@@ -10,15 +10,60 @@
 
       <div id="status">
       </div>
+<!--
+      <div class="owl-carousel">
+          <div class="item"><img src="../assets/portrait_thumb01.png"></div>
+          <div class="item"><img src="../assets/portrait_thumb02.png"></div>
+          <div class="item"><img src="../assets/portrait_thumb01.png"></div>
+          <div class="item"><img src="../assets/portrait_thumb02.png"></div>
+      </div>
+-->
+      <swiper-slide><img src="../assets/hallmark_gallery.png"></swiper-slide>
+        <swiper :options="swiperOption">
+          <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
+          <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
+      
+
     </div>
+ 
   </div>
 </template>
 
 <script>
+
+var $ = require('jquery');
+import Vue from 'vue'
+// ...
+import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
+
 export default {
-  data () {
+  components: {
+    swiper,
+    swiperSlide
+  },
+  data() {
     return {
-      msg: 'CHOOSE A PHOTO'
+      msg: 'CHOOSE A PHOTO',
+      swiperOption: {
+        pagination: '.swiper-pagination',
+        slidesPerView: 2,
+        paginationClickable: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 10
+      }
     }
   },
   ready () {
@@ -39,9 +84,17 @@ export default {
         });
    // }
 
+   Vue.nextTick(function () {
+        this.installOWLcarousel();
+    }.bind(this))
+
   },
   methods: {
 
+    installOWLcarousel: function() {
+       console.log('go owl!!!!')
+        $('.owl-carousel').owlCarousel();
+    },
     
     /**
      * This is the getPhoto library
@@ -294,16 +347,34 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
+<style lang="scss" scoped>
 
 h1 {
   //color: #42b983;
 }
+
+#swiper{
+  //position: absolute;
+  //bottom: 100px;
+}
+
+.transparent{
+  position: relative;
+}
+
 .photos{
 	//background-color: red;
 	//width: 30%;
 	//border: 1px solid pink;
   width: 25%;
   order: 3;
+}
+.swiper-container{
+      width: 80%;
+    position: absolute;
+    bottom: 20px;
+    left: 10%;
+ // transform: translateY(-100%);
+  //  display: inline-block;
 }
 </style>
