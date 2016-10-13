@@ -8,8 +8,10 @@
         <hello></hello>
         <photos></photos>
       </div>
+
     </section>
     <footer>
+    <child-component></child-component>
       <img src="./assets/mantlepiece_logo_footer.png">
     </footer>
   </div>
@@ -19,6 +21,7 @@
 import Hello from './components/Hello'
 import Scenes from './components/Scenes'
 import Photos from './components/Photos'
+
 
 export default {
   components: {

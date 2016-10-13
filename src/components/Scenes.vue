@@ -9,6 +9,9 @@
 	    	<img src="../assets/template1_thumb.png">
 		    <img src="../assets/template2_thumb.png">
 		    <img src="../assets/template1_thumb.png">
+		    <img src="../assets/template1_thumb.png">
+		    <img src="../assets/template2_thumb.png">
+		    <img src="../assets/template1_thumb.png">
 		   
     	</div>
   

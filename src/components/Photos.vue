@@ -3,9 +3,17 @@
     <img class="logo" src="../assets/title_christmas.png">
     <div class="transparent">
       <h1>{{ msg }}</h1>
-      
+      <!--
       <div class="fb-login-button" scope="public_profile,email" onlogin="this.checkLoginState();">
       </div>
+      
+      <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false">Login with Facebook</div>
+-->
+      <fb:login-button size="large"
+                 onlogin="Log.info.bind('onlogin callback')">
+  Login with Facebook
+</fb:login-button>
+
   
 
       <div id="status">

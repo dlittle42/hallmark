@@ -14,6 +14,9 @@ export default {
     return {
       msg: 'Hello Vue!'
     }
+  },
+  computed () {
+  	console.log('hello computed')
   }
 }
 </script>
