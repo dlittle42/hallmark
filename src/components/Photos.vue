@@ -17,9 +17,7 @@
     -->
 
         <button v-on:click="postToWall" id="facebook" class="social" >Login with Facebook</button>
-        <a v-on:click="imageToCanvas(allPhotos[0].url, allPhotos[0].name)" >SHOW PHOTO </a><br>
         <a v-on:click="postToFB" >Post Photo </a><br>
-        <a v-on:click="gotoAlbum" >album </a><br>
 
     
         <h1>OR</h1>
@@ -41,16 +39,23 @@
 
         <swiper-slide><img src="../assets/hallmark_gallery.png"></swiper-slide>
           <swiper :options="swiperOption">
-            <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb01.png"></swiper-slide>
-            <swiper-slide><img src="../assets/portrait_thumb02.png"></swiper-slide>
+            <swiper-slide>
+            <img v-on:click="getSrc(null, $event)" src="../assets/portrait_thumb01.png">
+            </swiper-slide>
+            <swiper-slide>
+            <img v-on:click="getSrc(null, $event)"src="../assets/portrait_thumb02.png">
+            </swiper-slide>
+            <img v-on:click="getSrc(null, $event)" src="../assets/portrait_thumb01.png">
+            </swiper-slide>
+            <swiper-slide>
+            <img v-on:click="getSrc(null, $event)"src="../assets/portrait_thumb02.png">
+            </swiper-slide>
+            <img v-on:click="getSrc(null, $event)" src="../assets/portrait_thumb01.png">
+            </swiper-slide>
+            <swiper-slide>
+            <img v-on:click="getSrc(null, $event)"src="../assets/portrait_thumb02.png">
+            </swiper-slide>
+            
             <div class="swiper-pagination" slot="pagination"></div>
             <div class="swiper-button-prev" slot="button-prev"></div>
             <div class="swiper-button-next" slot="button-next"></div>
@@ -96,28 +101,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
         }
       }
     },
-    route: {
-      activate() {
-          this.$nextTick(function () {
-              // => 'DOM loaded and ready'
-              console.log('DOM loaded and ready');
-          })
-          console.log('DOM activate');
-      },
-
-      data: function (transition) {
-         
-          console.log('The current view is ' + this.$route.params.name);
-
-         // this.setupThreejs();
-         return {
-               // title,
-                //content: store.getList().then(content => content)
-            }
-
-         
-        }
-    },
+    
     mounted: function () {
       this.$nextTick(function () {
         // code that assumes this.$el is in-document
@@ -134,7 +118,10 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
         /**
      * This is the getPhoto library
      */
-
+        getSrc: function(img, event){
+              this.$emit('imgSelect', event.target.src)
+              //this.$router.push('home');
+        },
         makeFacebookPhotoURL( id, accessToken ) {
           var path = 'https://graph.facebook.com/' + id + '/picture?access_token=' + accessToken;
           console.log(path);

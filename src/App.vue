@@ -33,8 +33,8 @@
           <div class="main content-block">
             <img class="logo" src="./assets/title_build_your_own.png">
             <div class="transparent">
+
               <canvas id="mainStage"></canvas>
-              <a v-on:click="setupPixi" >GO PIXI</a><br>
               <router-link to="/photos" >
                 Go to Photos
               </router-link>&nbsp;
@@ -51,7 +51,7 @@
             <img class="logo" src="./assets/title_christmas.png">
           
             <transition name="fade" mode="out-in">
-              <router-view></router-view>
+              <router-view v-on:imgSelect="updateImage"></router-view>
             </transition>
           </div>
 
@@ -114,9 +114,14 @@ export default {
       getAlert() {
         alert('function call');
       },
+      updateImage: function(img){
+       // alert('update image '+img);
+       // this.imageToCanvas(img);
+        this.imageToCanvas(img, 'portrait');
+      },
       getSrc: function(img){
             this.layout = img.srcElement.src;
-            this.imageToCanvas(this.layout);
+            this.imageToCanvas(this.layout, 'bkgd');
       },
       /*
       imageToCanvas: function(path){
@@ -142,10 +147,10 @@ export default {
 
       },
       */
-      imageToCanvas: function(path){
-
+      imageToCanvas: function(path, target){
+          this.$router.push('home');
           var texture01 = PIXI.Texture.fromImage(path)
-          bkgd.setTexture(texture01);
+          eval(target).setTexture(texture01);
 
 /*
           bkgd = PIXI.Sprite.fromImage(path);
@@ -225,6 +230,7 @@ export default {
        // document.body.appendChild(renderer.view);
         //var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
         //document.body.appendChild(renderer.view);
+        var parent = this;
 
         // create the root of the scene graph
         var canvas = document.getElementById('mainStage'),
@@ -239,6 +245,82 @@ export default {
         transparent: true
        });
        console.dir(renderer);
+
+/*
+       PIXI.loader.add([    
+           "./static/images/frame01.png",
+           "./static/images/frame02.png" 
+        ])  
+        .reset()
+         .on("progress", this.loadProgressHandler)  
+         .load(this.setup);
+*/
+        PIXI.loader.reset();
+        PIXI.loader.add('bunny', './static/images/frame01.png').load(function (loader, resources) {
+    // This creates a texture from a 'bunny.png' image.
+   // bunny = new PIXI.Sprite(resources.bunny.texture);
+
+    // frame = PIXI.Sprite.fromImage('./static/images/frame01.png');
+       //   var texture = PIXI.TextureCache["images/anyImage.png"];  
+         frame = new PIXI.Sprite(resources.bunny.texture);
+
+
+          frame.position.x = width/2;
+          frame.position.y = height/2 - 100;
+          frame.anchor.set(0.5);
+
+
+          var container = new PIXI.Container();
+          container.position.x =0;// width / 2;
+          container.position.y =0;//height / 2;
+         // container.anchor.set(0.5);
+
+          console.log(frame.width)
+
+          portrait = PIXI.Sprite.fromImage('./static/images/portrait01.png');
+          portrait.position.x = width/2;
+          portrait.position.y = height/2 - 100;
+          portrait.anchor.set(0.5);
+          portrait.interactive = true;
+          portrait.on('mousedown', this.onDown);
+          portrait.on('touchstart', this.onDown);
+
+          stage.addChild(container);
+          container.addChild(portrait);
+          stage.addChild(frame);
+
+          var mask_rect = new PIXI.Graphics();
+          mask_rect.beginFill(0xFF700B, 1);
+          var buffer = 5;
+          var adjustedX = frame.position.x - frame.width/2 + buffer;
+          var adjustedY = frame.position.y - frame.height/2 +buffer;
+          mask_rect.drawRect(adjustedX, adjustedY, frame.width - buffer*2, frame.height - buffer*2);
+         // mask_rect.anchor.set(0.5);
+
+          stage.addChild(mask_rect);
+
+          container.mask = mask_rect;
+
+/*
+           var marker1 = PIXI.Sprite.fromImage('./static/images/marker.png');
+        marker1.position.x = width/2;
+        marker1.position.y = height/2;
+        marker1.anchor.set(0.5);
+        marker1.interactive = true;
+        marker1.on('mousedown', this.onDown);
+        marker1.on('touchstart', this.onDown);
+
+        stage.addChild(marker1);
+        */
+          parent.setupMarkers();
+        
+
+      });
+
+
+
+        
+
      //  document.getElementById('mainStage').appendChild(renderer.view);
        mainStage = $('#mainStage canvas');
 
@@ -260,23 +342,9 @@ export default {
         stage.addChild(bkgd);
 
 
-        frame = PIXI.Sprite.fromImage('./static/images/frame01.png');
-        frame.position.x = width/2;
-        frame.position.y = height/2 - 100;
-        frame.anchor.set(0.5);
+       
 
-        console.log(frame.width)
-
-        portrait = PIXI.Sprite.fromImage('./static/images/portrait01.png');
-        portrait.position.x = width/2;
-        portrait.position.y = height/2 - 100;
-        portrait.anchor.set(0.5);
-        portrait.interactive = true;
-        portrait.on('mousedown', this.onDown);
-        portrait.on('touchstart', this.onDown);
-
-        stage.addChild(portrait);
-        stage.addChild(frame);
+        parent.setupMarkers();
 
         requestAnimationFrame(this.animate);
 
@@ -304,6 +372,20 @@ export default {
         }
         */
       },
+      /*
+      loadProgressHandler:function(loader, resource) {  
+         //Display the file `url` currently being loaded  
+         console.log("loading: " + resource.url);  
+         //Display the precentage of files currently loaded  
+         console.log("progress: " + loader.progress + "%");   
+         //If you gave your files names with the `add` method, you can access  
+         //them like this  
+         //console.log("loading: " + resource.name);
+      },
+      setup: function() {  
+        console.log("All files loaded");
+      },
+    */
       animate() {
           requestAnimationFrame(this.animate);
 
@@ -313,9 +395,142 @@ export default {
           // render the stage
           renderer.render(stage);
       },
-      onDown: function(evt){
+      setupMarkers: function() {
+
+        var width = $('#mainStage').width(),
+        height = $('#mainStage').height();
+
+        var marker_container = new PIXI.Container();
+          marker_container.position.x =0;// width / 2;
+          marker_container.position.y =0;//height / 2;
+
+        stage.addChild(marker_container);
+
+        var buttons = [];
+/*
+        var buttonPositions = [
+            175, 75,
+            655, 75,
+            410, 325,
+            150, 465,
+            685, 445
+        ];
+*/
+        var inc = 10;
+
+        var buttonPositions = [
+            ['wallpaper', width/2, height/inc],
+            ['trees', width/inc, (height/inc) * 3],
+            ['frames', (width/inc)*2, (height/inc)*3],
+            ['portraits', width/2, (height/2) - 100],
+            ['mantle01', (width/inc)*2, (height/inc)*6],
+            ['mantle02', (width/inc)*4, (height/inc)*6],
+            ['mantle03', (width/inc)*6, (height/inc)*6],
+            ['mantle04', (width/inc)*8, (height/inc)*6],
+            ['fireplace', (width/inc)*9, (height/inc)*5],
+            ['stocking01', (width/inc)*2, (height/inc)*7],
+            ['stocking02', (width/inc)*4, (height/inc)*7],
+            ['stocking03', (width/inc)*6, (height/inc)*7],
+            ['stocking04', (width/inc)*8, (height/inc)*7],
+            ['fire', width/2, (height/inc) * 8],
+            ['gifts', (width/inc)*9, (height/inc) * 8]
+
+
+        ]
+
+       // var noop = function () {
+       //   console.log('click');
+       // };
+
+        var textureButton = PIXI.Texture.fromImage('./static/images/marker.png');
+
+        for (var i = 0; i < buttonPositions.length; i++)
+        {
+            var button = new PIXI.Sprite(textureButton);
+            button.buttonMode = true;
+
+            button.anchor.set(0.5);
+
+            button.position.x = buttonPositions[i][1];
+            button.position.y = buttonPositions[i][2];
+            button.val = buttonPositions[i][0];
+
+            // make the button interactive...
+            button.interactive = true;
+
+          
+          
+
+            button
+                // set the mousedown and touchstart callback...
+                .on('mousedown', this.onMarkerDown)
+                .on('touchstart', this.onMarkerDown)
+
+                // set the mouseup and touchend callback...
+                .on('mouseup', this.onMarkerUp)
+                .on('touchend', this.onMarkerUp)
+                .on('mouseupoutside', this.onMarkerUp)
+                .on('touchendoutside', this.onMarkerUp)
+
+                // set the mouseover callback...
+                .on('mouseover', this.onMarkerOver)
+
+                // set the mouseout callback...
+                .on('mouseout', this.onMarkerOut)
+
+
+                // you can also listen to click and tap events :
+                .on('click', this.getGallery)
+                
+          //button.tap = noop;
+         // button.click = noop;
+            // add it to the stage
+            marker_container.addChild(button);
+
+            // add button to array
+            buttons.push(button);
+        }
+      },
+      onMarkerDown: function(evt){
         portrait.scale.x += 0.3;
         portrait.scale.y += 0.3;
+
+      },
+      onMarkerUp: function(evt){
+        portrait.scale.x -= 0.3;
+        portrait.scale.y -= 0.3;
+
+      },
+      onMarkerOver: function(evt){
+        portrait.scale.x += 0.3;
+        portrait.scale.y += 0.3;
+        console.log(evt.target.val);
+
+      },
+      onMarkerOut: function(evt){
+        portrait.scale.x -= 0.3;
+        portrait.scale.y -= 0.3;
+
+      },
+      getGallery: function(evt){
+        console.log(evt.target.val)
+        if (evt.target.val == "portraits"){
+          this.$router.push('photos');
+
+        }else if (evt.target.val == "mantle01" 
+          || evt.target.val =="mantle02" 
+          || evt.target.val =="mantle03" 
+          || evt.target.val =="mantle04"){
+          this.$router.push({ name: 'gallery', params : { 'imgset': 'mantlepieces' }});
+        }else if (evt.target.val == "stocking01" || 
+          evt.target.val =="stocking02" || 
+          evt.target.val =="stocking03" || 
+          evt.target.val =="stocking04"){
+          this.$router.push({ name: 'gallery', params : { 'imgset': 'stockings' }});
+        }else{
+          this.$router.push({ name: 'gallery', params : { 'imgset': evt.target.val }});
+        }
+        
 
       }
 
@@ -554,11 +769,28 @@ button#facebook {
    
 }
 
+button#twitter {
+    border-color: #83c0dc;
+    background-color: #54bdee;
+    background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/twitter-icon.png);  
+}
+
+button#download {
+    border-color: #83c0dc;
+    background-color: #548ac3;
+    background-image: url(../static/images/download_icon.svg);  
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s
 }
 .fade-enter, .fade-leave-active {
   opacity: 0
+}
+
+textarea{
+  height: 130px;
+  width: 80%;
 }
 
 

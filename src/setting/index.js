@@ -12,12 +12,13 @@ export default  {
         "Here's your 8th holiday message"
 
     ],
-    backgrounds: [
-          'background01_thumb.png',
-          'background01_thumb.png',
-          'background01_thumb.png',
-          'background01_thumb.png',
-          'background01_thumb.png'
+    wallpaper: [
+          'wallpaper-01.png',
+          'wallpaper-02.png',
+          'wallpaper-01.png',
+          'wallpaper-02.png',
+          'wallpaper-01.png',
+          'wallpaper-02.png'
     ],
     frames: [
           'frame01_thumb.png',
@@ -30,13 +31,13 @@ export default  {
           'frame01_thumb.png'
     ],
     stockings:[
-        'stocking01_thumb.png',
-        'stocking01_thumb.png',
-        'stocking01_thumb.png',
-        'stocking01_thumb.png',
-        'stocking01_thumb.png',
-        'stocking01_thumb.png',
-        'stocking01_thumb.png'
+        'stocking-01-thumb.png',
+        'stocking-01-thumb.png',
+        'stocking-01-thumb.png',
+        'stocking-01-thumb.png',
+        'stocking-01-thumb.png',
+        'stocking-01-thumb.png',
+        'stocking-01-thumb.png'
 
     ],
     mantlepieces:[

@@ -9,9 +9,10 @@
         </textarea>
         
     
-        <button>Twitter</button>
-        <button>Facebook</button>
-        <button>Download</button>
+        <button id="facebook" class="social" >Share on Facebook</button>
+        <button id="twitter" class="social" >Share on Twitter</button>
+        <button id="download" class="social" >Download</button>
+       
       </div>
  
 
