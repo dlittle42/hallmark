@@ -1,35 +1,327 @@
 <template>
   <div id="app">
+  <!--
+    <router-link to="/foo">Go to Foo</router-link>
+    <router-link to="/bar">Go to Bar</router-link>
+-->
     <header>
     </header>
     <section class="content">
       <div class="columns">
-        <scenes></scenes>
-        <hello></hello>
-        <photos></photos>
-      </div>
+          <div class="scenes content-block">
+            <img class="logo" src="./assets/hallmark_main_logo.png">
+            <div class="transparent">
+              <h1>CHOOSE A LAYOUT</h1>
+              
+              <div id="scene-scroll" class="scroll">
+              
+                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
+                <img v-on:click="getSrc" src="./assets/template2_thumb.png">
+                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
+                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
+                <img v-on:click="getSrc" src="./assets/template2_thumb.png">
+                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
+               
+              </div>
+          
+           
+         
+            </div>
+            
+          </div>
+          <!-- main stage -->
+          <div class="main content-block">
+            <img class="logo" src="./assets/title_build_your_own.png">
+            <div class="transparent">
+              <canvas id="mainStage"></canvas>
+              <a v-on:click="setupPixi" >GO PIXI</a><br>
+              <router-link to="/photos" >
+                Go to Photos
+              </router-link>&nbsp;
+              <router-link :to="{ name: 'gallery', params: { imgset: 'fireplaces' }}">
+                Go to Fireplaces
+              </router-link>&nbsp;
+              <router-link :to="{ name: 'gallery', params: { imgset: 'frames' }}">
+                Go to Frames
+              </router-link>&nbsp;
+              
+            </div>
+          </div>
+          <div class="photos content-block">
+            <img class="logo" src="./assets/title_christmas.png">
+          
+            <transition name="fade" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          </div>
 
+          
+      </div>
     </section>
     <footer>
-    <child-component></child-component>
       <img src="./assets/mantlepiece_logo_footer.png">
     </footer>
-  </div>
+  
+</div>
 </template>
 
 <script>
-import Hello from './components/Hello'
-import Scenes from './components/Scenes'
-import Photos from './components/Photos'
+var $ = require('jquery');
+import router from 'vue-router';
+import PIXI from 'pixi.js';
+//import setting from '../setting';
 
+var mainStage, bkgd, stage, renderer, frame, portrait;
 
 export default {
-  components: {
-    Hello,
-    Scenes,
-    Photos
+
+  
+
+
+  data () {
+    
+  
+    return {
+      // note: changing this line won't causes changes
+      // with hot-reload because the reloaded component
+      // preserves its current state and we are modifying
+      // its initial state.
+      //scene: 'Hello Simon!'
+      layout: ""
+
+    }
+   
+  },
+  /*
+  created () {
+    this.animate = this.animate.bind(this)
+    this.clock = new THREE.Clock()
+    this.mesh = this.createOcean()
+  },
+  */
+  mounted: function () {
+    this.$nextTick(function () {
+      // code that assumes this.$el is in-document
+      console.log('mounted!!!!!!!!');
+      this.setupPixi();
+    })
+  },
+  componentUpdated (el, binding, vnode, oldVNode) { 
+    console.log('updated!!!!!!!!');
+  },
+
+  methods: {
+      getAlert() {
+        alert('function call');
+      },
+      getSrc: function(img){
+            this.layout = img.srcElement.src;
+            this.imageToCanvas(this.layout);
+      },
+      /*
+      imageToCanvas: function(path){
+        var can = document.getElementById('canvas');
+        var ctx = can.getContext('2d');
+        console.log('canvas time: '+ path);
+        var img = new Image();
+        img.setAttribute('crossOrigin', 'anonymous');
+        img.onload = function(){
+            //can.width = img.width;
+            //can.height = img.height;
+
+
+            //flip it ///
+          //  ctx.translate(img.width-1, img.height-1);
+           // ctx.rotate(Math.PI);
+            /////////
+            ctx.drawImage(img, 0, 0, can.width, can.height);
+           
+            
+        }
+        img.src = path;
+
+      },
+      */
+      imageToCanvas: function(path){
+
+          var texture01 = PIXI.Texture.fromImage(path)
+          bkgd.setTexture(texture01);
+
+/*
+          bkgd = PIXI.Sprite.fromImage(path);
+
+          // center the sprite's anchor point
+          //bkgd.anchor.set(0.5);
+
+          // move the sprite to the center of the screen
+          bkgd.position.x = 0;
+          bkgd.position.y = 0;
+
+          stage.addChild(bkgd);
+    */
+      },
+      drawImageProp: function (ctx, img, x, y, w, h, offsetX, offsetY) {
+
+          if (arguments.length === 2) {
+              x = y = 0;
+              w = ctx.canvas.width;
+              h = ctx.canvas.height;
+          }
+
+          // default offset is center
+          offsetX = typeof offsetX === "number" ? offsetX : 0.5;
+          offsetY = typeof offsetY === "number" ? offsetY : 0.5;
+
+          // keep bounds [0.0, 1.0]
+          if (offsetX < 0) offsetX = 0;
+          if (offsetY < 0) offsetY = 0;
+          if (offsetX > 1) offsetX = 1;
+          if (offsetY > 1) offsetY = 1;
+
+          var iw = img.width,
+              ih = img.height,
+              r = Math.min(w / iw, h / ih),
+              nw = iw * r,   // new prop. width
+              nh = ih * r,   // new prop. height
+              cx, cy, cw, ch, ar = 1;
+
+          // decide which gap to fill    
+          if (nw < w) ar = w / nw;                             
+          if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
+          nw *= ar;
+          nh *= ar;
+
+          // calc source rectangle
+          cw = iw / (nw / w);
+          ch = ih / (nh / h);
+
+          cx = (iw - cw) * offsetX;
+          cy = (ih - ch) * offsetY;
+
+          // make sure source rectangle is valid
+          if (cx < 0) cx = 0;
+          if (cy < 0) cy = 0;
+          if (cw > iw) cw = iw;
+          if (ch > ih) ch = ih;
+
+          // fill image in dest. rectangle
+          ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
+      },
+      setupPixi: function(){
+ /*
+        var stage = new PIXI.Stage(0xff00ff),
+        canvas = document.getElementById('mainStage'),
+        scale = window.devicePixelRatio,
+        width = canvas.width,
+        height = canvas.height,
+        renderer = PIXI.autoDetectRenderer(width * scale, height * scale, canvas);
+
+        var stage = new PIXI.Container(),
+        renderer = PIXI.autoDetectRenderer(100%, 100%);
+        //document.body.appendChild();
+        $('.main #scene').append(renderer.view);
+        */
+
+       // document.body.appendChild(renderer.view);
+        //var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb});
+        //document.body.appendChild(renderer.view);
+
+        // create the root of the scene graph
+        var canvas = document.getElementById('mainStage'),
+        scale = 1,// window.devicePixelRatio,
+        width = $('#mainStage').width(),
+        height = $('#mainStage').height();
+        console.log('w='+width+',h='+height);
+
+
+       renderer = PIXI.autoDetectRenderer(width , height, { 
+        view:canvas, 
+        transparent: true
+       });
+       console.dir(renderer);
+     //  document.getElementById('mainStage').appendChild(renderer.view);
+       mainStage = $('#mainStage canvas');
+
+        // create the root of the scene graph
+       stage = new PIXI.Container();
+
+        // create a new Sprite from an image path.
+       bkgd = PIXI.Sprite.fromImage('./static/images/room01.png');
+
+        // center the sprite's anchor point
+        //bkgd.anchor.set(0.5);
+
+        // move the sprite to the center of the screen
+        bkgd.position.x = width/2;
+        bkgd.position.y = height/2;
+        bkgd.anchor.set(0.5);
+
+
+        stage.addChild(bkgd);
+
+
+        frame = PIXI.Sprite.fromImage('./static/images/frame01.png');
+        frame.position.x = width/2;
+        frame.position.y = height/2 - 100;
+        frame.anchor.set(0.5);
+
+        console.log(frame.width)
+
+        portrait = PIXI.Sprite.fromImage('./static/images/portrait01.png');
+        portrait.position.x = width/2;
+        portrait.position.y = height/2 - 100;
+        portrait.anchor.set(0.5);
+        portrait.interactive = true;
+        portrait.on('mousedown', this.onDown);
+        portrait.on('touchstart', this.onDown);
+
+        stage.addChild(portrait);
+        stage.addChild(frame);
+
+        requestAnimationFrame(this.animate);
+
+        //handle resizing
+       // renderer.resize($('#mainStage').width(), $('#mainStage').height());
+/*
+        //Use Pixi's built-in `loader` object to load an image
+        PIXI.loader
+          .add("./static/images/room01.png")
+          .load(setup);
+
+        //This `setup` function will run when the image has loaded
+        function setup() {
+
+          //Create the `cat` sprite from the texture
+          var cat = new PIXI.Sprite(
+            PIXI.loader.resources["./static/images/room01.png"].texture
+          );
+
+          //Add the cat to the stage
+          stage.addChild(cat);
+
+          //Render the stage   
+          renderer.render(stage);
+        }
+        */
+      },
+      animate() {
+          requestAnimationFrame(this.animate);
+
+          // just for fun, let's rotate mr rabbit a little
+         // bkgd.rotation += 0.1;
+
+          // render the stage
+          renderer.render(stage);
+      },
+      onDown: function(evt){
+        portrait.scale.x += 0.3;
+        portrait.scale.y += 0.3;
+
+      }
+
   }
 }
+
 </script>
 
 <style lang="scss">
@@ -102,6 +394,17 @@ h1{
  align-self: center
 }
 
+#mainStage{
+  width: 100%;
+  height: 100%;
+  background-color: pink;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+
 .content {
   display: flex;
   flex: 1;
@@ -113,6 +416,33 @@ h1{
   display: flex;
   flex:1;
   width: 100%;
+}
+
+.scenes{
+  //background-color: green;
+  //width: 30%;
+  //border: 1px solid blue;
+  width: 25%;
+  //background: #ccc;
+  order: 1;
+  //height: 100%;
+  
+}
+
+.main{
+  //background-color: yellow;
+  width: 30%;
+  //border: 1px solid green;
+  flex: 1;
+    order: 2;
+}
+
+.photos{
+  //background-color: red;
+  //width: 30%;
+  //border: 1px solid pink;
+  width: 25%;
+  order: 3;
 }
 
 .content-block{
@@ -141,16 +471,94 @@ footer {
   background-color: $trans-yellow;
   //border: solid 1px blue;
   //mix-blend-mode: overlay;
+  position: relative;
   width: 100%;
   //height: 100%;
   height: calc(100vh - 235px);
 
   //box-shadow: 0px 0px 40px 2px rgba(0,0,0,0.25);
   box-shadow: rgba(255, 206, 84, 0.5) 0px 0px 40px 2px;
+  z-index: 4;
 
  // overflow-x: hidden;
  // overflow-y: scroll;
 
+}
+
+.scroll{
+  width: 90%;
+  height: calc(100% - 66px);
+  margin: 0 auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  max-height: 100%;
+}
+
+#scene-scroll{
+
+
+  img{
+    //float:left;
+    //width: 100%;
+    //transform: scale(.9,.9)
+    display: block;
+      width: 100% !important;
+      height: auto !important;
+      margin-bottom: 5px;
+  }
+  
+}
+
+.scroll::-webkit-scrollbar {
+    width: .3em;
+}
+ 
+.scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.scroll::-webkit-scrollbar-thumb {
+  background-color: red;
+  outline: 1px solid slategrey;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Merriweather+Sans);
+button.social {
+    padding-left: 45px;
+    height: 35px;
+    background: none;
+    border: none;
+    display: block;
+    background-size: 35px 35px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    color: white;
+    font-family:"Merriweather Sans", sans-serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 205px;
+    border-bottom: 2px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    box-shadow: 0 4px 2px -2px gray;
+    text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
+    margin: 0 auto;
+}
+
+button#facebook {
+    border-color: #2d5073;
+    background-color: #3b5998;
+    background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
+
+   
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 
 
