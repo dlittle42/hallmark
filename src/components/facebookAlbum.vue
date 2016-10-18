@@ -7,7 +7,7 @@
 		<div class="img-gallery scroll" v-if="assets">
 	
 				<div class="gallery-img" v-for="(item, index) in assets">
-					<img v-on:click="getSrc(null, $event)" :src="'./static/images/'+ item" />
+					<img v-on:click="getSrc(null, item, $event)" :src="'./static/images/'+ item + '-thumb.png'" />
 	            </div>
 	     </div>
 
@@ -59,12 +59,13 @@ export default {
 
   methods: {
     
-    getSrc: function(img, event){
+    getSrc: function(img, item, event){
     	console.log('img='+img)
     	if (img==null){
     		var img = event.target.src;
     	}
-      	this.$emit('imgSelect', img)
+    	//alert(item);
+      	this.$emit('imgSelect', item, this.$route.params.imgset)
       	//this.$router.push('home');
 	}
   },

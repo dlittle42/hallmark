@@ -13,34 +13,51 @@ export default  {
 
     ],
     wallpaper: [
-          'wallpaper-01.png',
-          'wallpaper-02.png',
-          'wallpaper-01.png',
-          'wallpaper-02.png',
-          'wallpaper-01.png',
-          'wallpaper-02.png'
+          'wallpaper-01',
+          'wallpaper-02',
+          'wallpaper-01',
+          'wallpaper-02',
+          'wallpaper-01',
+          'wallpaper-02'
     ],
-    frames: [
-          'frame01_thumb.png',
-          'frame01_thumb.png',
-          'frame01_thumb.png',
-          'frame01_thumb.png',
-          'frame01_thumb.png',
-          'frame01_thumb.png',
-          'frame01_thumb.png',
-          'frame01_thumb.png'
+    frame: [
+          'frame-01a',
+          'frame-02a',
+          'frame-01a',
+          'frame-02a',
+          'frame-01a',
+          'frame-02a',
+          'frame-01a',
+          'frame-02a',
+          'frame-01a',
+          'frame-02a',
+          'frame-01a',
+          'frame-02a'
+    ],
+    mantle:[
+        'mantle-01',
+        'mantle-02',
+        'mantle-01',
+        'mantle-02',
+        'mantle-01',
+        'mantle-02',
+        'mantle-01',
+        'mantle-02'
     ],
     stockings:[
-        'stocking-01-thumb.png',
-        'stocking-01-thumb.png',
-        'stocking-01-thumb.png',
-        'stocking-01-thumb.png',
-        'stocking-01-thumb.png',
-        'stocking-01-thumb.png',
-        'stocking-01-thumb.png'
+        'stocking-01',
+        'stocking-02',
+        'stocking-01',
+        'stocking-02',
+        'stocking-01',
+        'stocking-02',
+        'stocking-01',
+        'stocking-02',
+        'stocking-01',
+        'stocking-02'
 
     ],
-    mantlepieces:[
+    mantlepiece:[
         'mantle01_thumb.png',
         'mantle01_thumb.png',
         'mantle01_thumb.png',
@@ -50,28 +67,37 @@ export default  {
         'mantle01_thumb.png'
 
     ],
-    fireplaces:[
-        'fireplace01_thumb.png',
-        'fireplace01_thumb.png',
-        'fireplace01_thumb.png',
-        'fireplace01_thumb.png',
-        'fireplace01_thumb.png',
-        'fireplace01_thumb.png',
-        'fireplace01_thumb.png',
-        'fireplace01_thumb.png'
+    fireplace:[
+        'fireplace-01',
+        'fireplace-02',
+        'fireplace-01',
+        'fireplace-02',
+        'fireplace-01',
+        'fireplace-02',
+        'fireplace-01',
+        'fireplace-02',
+        'fireplace-01',
+        'fireplace-02'
     
     ],
-    gifts:[
-        'gift01_thumb.png',
-        'gift01_thumb.png',
-        'gift01_thumb.png',
-        'gift01_thumb.png',
-        'gift01_thumb.png',
-        'gift01_thumb.png'
+    gift:[
+        'gift-01',
+        'gift-02',
+        'gift-01',
+        'gift-02',
+        'gift-01',
+        'gift-02'
 
     ],
-    trees:[
-
+    tree:[
+        'tree-01',
+        'tree-02',
+        'tree-01',
+        'tree-02',
+        'tree-01',
+        'tree-02',
+        'tree-01',
+        'tree-02'
     ],
     hallmark_gallery:[
           'Alice',

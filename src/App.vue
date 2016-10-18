@@ -71,7 +71,7 @@ import router from 'vue-router';
 import PIXI from 'pixi.js';
 //import setting from '../setting';
 
-var mainStage, bkgd, stage, renderer, frame, portrait;
+var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift;
 
 export default {
 
@@ -114,14 +114,16 @@ export default {
       getAlert() {
         alert('function call');
       },
-      updateImage: function(img){
+      updateImage: function(img, target){
        // alert('update image '+img);
        // this.imageToCanvas(img);
-        this.imageToCanvas(img, 'portrait');
+       //alert(img + " and "+target)
+       var fullimg = "./static/images/"+img+ ".png";
+        this.imageToCanvas(fullimg, target);
       },
       getSrc: function(img){
             this.layout = img.srcElement.src;
-            this.imageToCanvas(this.layout, 'bkgd');
+            this.imageToCanvas(this.layout, 'wallpaper');
       },
       /*
       imageToCanvas: function(path){
@@ -257,7 +259,7 @@ export default {
          .load(this.setup);
 */
         PIXI.loader.reset();
-        PIXI.loader.add('bunny', './static/images/frame01.png').load(function (loader, resources) {
+        PIXI.loader.add('bunny', './static/images/frame-01a.png').load(function (loader, resources) {
     // This creates a texture from a 'bunny.png' image.
    // bunny = new PIXI.Sprite(resources.bunny.texture);
 
@@ -329,18 +331,49 @@ export default {
        stage = new PIXI.Container();
 
         // create a new Sprite from an image path.
-       bkgd = PIXI.Sprite.fromImage('./static/images/room01.png');
+       wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
 
         // center the sprite's anchor point
-        //bkgd.anchor.set(0.5);
+        //wallpaper.anchor.set(0.5);
 
         // move the sprite to the center of the screen
-        bkgd.position.x = width/2;
-        bkgd.position.y = height/2;
-        bkgd.anchor.set(0.5);
+        wallpaper.width = width;
+        wallpaper.height = width;
+        wallpaper.position.x = width/2;
+        wallpaper.position.y = height/2;
+        wallpaper.anchor.set(0.5);
 
 
-        stage.addChild(bkgd);
+        stage.addChild(wallpaper);
+
+        fireplace = PIXI.Sprite.fromImage('./static/images/fireplace-01.png');
+
+        fireplace.scale.x = fireplace.scale.y = .6;
+        fireplace.position.x = width/2;
+        fireplace.position.y = height - (height/4);
+        fireplace.anchor.set(0.5);
+        stage.addChild(fireplace);
+
+
+        gift = PIXI.Sprite.fromImage('./static/images/gift-01.png');
+
+        gift.scale.x = gift.scale.y = .6;
+        gift.position.x = width;
+        gift.position.y = height;
+        gift.anchor.set(1);
+        stage.addChild(gift);
+
+
+        tree = PIXI.Sprite.fromImage('./static/images/tree-01.png');
+
+        tree.scale.x = tree.scale.y = .6;
+        tree.position.x = 0;
+        tree.position.y = 0;
+        //tree.anchor.set(0.5);
+        stage.addChild(tree);
+
+
+        
 
 
        
@@ -421,20 +454,20 @@ export default {
 
         var buttonPositions = [
             ['wallpaper', width/2, height/inc],
-            ['trees', width/inc, (height/inc) * 3],
-            ['frames', (width/inc)*2, (height/inc)*3],
-            ['portraits', width/2, (height/2) - 100],
+            ['tree', width/inc, (height/inc) * 3],
+            ['frame', (width/inc)*2, (height/inc)*3],
+            ['portrait', width/2, (height/2) - 100],
             ['mantle01', (width/inc)*2, (height/inc)*6],
             ['mantle02', (width/inc)*4, (height/inc)*6],
             ['mantle03', (width/inc)*6, (height/inc)*6],
             ['mantle04', (width/inc)*8, (height/inc)*6],
-            ['fireplace', (width/inc)*9, (height/inc)*5],
+            ['mantlepiece', (width/inc)*9, (height/inc)*5],
             ['stocking01', (width/inc)*2, (height/inc)*7],
             ['stocking02', (width/inc)*4, (height/inc)*7],
             ['stocking03', (width/inc)*6, (height/inc)*7],
             ['stocking04', (width/inc)*8, (height/inc)*7],
-            ['fire', width/2, (height/inc) * 8],
-            ['gifts', (width/inc)*9, (height/inc) * 8]
+            ['fireplace', width/2, (height/inc) * 8],
+            ['gift', (width/inc)*9, (height/inc) * 8]
 
 
         ]
@@ -493,36 +526,39 @@ export default {
         }
       },
       onMarkerDown: function(evt){
-        portrait.scale.x += 0.3;
-        portrait.scale.y += 0.3;
+        //portrait.scale.x += 0.3;
+       // portrait.scale.y += 0.3;
 
       },
       onMarkerUp: function(evt){
-        portrait.scale.x -= 0.3;
-        portrait.scale.y -= 0.3;
+        //portrait.scale.x -= 0.3;
+       // portrait.scale.y -= 0.3;
 
       },
       onMarkerOver: function(evt){
-        portrait.scale.x += 0.3;
-        portrait.scale.y += 0.3;
-        console.log(evt.target.val);
+        var obj = eval(evt.target.val);
+        console.log(obj);
+        obj.scale.x += 0.01;
+        obj.scale.y += 0.01;
+        
 
       },
       onMarkerOut: function(evt){
-        portrait.scale.x -= 0.3;
-        portrait.scale.y -= 0.3;
+        var obj = eval(evt.target.val);
+        obj.scale.x -= 0.01;
+        obj.scale.y -= 0.01;
 
       },
       getGallery: function(evt){
         console.log(evt.target.val)
-        if (evt.target.val == "portraits"){
+        if (evt.target.val == "portrait"){
           this.$router.push('photos');
 
         }else if (evt.target.val == "mantle01" 
           || evt.target.val =="mantle02" 
           || evt.target.val =="mantle03" 
           || evt.target.val =="mantle04"){
-          this.$router.push({ name: 'gallery', params : { 'imgset': 'mantlepieces' }});
+          this.$router.push({ name: 'gallery', params : { 'imgset': 'mantle' }});
         }else if (evt.target.val == "stocking01" || 
           evt.target.val =="stocking02" || 
           evt.target.val =="stocking03" || 

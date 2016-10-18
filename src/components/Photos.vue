@@ -230,7 +230,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
             });
         },
         postToFB() { 
-          var data = $('#canvas')[0].toDataURL("image/png");
+          var data = $('#mainStage')[0].toDataURL("image/png");
           var blob = this.dataURItoBlob(data);
           console.log('blob='+blob);
           this.postImageToFacebook(this.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
