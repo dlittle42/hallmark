@@ -542,7 +542,7 @@ export default {
          // button.click = noop;
             // add it to the stage
             marker_container.addChild(button);
-            marker_container.position.x = 300;
+            
 
             // add button to array
             buttons.push(button);
