@@ -159,8 +159,29 @@ export default {
       */
       imageToCanvas: function(path, target){
           this.$router.push('home');
-          var texture01 = PIXI.Texture.fromImage(path)
-          eval(target).setTexture(texture01);
+         // var texture01 = PIXI.Texture.fromImage(path)
+         // eval(target).setTexture(texture01);
+
+         
+          PIXI.loader.reset();
+          PIXI.loader.add('newImg', path).load(function (loader, resources) {
+        // This creates a texture from a 'bunny.png' image.
+       // bunny = new PIXI.Sprite(resources.bunny.texture);
+
+        // frame = PIXI.Sprite.fromImage('./static/images/frame01.png');
+           //   var texture = PIXI.TextureCache["images/anyImage.png"];  
+            // frame = new PIXI.Sprite(resources.bunny.texture);
+            var obj = eval(target);
+             obj.setTexture(resources.newImg.texture);
+            //alert('width='+ resources.newImg.texture.width+ " , height="+ resources.newImg.texture.height);
+            if (target == 'portrait'){
+              var ratio = Math.min(frame.width/resources.newImg.texture.width,
+                   frame.height/resources.newImg.texture.height);
+              alert(ratio);
+              obj.scale.x = obj.scale.y = ratio;
+            }
+          });
+
 
 /*
           bkgd = PIXI.Sprite.fromImage(path);
@@ -860,7 +881,7 @@ a#dl{
     cursor: default;
     color: white;
     box-sizing: border-box;
-    padding: 8px 6px;
+    padding: 8px 6px 8px 45px;
     cursor:pointer;
 
 
