@@ -11,8 +11,8 @@
     
         <button id="facebook" class="social" >Share on Facebook</button>
         <button id="twitter" class="social" >Share on Twitter</button>
-        <button id="download" class="social" v-on:click="downloadCanvas(null, 'mainStage', 'greeting.png')" >Download</button>
-       <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download Canvas</a> 
+       <!-- <button id="download" class="social" v-on:click="downloadCanvas(null, 'mainStage', 'greeting.png')" >Download</button> -->
+       <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
        <!-- <a id="download">Download as image</a> -->
        
       </div>
