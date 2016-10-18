@@ -120,7 +120,13 @@ export default {
        // alert('update image '+img);
        // this.imageToCanvas(img);
        //alert(img + " and "+target)
-       var fullimg = "./static/images/"+img+ ".png";
+       var fullimg;
+       if (img.includes('graph.facebook')){
+          fullimg = img;
+       }else{
+          fullimg = "./static/images/"+img+ ".png";
+       }
+       
         this.imageToCanvas(fullimg, target);
       },
       getSrc: function(img){
