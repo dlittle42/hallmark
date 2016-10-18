@@ -11,7 +11,9 @@
     
         <button id="facebook" class="social" >Share on Facebook</button>
         <button id="twitter" class="social" >Share on Twitter</button>
-        <button id="download" class="social" >Download</button>
+        <button id="download" class="social" v-on:click="downloadCanvas(null, 'mainStage', 'greeting.png')" >Download</button>
+       <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download Canvas</a> 
+       <!-- <a id="download">Download as image</a> -->
        
       </div>
  
@@ -19,7 +21,7 @@
   </template>
 
   <script>
-//var $ = require('jquery');
+var $ = require('jquery');
 import Vue from 'vue'
 import router from 'vue-router'
 
@@ -57,6 +59,12 @@ import router from 'vue-router'
     this.$nextTick(function () {
       // code that assumes this.$el is in-document
       console.log('home mounted!!!!!!!!');
+     // var parent = this;
+     /* document.getElementById('download').addEventListener('click', function() {
+          parent.downloadCanvas(this, 'mainStage', 'test.png');
+      }, false);
+      */
+      document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
     })
   },
     ready: function () {
@@ -157,6 +165,7 @@ import router from 'vue-router'
         imageToCanvas(path, name){
           var can = document.getElementById('canvas');
         var ctx = can.getContext('2d');
+
           console.log('canvas time: '+ path);
           var img = new Image();
           img.setAttribute('crossOrigin', 'anonymous');
@@ -203,6 +212,26 @@ import router from 'vue-router'
               'into Facebook.';
           }
         },
+        downloadCanvas: function(link, canvasId, filename) {
+            link.href = document.getElementById(canvasId).toDataURL();
+            link.download = filename;
+        },
+        dlCanvas: function(evt) {
+
+
+          var dt = document.getElementById("mainStage").toDataURL('image/png');
+          //alert(dt);
+
+          /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
+          dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+
+          /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
+          dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+
+          
+          evt.target.href = dt;
+       
+        }
         
         
         
