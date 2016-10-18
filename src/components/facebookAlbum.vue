@@ -2,7 +2,7 @@
 
       <div class="transparent">
         <h1>CHOOSE A PHOTO</h1>
-        {{$route.params.imgset}}
+        <!-- {{$route.params.imgset}} -->
 
 		<div class="img-gallery scroll" v-if="assets">
 	
@@ -15,7 +15,7 @@
 	
 				<div class="gallery-img" v-for="(item, index) in fbgallery">
 					<!--<img :src="item.url" />-->
-					<div class="fbimg" v-on:click="getSrc(item.url, $event)" v-bind:style="{ backgroundImage: 'url(' + item.url + ')' }"></div>
+					<div class="fbimg" v-on:click="getSrc(item.url, null, $event)" v-bind:style="{ backgroundImage: 'url(' + item.url + ')' }"></div>
 	            </div>
 	     
 	
@@ -60,6 +60,15 @@ export default {
   methods: {
     
     getSrc: function(img, item, event){
+
+    	if(img==null){
+    		//default gallery
+    		this.$emit('imgSelect', item, this.$route.params.imgset)
+    	}else{
+    		//fb gallery
+    		this.$emit('imgSelect', img, 'portrait')
+    	}
+/*
     	console.log('img='+img)
     	if (img==null){
     		var img = event.target.src;
@@ -67,6 +76,7 @@ export default {
     	//alert(item);
       	this.$emit('imgSelect', item, this.$route.params.imgset)
       	//this.$router.push('home');
+      	*/
 	}
   },
 

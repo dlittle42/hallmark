@@ -9,7 +9,7 @@
     <section class="content">
       <div class="columns">
           <div class="scenes content-block">
-            <img class="logo" src="./assets/hallmark_main_logo.png">
+            <router-link :to="'home'"><img class="logo" src="./assets/hallmark_main_logo.png"></router-link>
             <div class="transparent">
               <h1>CHOOSE A LAYOUT</h1>
               
@@ -35,6 +35,7 @@
             <div class="transparent">
 
               <canvas id="mainStage"></canvas>
+              <!--
               <router-link to="/photos" >
                 Go to Photos
               </router-link>&nbsp;
@@ -44,6 +45,7 @@
               <router-link :to="{ name: 'gallery', params: { imgset: 'frames' }}">
                 Go to Frames
               </router-link>&nbsp;
+              -->
               
             </div>
           </div>
@@ -649,7 +651,7 @@ h1{
 #mainStage{
   width: 100%;
   height: 100%;
-  background-color: pink;
+  background-color: lightgrey;
   position: absolute;
   top: 0;
   left: 0;
