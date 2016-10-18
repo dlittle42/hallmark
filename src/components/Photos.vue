@@ -119,7 +119,8 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
      * This is the getPhoto library
      */
         getSrc: function(img, event){
-              this.$emit('imgSelect', event.target.src)
+              //this.$emit('imgSelect', event.target.src)
+              this.$emit('imgSelect', event.target.src, 'portrait')
               //this.$router.push('home');
         },
         makeFacebookPhotoURL( id, accessToken ) {

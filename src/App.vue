@@ -73,7 +73,7 @@ import router from 'vue-router';
 import PIXI from 'pixi.js';
 //import setting from '../setting';
 
-var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift;
+var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container;
 
 export default {
 
@@ -121,7 +121,7 @@ export default {
        // this.imageToCanvas(img);
        //alert(img + " and "+target)
        var fullimg;
-       if (img.includes('graph.facebook')){
+       if (img.includes('graph.facebook') || img.includes('http')){
           fullimg = img;
        }else{
           fullimg = "./static/images/"+img+ ".png";
@@ -337,6 +337,17 @@ export default {
 
         // create the root of the scene graph
        stage = new PIXI.Container();
+       stage.hitArea = new PIXI.Rectangle(0, 0, width, height);
+
+
+       stage.interactive = true;
+       stage.button = true;
+
+      stage
+
+            // set the mouseover callback...
+            .on('mouseover', this.onStageOver)
+            .on('mouseout', this.onStageOut)
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
@@ -386,7 +397,7 @@ export default {
 
        
 
-        parent.setupMarkers();
+        //parent.setupMarkers();
 
         requestAnimationFrame(this.animate);
 
@@ -442,7 +453,10 @@ export default {
         var width = $('#mainStage').width(),
         height = $('#mainStage').height();
 
-        var marker_container = new PIXI.Container();
+        marker_container = new PIXI.DisplayObjectContainer();
+        marker_container.width = width;
+        marker_container.height = height;
+
           marker_container.position.x =0;// width / 2;
           marker_container.position.y =0;//height / 2;
 
@@ -528,6 +542,7 @@ export default {
          // button.click = noop;
             // add it to the stage
             marker_container.addChild(button);
+            marker_container.position.x = 300;
 
             // add button to array
             buttons.push(button);
@@ -555,6 +570,17 @@ export default {
         var obj = eval(evt.target.val);
         obj.scale.x -= 0.01;
         obj.scale.y -= 0.01;
+
+      },
+      onStageOver: function(evt){
+        console.log('over stage');
+        marker_container.position.x = 0;
+        
+
+      },
+      onStageOut: function(evt){
+        console.log('out stage');
+        marker_container.position.x = 800;
 
       },
       getGallery: function(evt){
