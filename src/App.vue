@@ -159,10 +159,10 @@ export default {
       */
       imageToCanvas: function(path, target){
           this.$router.push('home');
-         // var texture01 = PIXI.Texture.fromImage(path)
-         // eval(target).setTexture(texture01);
-
-         
+          var texture01 = PIXI.Texture.fromImage(path)
+          eval(target).setTexture(texture01);
+        // alert(path);
+         /*
           PIXI.loader.reset();
           PIXI.loader.add('newImg', path).load(function (loader, resources) {
         // This creates a texture from a 'bunny.png' image.
@@ -177,11 +177,12 @@ export default {
             if (target == 'portrait'){
               var ratio = Math.min(frame.width/resources.newImg.texture.width,
                    frame.height/resources.newImg.texture.height);
-              alert(ratio);
+             // alert(ratio);
               obj.scale.x = obj.scale.y = ratio;
             }
+            
           });
-
+*/
 
 /*
           bkgd = PIXI.Sprite.fromImage(path);
@@ -310,6 +311,7 @@ export default {
           console.log(frame.width)
 
           portrait = PIXI.Sprite.fromImage('./static/images/portrait01.png');
+          //portrait.image.crossOrigin = "anonymous";
           portrait.position.x = width/2;
           portrait.position.y = height/2 - 100;
           portrait.anchor.set(0.5);

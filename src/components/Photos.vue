@@ -17,10 +17,10 @@
     -->
 
         <button v-on:click="postToWall" id="facebook" class="social" >Login with Facebook</button>
-        <a v-on:click="postToFB" >Post Photo </a><br>
+      <!--  <a v-on:click="postToFB" >Post Photo </a><br> -->
 
     
-        <h1>OR</h1>
+        <h1 class="or">OR</h1>
         <div id="status">
         </div>
   <!--
@@ -396,8 +396,9 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
   <style lang="scss" scoped>
 
-h1 {
+h1.or {
   //color: #42b983;
+  margin: 5px auto;
 }
 
 #swiper{
@@ -431,7 +432,7 @@ h1 {
     border-radius: 5px;
     max-height: 150px;
     padding: 60px;
-    margin: 30px;
+    margin: 10px 30px;
     transition: all 0.5s ease;
     background-color: none;
     background:rgba(2,173,231,0) url(../assets/arrow.png) no-repeat center 10px;
