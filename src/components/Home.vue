@@ -13,6 +13,7 @@
         <button id="twitter" class="social" >Share on Twitter</button>
        <!-- <button id="download" class="social" v-on:click="downloadCanvas(null, 'mainStage', 'greeting.png')" >Download</button> -->
        <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
+       <a id="up" class="social" href="#">Upload</a> 
        <!-- <a id="download">Download as image</a> -->
        
       </div>
@@ -64,7 +65,9 @@ import router from 'vue-router'
           parent.downloadCanvas(this, 'mainStage', 'test.png');
       }, false);
       */
+      document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
       document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
+  
     })
   },
     ready: function () {
@@ -231,7 +234,28 @@ import router from 'vue-router'
           
           evt.target.href = dt;
        
-        }
+        },
+        
+        uploadCanvasData: function()
+        {
+
+            var data = $('#mainStage')[0].toDataURL("image/png");
+            var blob = this.dataURItoBlob(data);
+
+            var formData = new FormData();
+           // formData.append("file", blob);
+            formData.append('image', blob, 'filename');
+
+            var request = new XMLHttpRequest();
+            request.onload = this.completeRequest;
+
+            request.open("POST", "/upload/add");
+            request.send(formData);
+        },
+        completeRequest: function(){
+          alert('completed')
+        },
+        
         
         
         

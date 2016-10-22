@@ -70,7 +70,7 @@
 <script>
 var $ = require('jquery');
 import router from 'vue-router';
-import PIXI from 'pixi.js';
+var PIXI = require('pixi.js');
 //import setting from '../setting';
 
 var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container;
