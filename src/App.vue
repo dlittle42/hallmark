@@ -5,16 +5,31 @@
     <router-link to="/bar">Go to Bar</router-link>
 -->
     <header class="header">
+      <div id="layout_title" class="aside aside-1">
+
+        <router-link :to="'home'"><img class="logo" src="./assets/hallmark_main_logo.png"></router-link>
+
+      </div>
+      <div id="main_title" class="main">
+
+        <img class="logo" src="./assets/title_build_your_own.png">
+
+      </div>
+      <div id="photos_title" class="aside aside-2">
+
+        <img class="logo" src="./assets/title_christmas.png">
+      </div>
     </header>
     <!--
     <section class="content">
       <div class="columns">
       -->
-          <div class="scenes content-block aside aside-1">
-            <router-link :to="'home'"><img class="logo" src="./assets/hallmark_main_logo.png"></router-link>
+          <div id="layout_block" class="content-block aside aside-1">
+            
             <div class="transparent">
+  
               <h1>CHOOSE A LAYOUT</h1>
-             
+           
               <div id="scene-scroll" class="scroll">
               
                 <img v-on:click="checkFacebookLogin" src="./assets/template1_thumb.png">
@@ -26,45 +41,42 @@
                
               </div>
           
-           
+   
          
             </div>
             
           </div>
           <!-- main stage -->
-          <div class="main content-block">
-            <img class="logo" src="./assets/title_build_your_own.png">
+          <div id="main_block" class="main content-block">
+            
             <div class="transparent">
-
+           
               <canvas id="mainStage"></canvas>
-              <!--
-              <router-link to="/photos" >
-                Go to Photos
-              </router-link>&nbsp;
-              <router-link :to="{ name: 'gallery', params: { imgset: 'fireplaces' }}">
-                Go to Fireplaces
-              </router-link>&nbsp;
-              <router-link :to="{ name: 'gallery', params: { imgset: 'frames' }}">
-                Go to Frames
-              </router-link>&nbsp;
-              -->
-              
+         
+
             </div>
           </div>
-          <div class="photos content-block aside aside-2">
-            <img class="logo" src="./assets/title_christmas.png">
-          
+
+          <div id="photo_block" class="content-block aside aside-2">
+      
             <transition name="fade" mode="out-in">
               <router-view v-on:imgSelect="updateImage" v-on:fbPost="uploadCanvasData"></router-view>
             </transition>
+            <div id="intro">
+              <img class="logo" src="./assets/title_christmas.png">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus. Vivamus eleifend.</p>
 
+              <button id="message_btn" class="social" v-on:click="">Choose a message</button>
+              <button id="layout_btn" class="social" v-on:click="">Select a layout</button>
+            </div>
+         
             <div id="social_action">
              <button id="facebook" class="social" v-on:click="postFB()">Share on Facebook</button>
               <button id="twitter" class="social" >Share on Twitter</button>
-             <!-- <button id="download" class="social" v-on:click="downloadCanvas(null, 'mainStage', 'greeting.png')" >Download</button> -->
-             <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
+              <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
              <a id="up" class="social" href="#">Upload</a> 
              </div>
+        
           </div>
 
           <!--
@@ -736,6 +748,7 @@ body {
   height: 100%;
   //overflow: hidden;
   margin: 0px;
+  box-sizing: border-box;
 
 }
 
@@ -745,13 +758,15 @@ body {
   //border: 1px solid red;
   //margin-top: -100px;
   width: 100vw;
+ // height: 100%;
  // height: 100vh;
   max-width: 1366px;
   font-family: 'bebas_neueregular', Source Sans Pro, Helvetica, sans-serif;
   text-align: center;
   font-weight: normal;
 
-  min-height: 100vh;
+ // min-height: 100vh;
+  margin: 0 auto;
  // display: flex;
  // flex-direction: column;
 
@@ -763,10 +778,12 @@ body {
 }
 
 h1{
-  font-weight: normal;
-      font-size: 24px;
+    font-weight: normal;
+    font-size: 24px;
     color: #cf151b;
     letter-spacing: 1.5px;
+    margin: 0;
+    padding: 15px;
 }
 
 .logo {
@@ -775,10 +792,39 @@ h1{
  align-self: center
 }
 
+
+.transparent{
+  background-color: $trans-yellow;
+  //border: solid 1px blue;
+  //mix-blend-mode: overlay;
+  //position: relative;
+ // width: 100%;
+  //height: 100%;
+  height: calc(100vh - 215px);
+
+  //box-shadow: 0px 0px 40px 2px rgba(0,0,0,0.25);
+  box-shadow: rgba(255, 206, 84, 0.5) 0px 0px 40px 2px;
+  //z-index: 4;
+
+ // overflow-x: hidden;
+ // overflow-y: scroll;
+
+}
+
+#main_block .transparent{
+  display: flex;
+}
+
+
+
+
 #mainStage{
   width: 100%;
- // height: 100%;
+  height: 100%;
+  align-self: center;
+  justify-content: center;
   background-color: lightgrey;
+  //padding: 10px;
  //position: absolute;
  //top: 0;
  //left: 0;
@@ -786,54 +832,12 @@ h1{
 }
 
 
-.content {
- // display: flex;
- // flex: 1;
- // background: #999;
-  color: #000; 
-}
-
-.columns{
-  //display: flex;
-  //flex:1;
-  width: 100%;
-}
-
-
-
-.scenes{
-  //background-color: green;
-  //width: 30%;
-  //border: 1px solid blue;
-  width: 25%;
-  //background: #ccc;
-//  order: 1;
-  //height: 100%;
-
-  
-}
-
-.main{
-  //background-color: yellow;
-  width: 30%;
-  //border: 1px solid green;
- // flex: 1;
- //   order: 2;
-}
-
-.photos{
-  //background-color: red;
-  //width: 30%;
-  //border: 1px solid pink;
-  width: 25%;
- // order: 3;
-}
-
 .content-block{
   color: white;
  // float: left;
  // border: solid 1px red;
-  padding: 10px;
+  //padding: 10px;
+  padding: 0 10px;
   //display: flex; 
   //flex-direction: column;
   overflow: hidden;
@@ -846,7 +850,7 @@ h1{
 
 
 
-.wrapper {
+.wrapper, .header {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -860,49 +864,173 @@ h1{
   text-align: center;
 }
 
-.wrapper > * {
-  padding: 10px;
+.wrapper > * ,
+.header > * {
+ // padding: 10px;
   flex: 1 100%;
 }
 
 .header {
-  background: tomato;
-  height: 125px;
+  //background: tomato;
+  //height: 125px;
+  width: 100vw;
+ // height: 100vh;
+  max-width: 1366px;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .footer {
-  background: lightgreen;
-  height: 100px;
+  //background: lightgreen;
+ // height: 100px;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .main {
-  text-align: left;
-  background: deepskyblue;
+ // text-align: center;
+  //background: deepskyblue;
  // max-width: 500px;
 }
 
 .aside-1 {
-  background: gold;
+  //background: gold;
 }
 
 .aside-2 {
-  background: hotpink;
+  //background: hotpink;
 }
 
-@media all and (max-width: 599px) {
+#layout_title,
+#main_title,
+#photos_title{
+  //padding: 10px;
+
+}
+
+
+#social_action{
+  margin-top: -182px;
+}
+
+#intro{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    color: black;
+}
+
+@media (max-width:1092px) {
+  #layout_block,
+  #layout_title{
+    display: none;
+  }
+  #photo_block{
+  position: relative;
+  }
+  #photos_title{
+    display: none;
+  }
+}
+
+@media (min-width:1091px) {
+  #intro{
+    display: none;
+  }
+}
+
+
+@media all and (max-width: 767px) {
   .aside { flex: 1 auto; }
   //.main  { max-width: 100% }
+  #photo_block{
+    position: absolute;
+   // top: 135px;
+  //  left: 0px;
+    width: 100%;
+    padding: 0px;
+   // box-sizing: border-box;
+    //opacity: .5;
+    //display: none;
+
+    .transparent{
+      height: 100vw;
+    }
+  }
+
+  #main_block {
+    padding: 0;
+  }
+
+  #main_block .transparent{
+    display: block;
+    height: 100%;
+    margin: 0 0 20px 0;
+  }
+
+  .header{
+    height: 30%;
+  }
+
+  #photos_title{
+    display: none;
+  }
+  #intro{
+    display: none;
+  }
+
+  .content-block {
+    position: absolute;
+    top: 10vh;
+    left: 0px;
+    height: auto;
+    display: block; 
+    width: 100vw;
+  }
+
+  .footer{
+    position: absolute;
+    top: calc(100vw + 100px);
+    left: 0;
+  }
+
+  #social_action{
+    margin-top: 80px;
+  }
+
+  #layout_block,
+  #photo_block .transparent{
+    visibility: hidden;
+  }
+
+  .social{
+  
+    float: left;
+    transform: scale(.8,.8);
+    margin: 0 -7px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
 
 }
 
-@media all and (min-width: 600px) {
-  .aside { flex: 1 auto; }
+//@media all and (min-width: 600px) {
+//  .aside { flex: 1; }
 
-}
+//}
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 768px) {
   //.main    { flex: 3 0px; }
-  .main    { flex: 2  500px; }
+  .aside { flex: 1; }
+  .main    { flex: 2; }
   .aside-1 { order: 1; } 
   .main    { order: 2; }
   .aside-2 { order: 3; }
@@ -910,23 +1038,8 @@ h1{
 }
 
 
-.transparent{
-  background-color: $trans-yellow;
-  //border: solid 1px blue;
-  //mix-blend-mode: overlay;
-  position: relative;
-  width: 100%;
-  //height: 100%;
-  height: calc(100vh - 235px);
 
-  //box-shadow: 0px 0px 40px 2px rgba(0,0,0,0.25);
-  box-shadow: rgba(255, 206, 84, 0.5) 0px 0px 40px 2px;
-  z-index: 4;
 
- // overflow-x: hidden;
- // overflow-y: scroll;
-
-}
 
 .scroll{
   width: 90%;
@@ -968,7 +1081,7 @@ h1{
 @import url(http://fonts.googleapis.com/css?family=Merriweather+Sans);
 .social {
     padding-left: 45px;
-    height: 35px;
+    height: 36px;
     background: none;
     border: none;
     display: block;
@@ -988,6 +1101,36 @@ h1{
     text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
     margin: 8px auto;
     
+}
+
+button#layout_btn {
+    border-color: #2d5073;
+    background-color: #3b5998;
+    cursor:pointer;
+    text-transform: uppercase;
+    padding: 0;
+    font-family: 'bebas_neueregular', Source Sans Pro, Helvetica, sans-serif;
+        font-size: 18px;
+    letter-spacing: 1px;
+    background-color: #e8d69e;
+    color: #cf151b;
+    text-shadow: none;
+   
+}
+
+button#message_btn {
+    border-color: #2d5073;
+    background-color: #3b5998;
+    cursor:pointer;
+    text-transform: uppercase;
+    font-family: 'bebas_neueregular', Source Sans Pro, Helvetica, sans-serif;
+        font-size: 18px;
+    letter-spacing: 1px;
+    padding: 0;
+    background-color: #e8d69e;
+    color: #cf151b;
+    text-shadow: none;
+   
 }
 
 button#facebook {
@@ -1033,7 +1176,7 @@ a#dl{
 
 textarea{
   height: 130px;
-  width: 80%;
+  //width: 80%;
 }
 
 @media (max-width:744px) {
@@ -1041,15 +1184,16 @@ textarea{
 
 }
 
-@media (max-width:968px) {
-  /*  .scenes{
-      position: absolute;
-      top: 0px;
-      left: 0;
-      z-index: 4;
-      width: 70%;
-    }
-    */
+//@media (max-width:968px) {
+@media (max-width:1092px) {
+  #layout_block,
+  #layout_title,{
+    display: none;
+  }
+
+  #intro{
+    display: visible;
+  }
 }
 
 
