@@ -52,7 +52,8 @@ router.post(
       data.imageUrl = req.file.cloudStoragePublicUrl;
     }
    // res.redirect(data.imageUrl);
-    res.status(200).json(data.imageUrl);  
+   // res.status(200).json(data.imageUrl);  
+    res.json({"uploaded": data.imageUrl});
    // return data.imageUrl;
   }
 );

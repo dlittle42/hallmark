@@ -78,6 +78,7 @@ var Dropzone = require("dropzone");
 import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
   export default {
+    inherit: true,
 
     router: '',
 
@@ -89,7 +90,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
       return {
         msg: 'CHOOSE A PHOTO',
         router: '',
-        accessToken:'',
+       // accessToken:'',
         allPhotos: [],
         swiperOption: {
           pagination: '.swiper-pagination',
@@ -243,6 +244,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
           */
         },
         postToWall(){
+          console.log('ACCESSTOKEN = '+this.accessToken)
           console.log('outside router='+ this.router)
           //passed scope through getPhotos callback???
           this.getPhotos( this, function( photos ) {

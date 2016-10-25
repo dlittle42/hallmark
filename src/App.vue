@@ -12,11 +12,11 @@
             <router-link :to="'home'"><img class="logo" src="./assets/hallmark_main_logo.png"></router-link>
             <div class="transparent">
               <h1>CHOOSE A LAYOUT</h1>
-              
+             
               <div id="scene-scroll" class="scroll">
               
-                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
-                <img v-on:click="getSrc" src="./assets/template2_thumb.png">
+                <img v-on:click="checkFacebookLogin" src="./assets/template1_thumb.png">
+                <img v-on:click="uploadToAlbum" src="./assets/template2_thumb.png">
                 <img v-on:click="getSrc" src="./assets/template1_thumb.png">
                 <img v-on:click="getSrc" src="./assets/template1_thumb.png">
                 <img v-on:click="getSrc" src="./assets/template2_thumb.png">
@@ -53,7 +53,7 @@
             <img class="logo" src="./assets/title_christmas.png">
           
             <transition name="fade" mode="out-in">
-              <router-view v-on:imgSelect="updateImage"></router-view>
+              <router-view v-on:imgSelect="updateImage" v-on:fbPost="uploadCanvasData"></router-view>
             </transition>
           </div>
 
@@ -88,7 +88,7 @@ export default {
       // with hot-reload because the reloaded component
       // preserves its current state and we are modifying
       // its initial state.
-      //scene: 'Hello Simon!'
+      accessToken:'unknown',
       layout: ""
 
     }
@@ -121,47 +121,32 @@ export default {
        // this.imageToCanvas(img);
        //alert(img + " and "+target)
        var fullimg;
-       if (img.includes('graph.facebook') || img.includes('http')){
+     //  if (img.includes('graph.facebook') || img.includes('http')){
+      if(img.length >30){
           fullimg = img;
        }else{
           fullimg = "./static/images/"+img+ ".png";
        }
-       
+       console.log("FULLIMAGE="+fullimg)
+       //fullimg = "https://scontent.xx.fbcdn.net/v/t1.0-9/301406_10150280973301594_716561513_n.jpg?oh=31f090bc7c4acefaa14603eeff3156b5&oe=588E9495"
+       fullimg="https://graph.facebook.com/10153785297671594/picture?access_token=EAAKAylEi…eOGet9RgnZAJubjuwUPqo7fWUZBpvwCON03xLMjpPLdZA2kx364TmzJ5uWA4eLB86GSBXgZDZD"
+        //create image to preload:
+   
         this.imageToCanvas(fullimg, target);
       },
       getSrc: function(img){
             this.layout = img.srcElement.src;
             this.imageToCanvas(this.layout, 'wallpaper');
       },
-      /*
-      imageToCanvas: function(path){
-        var can = document.getElementById('canvas');
-        var ctx = can.getContext('2d');
-        console.log('canvas time: '+ path);
-        var img = new Image();
-        img.setAttribute('crossOrigin', 'anonymous');
-        img.onload = function(){
-            //can.width = img.width;
-            //can.height = img.height;
-
-
-            //flip it ///
-          //  ctx.translate(img.width-1, img.height-1);
-           // ctx.rotate(Math.PI);
-            /////////
-            ctx.drawImage(img, 0, 0, can.width, can.height);
-           
-            
-        }
-        img.src = path;
-
-      },
-      */
+      
       imageToCanvas: function(path, target){
           this.$router.push('home');
+          console.log('---' + path)
+          console.log('---' + path.toString())
           var texture01 = PIXI.Texture.fromImage(path)
           eval(target).setTexture(texture01);
-        // alert(path);
+         console.log(path);
+         console.log(texture01)
          /*
           PIXI.loader.reset();
           PIXI.loader.add('newImg', path).load(function (loader, resources) {
@@ -196,53 +181,6 @@ export default {
 
           stage.addChild(bkgd);
     */
-      },
-      drawImageProp: function (ctx, img, x, y, w, h, offsetX, offsetY) {
-
-          if (arguments.length === 2) {
-              x = y = 0;
-              w = ctx.canvas.width;
-              h = ctx.canvas.height;
-          }
-
-          // default offset is center
-          offsetX = typeof offsetX === "number" ? offsetX : 0.5;
-          offsetY = typeof offsetY === "number" ? offsetY : 0.5;
-
-          // keep bounds [0.0, 1.0]
-          if (offsetX < 0) offsetX = 0;
-          if (offsetY < 0) offsetY = 0;
-          if (offsetX > 1) offsetX = 1;
-          if (offsetY > 1) offsetY = 1;
-
-          var iw = img.width,
-              ih = img.height,
-              r = Math.min(w / iw, h / ih),
-              nw = iw * r,   // new prop. width
-              nh = ih * r,   // new prop. height
-              cx, cy, cw, ch, ar = 1;
-
-          // decide which gap to fill    
-          if (nw < w) ar = w / nw;                             
-          if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
-          nw *= ar;
-          nh *= ar;
-
-          // calc source rectangle
-          cw = iw / (nw / w);
-          ch = ih / (nh / h);
-
-          cx = (iw - cw) * offsetX;
-          cy = (ih - ch) * offsetY;
-
-          // make sure source rectangle is valid
-          if (cx < 0) cx = 0;
-          if (cy < 0) cy = 0;
-          if (cw > iw) cw = iw;
-          if (ch > ih) ch = ih;
-
-          // fill image in dest. rectangle
-          ctx.drawImage(img, cx, cy, cw, ch,  x, y, w, h);
       },
       setupPixi: function(){
  /*
@@ -626,7 +564,126 @@ export default {
         }
         
 
-      }
+      },
+      postToFacebook: function(msg, img){
+        // Create facebook post using image
+        FB.api(
+            "/me/feed",
+            "post",
+            {
+                "message": "hey there",
+                "picture": img, //'https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg',//response.images[0].source,
+                "link": window.location.href,
+                "name": 'Look at that, huh?',
+                "description": msg,
+                "privacy": {
+                    value: 'SELF'
+                }
+            },
+            function (response) {
+              console.log('feedback: '+response)
+              console.dir(response);
+                if (response && !response.error) {
+                    /* handle the result */
+                    console.log("Posted story to facebook");
+                    console.log(response);
+                }
+            }
+        );
+      },
+      dataURItoBlob(dataURI) {
+          var byteString = atob(dataURI.split(',')[1]);
+          var ab = new ArrayBuffer(byteString.length);
+          var ia = new Uint8Array(ab);
+          for (var i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+          }
+          return new Blob([ab], {type: 'image/png'});
+      },
+      uploadCanvasData: function()
+      {
+
+          var data = $('#mainStage')[0].toDataURL("image/png");
+          var blob = this.dataURItoBlob(data);
+
+          var formData = new FormData();
+         // formData.append("file", blob);
+          formData.append('image', blob, 'filename');
+
+          var xhr = new XMLHttpRequest();
+          //request.onload = this.completeRequest;
+          var scope = this;
+
+          xhr.onload = function () {
+          if (xhr.readyState === xhr.DONE) {
+                  if (xhr.status === 200) {
+                    var gcloud = JSON.parse(xhr.response);
+                      console.log(gcloud.uploaded)
+                      console.log(xhr.response);
+                      //console.log(xhr.responseText);
+                      scope.postToFacebook('custom message here', gcloud.uploaded)
+                  }
+              }
+          };
+
+
+          xhr.open("POST", "/upload/add");
+          xhr.send(formData);
+      },
+      completeRequest: function(response){
+        alert('completed '+ response);
+        console.log(response)
+       //this.postToFacebook()
+      },
+      checkFacebookLogin: function(){
+        console.log('check' + FB)
+        FB.getLoginStatus(function(response) {
+          console.log(response);
+        });
+      },
+      uploadToAlbum: function(){
+        var data = $('#mainStage')[0].toDataURL("image/png");
+        var blob = this.dataURItoBlob(data);
+        this.postImageToFacebook(this.accessToken, blob, 'message')
+      },
+      postImageToFacebook(token, imageData, message) {
+            var fd = new FormData();
+            fd.append("access_token", token);
+            fd.append("source", imageData);
+            fd.append("message","I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://somesite.here.com");
+           // fd.append("no_story", true);
+
+            // Upload image to facebook without story(post to feed)
+            $.ajax({
+                url: "https://graph.facebook.com/me/photos?access_token=" + token,
+                type: "POST",
+                data: fd,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    console.log("success: ", data);
+
+                    // Get image source url
+                    FB.api(
+                        "/" + data.id + "?fields=images",
+                        function (response) {
+                            if (response && !response.error) {
+                              console.log("go post to wall!!!!!!");
+                                console.log(response.images[0].source);
+
+                            }
+                        }
+                    );
+                },
+                error: function (shr, status, data) {
+                    console.log("error " + data + " Status " + shr.status);
+                },
+                complete: function (data) {
+                    console.log('Post to facebook Complete');
+                }
+            });
+        },
 
   }
 }
@@ -900,6 +957,21 @@ a#dl{
 textarea{
   height: 130px;
   width: 80%;
+}
+
+@media (max-width:744px) {
+
+
+}
+
+@media (max-width:968px) {
+    .scenes{
+      position: absolute;
+      top: 0px;
+      left: 0;
+      z-index: 4;
+      width: 70%;
+    }
 }
 
 

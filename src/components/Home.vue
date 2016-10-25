@@ -9,7 +9,7 @@
         </textarea>
         
     
-        <button id="facebook" class="social" >Share on Facebook</button>
+        <button id="facebook" class="social" v-on:click="postFB()">Share on Facebook</button>
         <button id="twitter" class="social" >Share on Twitter</button>
        <!-- <button id="download" class="social" v-on:click="downloadCanvas(null, 'mainStage', 'greeting.png')" >Download</button> -->
        <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
@@ -93,12 +93,17 @@ import router from 'vue-router'
     },
 
     methods: {
+
+        postFB: function(){
+          //console.log('postFB');
+          this.$emit('fbPost');
+        },
         
         postImageToFacebook(token, filename, mimeType, imageData, message) {
             var fd = new FormData();
             fd.append("access_token", token);
             fd.append("source", imageData);
-            fd.append("message","You could add a pretty long message here with a link back to the site http://somesite.here.com");
+            fd.append("message","I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://somesite.here.com");
            // fd.append("no_story", true);
 
             // Upload image to facebook without story(post to feed)
@@ -156,6 +161,7 @@ import router from 'vue-router'
                 }
             });
         },
+        /*
         dataURItoBlob(dataURI) {
             var byteString = atob(dataURI.split(',')[1]);
             var ab = new ArrayBuffer(byteString.length);
@@ -165,9 +171,11 @@ import router from 'vue-router'
             }
             return new Blob([ab], {type: 'image/png'});
         },
+        */
+        /*
         imageToCanvas(path, name){
           var can = document.getElementById('canvas');
-        var ctx = can.getContext('2d');
+          var ctx = can.getContext('2d');
 
           console.log('canvas time: '+ path);
           var img = new Image();
@@ -193,7 +201,7 @@ import router from 'vue-router'
           img.src = path;
 
         },
-
+        */
         statusChangeCallback(response) {
           console.log('statusChangeCallback');
           console.log(response);
@@ -235,7 +243,7 @@ import router from 'vue-router'
           evt.target.href = dt;
        
         },
-        
+        /*
         uploadCanvasData: function()
         {
 
@@ -252,12 +260,12 @@ import router from 'vue-router'
             request.open("POST", "/upload/add");
             request.send(formData);
         },
-        completeRequest: function(){
-          alert('completed')
+        completeRequest: function(evt){
+          alert('completed '+ evt)
         },
         
         
-        
+        */
         
        
     }

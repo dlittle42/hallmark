@@ -66,6 +66,7 @@ export default {
     		this.$emit('imgSelect', item, this.$route.params.imgset)
     	}else{
     		//fb gallery
+    		console.warn(img)
     		this.$emit('imgSelect', img, 'portrait')
     	}
 /*
