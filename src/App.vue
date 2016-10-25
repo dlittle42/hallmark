@@ -1,14 +1,16 @@
 <template>
-  <div id="app">
+  <div id="app" class="wrapper">
   <!--
     <router-link to="/foo">Go to Foo</router-link>
     <router-link to="/bar">Go to Bar</router-link>
 -->
-    <header>
+    <header class="header">
     </header>
+    <!--
     <section class="content">
       <div class="columns">
-          <div class="scenes content-block">
+      -->
+          <div class="scenes content-block aside aside-1">
             <router-link :to="'home'"><img class="logo" src="./assets/hallmark_main_logo.png"></router-link>
             <div class="transparent">
               <h1>CHOOSE A LAYOUT</h1>
@@ -49,18 +51,27 @@
               
             </div>
           </div>
-          <div class="photos content-block">
+          <div class="photos content-block aside aside-2">
             <img class="logo" src="./assets/title_christmas.png">
           
             <transition name="fade" mode="out-in">
               <router-view v-on:imgSelect="updateImage" v-on:fbPost="uploadCanvasData"></router-view>
             </transition>
+
+            <div id="social_action">
+             <button id="facebook" class="social" v-on:click="postFB()">Share on Facebook</button>
+              <button id="twitter" class="social" >Share on Twitter</button>
+             <!-- <button id="download" class="social" v-on:click="downloadCanvas(null, 'mainStage', 'greeting.png')" >Download</button> -->
+             <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
+             <a id="up" class="social" href="#">Upload</a> 
+             </div>
           </div>
 
-          
+          <!--
       </div>
     </section>
-    <footer>
+    -->
+    <footer class="footer">
       <img src="./assets/mantlepiece_logo_footer.png">
     </footer>
   
@@ -105,6 +116,10 @@ export default {
     this.$nextTick(function () {
       // code that assumes this.$el is in-document
       console.log('mounted!!!!!!!!');
+      $('#mainStage').height($('#mainStage').width() / 1);
+      $(window).resize(function(){
+         $('#mainStage').height($('#mainStage').width() / 1);
+      });
       this.setupPixi();
     })
   },
@@ -131,7 +146,7 @@ export default {
        //fullimg = "https://scontent.xx.fbcdn.net/v/t1.0-9/301406_10150280973301594_716561513_n.jpg?oh=31f090bc7c4acefaa14603eeff3156b5&oe=588E9495"
        fullimg="https://graph.facebook.com/10153785297671594/picture?access_token=EAAKAylEi…eOGet9RgnZAJubjuwUPqo7fWUZBpvwCON03xLMjpPLdZA2kx364TmzJ5uWA4eLB86GSBXgZDZD"
         //create image to preload:
-   
+
         this.imageToCanvas(fullimg, target);
       },
       getSrc: function(img){
@@ -711,15 +726,15 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  overflow: hidden;
+ // overflow: hidden;
 }
 
 body {
-  display: flex;
+ // display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-   overflow: hidden;
+  //overflow: hidden;
   margin: 0px;
 
 }
@@ -737,8 +752,8 @@ body {
   font-weight: normal;
 
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+ // display: flex;
+ // flex-direction: column;
 
 }
 
@@ -762,27 +777,29 @@ h1{
 
 #mainStage{
   width: 100%;
-  height: 100%;
+ // height: 100%;
   background-color: lightgrey;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
+ //position: absolute;
+ //top: 0;
+ //left: 0;
+ //z-index: -1;
 }
 
 
 .content {
-  display: flex;
-  flex: 1;
+ // display: flex;
+ // flex: 1;
  // background: #999;
   color: #000; 
 }
 
 .columns{
-  display: flex;
-  flex:1;
+  //display: flex;
+  //flex:1;
   width: 100%;
 }
+
+
 
 .scenes{
   //background-color: green;
@@ -790,8 +807,9 @@ h1{
   //border: 1px solid blue;
   width: 25%;
   //background: #ccc;
-  order: 1;
+//  order: 1;
   //height: 100%;
+
   
 }
 
@@ -799,8 +817,8 @@ h1{
   //background-color: yellow;
   width: 30%;
   //border: 1px solid green;
-  flex: 1;
-    order: 2;
+ // flex: 1;
+ //   order: 2;
 }
 
 .photos{
@@ -808,7 +826,7 @@ h1{
   //width: 30%;
   //border: 1px solid pink;
   width: 25%;
-  order: 3;
+ // order: 3;
 }
 
 .content-block{
@@ -819,19 +837,78 @@ h1{
   //display: flex; 
   //flex-direction: column;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+ // display: flex;
+ // flex-direction: column;
   height:100%
 
 }
 
-header{
-  height: 0;//125px;
+
+
+
+.wrapper {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;  
+  
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  
+  font-weight: bold;
+  text-align: center;
 }
 
-footer {
+.wrapper > * {
+  padding: 10px;
+  flex: 1 100%;
+}
+
+.header {
+  background: tomato;
+  height: 125px;
+}
+
+.footer {
+  background: lightgreen;
   height: 100px;
 }
+
+.main {
+  text-align: left;
+  background: deepskyblue;
+ // max-width: 500px;
+}
+
+.aside-1 {
+  background: gold;
+}
+
+.aside-2 {
+  background: hotpink;
+}
+
+@media all and (max-width: 599px) {
+  .aside { flex: 1 auto; }
+  //.main  { max-width: 100% }
+
+}
+
+@media all and (min-width: 600px) {
+  .aside { flex: 1 auto; }
+
+}
+
+@media all and (min-width: 800px) {
+  //.main    { flex: 3 0px; }
+  .main    { flex: 2  500px; }
+  .aside-1 { order: 1; } 
+  .main    { order: 2; }
+  .aside-2 { order: 3; }
+  .footer  { order: 4; }
+}
+
 
 .transparent{
   background-color: $trans-yellow;
@@ -965,14 +1042,18 @@ textarea{
 }
 
 @media (max-width:968px) {
-    .scenes{
+  /*  .scenes{
       position: absolute;
       top: 0px;
       left: 0;
       z-index: 4;
       width: 70%;
     }
+    */
 }
+
+
+
 
 
 </style>

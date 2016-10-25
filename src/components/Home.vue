@@ -1,21 +1,14 @@
 <!-- src/components/Home.vue -->
 
   <template>
-
+      <!-- message browser only -->
       <div class="transparent">
         <h1>Share</h1>
         <textarea>
           write your message here
         </textarea>
         
-    
-        <button id="facebook" class="social" v-on:click="postFB()">Share on Facebook</button>
-        <button id="twitter" class="social" >Share on Twitter</button>
-       <!-- <button id="download" class="social" v-on:click="downloadCanvas(null, 'mainStage', 'greeting.png')" >Download</button> -->
-       <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
-       <a id="up" class="social" href="#">Upload</a> 
-       <!-- <a id="download">Download as image</a> -->
-       
+
       </div>
  
 
