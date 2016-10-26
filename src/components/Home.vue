@@ -5,8 +5,18 @@
       <div>
         <h1>Choose Your Message</h1>
 
-        <p>
+        <p id="msg">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
+        </p>
 
+        <div class="spinner" id="fakedots">
+                  <div class="bounce1"></div>
+                  <div class="bounce2"></div>
+                  <div class="bounce3"></div>
+                  <div class="bounce1"></div>
+                  <div class="bounce2"></div>
+
+                </div>
 <!--
           <swiper :options="swiperOption">
             <swiper-slide>
@@ -336,6 +346,15 @@ h1 {
   //  display: inline-block;
 }
 
+#msg{
+    box-sizing: border-box;
+    padding: 4px 20px;
+    color: #3c3b3b;
+    /* font-weight: 300; */
+    font-family: Source Sans Pro, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
 .dropzone {
     border: 2px dashed #aba890;
     color: #aba890;
@@ -353,5 +372,18 @@ h1 {
 }
 .dropzone.dz-clickable {
     cursor: pointer;
+}
+
+
+#fakedots > div {
+  width: 10px;
+  height: 10px;
+  background-color: #c7bd8b;
+
+  border-radius: 100%;
+  display: inline-block;
+  animation: none;
+ // -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+ // animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
 </style>

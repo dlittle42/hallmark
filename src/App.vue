@@ -60,7 +60,7 @@
               </div>
               <div id="thanks">
               <h1>Thanks for creating and sharing your Most Wonderful Mantlepiece of Christmas!</h1>
-                   <p>Remember, to keep the holiday spirit filling your home all season, watch the Most Wonderful Movies of Christmas, only on Hallmark Movies & Mysteries.</p>
+                   <p>Remember, to keep the holiday spirit filling your home all season, watch the Most Wonderful Movies of Christmas, only on Hallmark Movies & Mysteries.</p></br>
                    <p> [Embedded YouTube playlist] </p>
               </div>
               <canvas id="mainStage"></canvas>
@@ -957,6 +957,11 @@ body {
 
 }
 
+p{
+  font-family: Source Sans Pro, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
 #app {
   //color: #2c3e50;
  // background-color: $trans-yellow;
@@ -1439,13 +1444,19 @@ textarea{
     flex-direction: column;
     /* align-items: center; */
 
-    padding: 115px;
+   // padding: 115px;
+    padding: 30% 45px;
     box-sizing: border-box;
 
    p{
     width: 76%;
     text-align: center;
     margin: 0 auto;
+   }
+
+   h1{
+    text-shadow: rgba(6, 0, 0, .8) 1px 1px 0;
+    font-size: 34px;
    }
 
 }
