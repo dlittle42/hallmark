@@ -93,16 +93,5 @@ export default  {
         'tree-02',
         'tree-01',
         'tree-02'
-    ],
-    hallmark_gallery:[
-          'Alice',
-          'Alva',
-          'Bruce',
-          'Damayanti',
-          'Diego',
-          'Ellen',
-          'Fred',
-          'Ioana'
-
     ]
 };
