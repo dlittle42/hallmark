@@ -798,11 +798,11 @@ export default {
             "/me/feed",
             "post",
             {
-                "message": "hey there",
+                //"message": "Share Your Most Wonderful Mantlepiece of Christmas",
                 "picture": img, //'https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg',//response.images[0].source,
                 "link": window.location.href,
-                "name": 'Look at that, huh?',
-                "description": msg,
+                "name": 'Share Your Most Wonderful Mantlepiece of Christmas',
+                "description": 'I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out!',
                 "privacy": {
                     value: 'SELF'
                 }
