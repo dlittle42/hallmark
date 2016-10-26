@@ -1,6 +1,6 @@
 <template>
 
-      <div class="transparent">
+      <div>
         <h1>CHOOSE A PHOTO</h1>
         <!-- {{$route.params.imgset}} -->
 
@@ -27,6 +27,7 @@
 <script>
 
 import setting from '../setting';
+var $ = require('jquery');
 
 export default {
 
@@ -41,6 +42,7 @@ export default {
 	    this.$nextTick(function () {
 	      // code that assumes this.$el is in-document
 	      console.log('gallery mounted');
+	      $('#social_action').fadeOut();
 	    //  console.log(assets);
 	      console.log(this.$route.params.imgset);
 	      //var set = eval(this.$route.params.imgset);
@@ -67,6 +69,7 @@ export default {
     	}else{
     		//fb gallery
     		console.warn(img)
+    		//$('body').prepend($('<img>',{id:'theImg',src:img}))
     		this.$emit('imgSelect', img, 'portrait')
     	}
 /*

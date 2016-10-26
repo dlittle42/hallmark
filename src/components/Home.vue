@@ -2,7 +2,7 @@
 
   <template>
       <!-- message browser only -->
-      <div class="transparent">
+      <div>
         <h1>Share</h1>
         <textarea>
           write your message here
@@ -58,6 +58,7 @@ import router from 'vue-router'
           parent.downloadCanvas(this, 'mainStage', 'test.png');
       }, false);
       */
+      $('#social_action').fadeIn();
       document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
       document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
   

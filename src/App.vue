@@ -49,8 +49,15 @@
           <!-- main stage -->
           <div id="main_block" class="main content-block">
             
+            
             <div class="transparent">
-           
+              <div id="load-panel">
+                <div class="spinner">
+                  <div class="bounce1"></div>
+                  <div class="bounce2"></div>
+                  <div class="bounce3"></div>
+                </div>
+              </div>
               <canvas id="mainStage"></canvas>
          
 
@@ -58,24 +65,29 @@
           </div>
 
           <div id="photo_block" class="content-block aside aside-2">
-      
-            <transition name="fade" mode="out-in">
-              <router-view v-on:imgSelect="updateImage" v-on:fbPost="uploadCanvasData"></router-view>
-            </transition>
-            <div id="intro">
-              <img class="logo" src="./assets/title_christmas.png">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus. Vivamus eleifend.</p>
 
-              <button id="message_btn" class="social" v-on:click="">Choose a message</button>
-              <button id="layout_btn" class="social" v-on:click="">Select a layout</button>
-            </div>
+            <div class="transparent">
+
+
+              <transition name="fade" mode="out-in">
+                <router-view v-on:imgSelect="updateImage"></router-view>
+              </transition>
+              <div id="intro">
+                <img class="logo" src="./assets/title_christmas.png">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus. Vivamus eleifend.</p>
+
+                <button id="message_btn" class="social" v-on:click="">Choose a message</button>
+                <button id="layout_btn" class="social" v-on:click="">Select a layout</button>
+              </div>
+
+              <div id="social_action">
+               <button id="facebook" class="social" v-on:click="uploadCanvasData">Share on Facebook</button>
+                <button id="twitter" class="social" >Share on Twitter</button>
+                <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
+               <a id="up" class="social" href="#">Upload</a> 
+               </div>
          
-            <div id="social_action">
-             <button id="facebook" class="social" v-on:click="postFB()">Share on Facebook</button>
-              <button id="twitter" class="social" >Share on Twitter</button>
-              <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
-             <a id="up" class="social" href="#">Upload</a> 
-             </div>
+            </div>
         
           </div>
 
@@ -94,6 +106,8 @@
 var $ = require('jquery');
 import router from 'vue-router';
 var PIXI = require('pixi.js');
+var FastClick = require('fastclick');
+
 //import setting from '../setting';
 
 var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container;
@@ -128,10 +142,15 @@ export default {
     this.$nextTick(function () {
       // code that assumes this.$el is in-document
       console.log('mounted!!!!!!!!');
-      $('#mainStage').height($('#mainStage').width() / 1);
+      //attachFastClick(document.body);
+      /*
+      FastClick.attach(document.body);
+      */
+      $('#mainStage').height($('#main_block').width() / 1);
       $(window).resize(function(){
          $('#mainStage').height($('#mainStage').width() / 1);
       });
+      
       this.setupPixi();
     })
   },
@@ -144,19 +163,23 @@ export default {
         alert('function call');
       },
       updateImage: function(img, target){
+        $('#load-panel').addClass('active');
        // alert('update image '+img);
        // this.imageToCanvas(img);
        //alert(img + " and "+target)
        var fullimg;
      //  if (img.includes('graph.facebook') || img.includes('http')){
-      if(img.length >30){
-          fullimg = img;
+      //if(img.length >30){
+      if (img.includes('access_token')){
+          fullimg = img + '&.png';
        }else{
           fullimg = "./static/images/"+img+ ".png";
        }
        console.log("FULLIMAGE="+fullimg)
+
        //fullimg = "https://scontent.xx.fbcdn.net/v/t1.0-9/301406_10150280973301594_716561513_n.jpg?oh=31f090bc7c4acefaa14603eeff3156b5&oe=588E9495"
-       fullimg="https://graph.facebook.com/10153785297671594/picture?access_token=EAAKAylEi…eOGet9RgnZAJubjuwUPqo7fWUZBpvwCON03xLMjpPLdZA2kx364TmzJ5uWA4eLB86GSBXgZDZD"
+
+     //  fullimg="https://graph.facebook.com/10153785297671594/picture?access_token=EAAKAylEi…eOGet9RgnZAJubjuwUPqo7fWUZBpvwCON03xLMjpPLdZA2kx364TmzJ5uWA4eLB86GSBXgZDZD"
         //create image to preload:
 
         this.imageToCanvas(fullimg, target);
@@ -164,19 +187,53 @@ export default {
       getSrc: function(img){
             this.layout = img.srcElement.src;
             this.imageToCanvas(this.layout, 'wallpaper');
+            $('#load-panel').addClass('active');
       },
       
       imageToCanvas: function(path, target){
           this.$router.push('home');
           console.log('---' + path)
           console.log('---' + path.toString())
-          var texture01 = PIXI.Texture.fromImage(path)
-          eval(target).setTexture(texture01);
+          //$('body').prepend($('<img>',{id:'theImg',src:path}))
+
+          //facebook redirects a url to the image
+          //fake out the PIXI loader with a faux file extension
+        //  var texture01 = PIXI.Texture.from(path+'&.png')
+
+        //  eval(target).setTexture(texture01);
          console.log(path);
-         console.log(texture01)
-         /*
+        // console.log(texture01)
+         
+
+         var dimension, image;
+
+          image = new Image();
+          image.src = path;
+          image.onload = function() {
+              dimension = {
+                  width: image.naturalWidth,
+                  height: image.naturalHeight
+              };
+              console.log(dimension); // Actual image dimension
+              console.log(this.src)
+
+              var obj = eval(target);
+              var texture01 = PIXI.Texture.from(path)
+              obj.setTexture(texture01);
+              if (target == 'portrait'){
+                var ratio = Math.max(frame.width/dimension.width,frame.height/dimension.height);
+               // alert(ratio);
+                obj.scale.x = obj.scale.y = ratio;
+              }
+              //$('#load-panel').delay(1000).removeClass('active');
+              $('#load-panel').delay(500).queue(function(next){
+                  $(this).removeClass("active");
+                  next();
+              });
+          };
+      /*
           PIXI.loader.reset();
-          PIXI.loader.add('newImg', path).load(function (loader, resources) {
+          PIXI.loader.add('newImg', path+'?&.png').load(function (loader, resources) {
         // This creates a texture from a 'bunny.png' image.
        // bunny = new PIXI.Sprite(resources.bunny.texture);
 
@@ -185,16 +242,19 @@ export default {
             // frame = new PIXI.Sprite(resources.bunny.texture);
             var obj = eval(target);
              obj.setTexture(resources.newImg.texture);
-            //alert('width='+ resources.newImg.texture.width+ " , height="+ resources.newImg.texture.height);
+            alert('width='+ resources.newImg.texture.width+ " , height="+ resources.newImg.texture.height);
             if (target == 'portrait'){
               var ratio = Math.min(frame.width/resources.newImg.texture.width,
                    frame.height/resources.newImg.texture.height);
              // alert(ratio);
               obj.scale.x = obj.scale.y = ratio;
             }
+
+           
             
           });
-*/
+           */
+
 
 /*
           bkgd = PIXI.Sprite.fromImage(path);
@@ -325,7 +385,11 @@ export default {
 
         // create the root of the scene graph
        stage = new PIXI.Container();
+       //stage = new PIXI.DisplayObjectContainer();
        stage.hitArea = new PIXI.Rectangle(0, 0, width, height);
+     // stage.position.x = width/2;
+      //  stage.position.y = height/2;
+      //  stage.anchor.set(0.5);
 
 
        stage.interactive = true;
@@ -389,8 +453,11 @@ export default {
 
         requestAnimationFrame(this.animate);
 
+
+       // this.resize();
+
         //handle resizing
-       // renderer.resize($('#mainStage').width(), $('#mainStage').height());
+       //renderer.resize($('#main_block').width(), $('#main_block').height());
 /*
         //Use Pixi's built-in `loader` object to load an image
         PIXI.loader
@@ -539,11 +606,18 @@ export default {
       onMarkerDown: function(evt){
         //portrait.scale.x += 0.3;
        // portrait.scale.y += 0.3;
+       var obj = eval(evt.target.val);
+        obj.scale.x -= 0.01;
+        obj.scale.y -= 0.01;
+     //  alert('touched');
 
       },
       onMarkerUp: function(evt){
         //portrait.scale.x -= 0.3;
        // portrait.scale.y -= 0.3;
+       var obj = eval(evt.target.val);
+        obj.scale.x += 0.01;
+        obj.scale.y += 0.01;
 
       },
       onMarkerOver: function(evt){
@@ -570,6 +644,69 @@ export default {
         console.log('out stage');
         marker_container.position.x = 800;
 
+      },
+      resize: function (){
+        /**
+         * Add listeners for canvas scaling with window resizing and device rotation
+         */
+        window.addEventListener('resize', this.rendererResize);
+        window.addEventListener('deviceOrientation', this.rendererResize);
+        this.rendererResize();
+      },
+      rendererResize: function () {
+
+        /**
+           * The width and height to which our graphic assets are designed for 
+           * Keep in mind retina resolutions and remember to provide 2xWidth 2xHeight assets for them
+           */
+          var targetWidth = 500;
+          var targetHeight = 500;
+
+
+          var width = $('#main_block').width(),
+              height = width,
+              targetScale;
+
+          var canvas = document.getElementById('mainStage')
+
+          /**
+           * Set the canvas size and display size
+           * This way we can support retina graphics and make our game really crisp
+           */
+          canvas.width = width * window.devicePixelRatio;
+          canvas.height = height * window.devicePixelRatio;
+          canvas.style.width = width + 'px';
+          canvas.style.height = height + 'px';
+
+          /**
+           * Resize the PIXI renderer
+           * Let PIXI know that we changed the size of the viewport
+           */
+           console.log('RESIZING PIXI: '+ canvas.width+','+canvas.height);
+          renderer.resize(canvas.width, canvas.height);
+
+          /**
+           * Scale the canvas horizontally and vertically keeping in mind the screen estate we have
+           * at our disposal. This keeps the relative game dimensions in place.
+           */
+           if (height / targetHeight < width / targetWidth) {
+               stage.scale.x = stage.scale.y = height / targetHeight;
+           } else {
+               stage.scale.x = stage.scale.y = width / targetWidth;
+           }
+
+          /**
+           * Some sugar
+           * Set the x horizontal center point of the canvas after resizing.
+           * This should be used for engines which calculate object position from anchor 0.5/0.5
+           */
+         // stage.pivot.y = -(width * (1 / stage.scale.y) / 2) * window.devicePixelRatio;
+         // stage.pivot.x = -(width * (1 / stage.scale.x) / 2) * window.devicePixelRatio;
+
+          /**
+           * iOS likes to scroll when rotating - fix that 
+           */
+          window.scrollTo(0, 0);
       },
       getGallery: function(evt){
         console.log(evt.target.val)
@@ -614,6 +751,7 @@ export default {
                     /* handle the result */
                     console.log("Posted story to facebook");
                     console.log(response);
+                    $('#load-panel').removeClass('active');
                 }
             }
         );
@@ -629,6 +767,8 @@ export default {
       },
       uploadCanvasData: function()
       {
+
+          $('#load-panel').addClass('active');
 
           var data = $('#mainStage')[0].toDataURL("image/png");
           var blob = this.dataURItoBlob(data);
@@ -811,8 +951,10 @@ h1{
 
 }
 
+
 #main_block .transparent{
   display: flex;
+  position: relative;
 }
 
 
@@ -829,6 +971,10 @@ h1{
  //top: 0;
  //left: 0;
  //z-index: -1;
+}
+
+#photo_block{
+  position: relative;
 }
 
 
@@ -914,7 +1060,10 @@ h1{
 
 
 #social_action{
-  margin-top: -182px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 #intro{
@@ -959,6 +1108,7 @@ h1{
    // box-sizing: border-box;
     //opacity: .5;
     //display: none;
+        pointer-events: none;
 
     .transparent{
       height: 100vw;
@@ -1002,12 +1152,15 @@ h1{
   }
 
   #social_action{
-    margin-top: 80px;
+    //margin-top: 80px;
   }
 
   #layout_block,
-  #photo_block .transparent{
-    visibility: hidden;
+  #photo_block{
+   // visibility: hidden;
+    display: none;
+    pointer-events: none;
+
   }
 
   .social{
@@ -1197,6 +1350,70 @@ textarea{
 }
 
 
+
+///// loader //////
+
+#load-panel{
+    background-color: rgba(0,0,0,.5);
+    
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity .25s ease-out;
+   -moz-transition: opacity .25s ease-out;
+   -webkit-transition: opacity .25s ease-out;
+   pointer-events:none;
+
+}
+
+#load-panel.active{
+    opacity: 1;
+  
+}
+
+.spinner {
+  margin: 0 auto;
+  width: 70px;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #fbf7d8;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
 
 
 

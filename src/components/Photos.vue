@@ -2,7 +2,7 @@
 
   <template>
     
-      <div class="transparent">
+      <div>
         <h1>CHOOSE A PHOTO</h1>
         <!--
         <div class="fb-login-button" scope="public_profile,email" onlogin="this.checkLoginState();">
@@ -74,6 +74,7 @@ import Vue from 'vue';
 var router = require('vue-router');
 var Dropzone = require("dropzone");
 
+
 // ...
 import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
@@ -106,6 +107,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
     mounted: function () {
       this.$nextTick(function () {
         // code that assumes this.$el is in-document
+         $('#social_action').fadeOut();
         router = this.$router;
         console.log('The current view ' + this.$route.path+' is mounted!!');
 
@@ -244,6 +246,8 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
           */
         },
         postToWall(){
+
+          $('#load-panel').addClass('active');
           console.log('ACCESSTOKEN = '+this.accessToken)
           console.log('outside router='+ this.router)
           //passed scope through getPhotos callback???
@@ -251,6 +255,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
             console.log("**********READY**********")
             console.dir(photos);
             console.log('url======'+photos[0].url);
+            $('#load-panel').removeClass('active');
             router.push({ name: 'gallery', params : { 'fbset': photos }});
          // router.push({ path: 'album', params : { imgset: 'backgrounds' }});
            // router.push('album');
