@@ -32,8 +32,8 @@
            
               <div id="scene-scroll" class="scroll">
               
-                <img v-on:click="checkFacebookLogin" src="./assets/template1_thumb.png">
-                <img v-on:click="uploadToAlbum" src="./assets/template2_thumb.png">
+                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
+                <img v-on:click="getSrc" src="./assets/template2_thumb.png">
                 <img v-on:click="getSrc" src="./assets/template1_thumb.png">
                 <img v-on:click="getSrc" src="./assets/template1_thumb.png">
                 <img v-on:click="getSrc" src="./assets/template2_thumb.png">
@@ -86,6 +86,7 @@
               </div>
 
               <div id="social_action">
+              <h1>Share Your Greeting</h1>
                <button id="facebook" class="social" v-on:click="uploadCanvasData">Share on Facebook</button>
                 <button id="twitter" class="social" >Share on Twitter</button>
                 <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
@@ -1125,7 +1126,7 @@ h1{
 
 #social_action{
     position: absolute;
-    bottom: 0;
+    bottom: 40px;
     left: 0;
     width: 100%;
 }

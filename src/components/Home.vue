@@ -3,8 +3,11 @@
   <template>
       <!-- message browser only -->
       <div>
-        <h1>Share</h1>
+        <h1>Choose Your Message</h1>
 
+        <p>
+
+<!--
           <swiper :options="swiperOption">
             <swiper-slide>
             <p>1. Some text goes right here ...</p>
@@ -27,7 +30,7 @@
             <div class="swiper-button-prev" slot="button-prev"></div>
             <div class="swiper-button-next" slot="button-next"></div>
           </swiper>
-
+-->
         
 
       </div>
