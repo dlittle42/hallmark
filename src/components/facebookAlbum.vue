@@ -7,7 +7,9 @@
 		<div class="img-gallery scroll" v-if="assets">
 	
 				<div class="gallery-img" v-for="(item, index) in assets">
-					<img v-on:click="getSrc(null, item, $event)" :src="'./static/images/'+ item + '-thumb.png'" />
+				<figure>
+					<img class="highlight" v-on:click="getSrc(null, item, $event)" :src="'./static/images/'+ item + '-thumb.png'" />
+					</figure>
 	            </div>
 	     </div>
 
@@ -15,7 +17,9 @@
 	
 				<div class="gallery-img" v-for="(item, index) in fbgallery">
 					<!--<img :src="item.url" />-->
-					<div class="fbimg" v-on:click="getSrc(item.url, null, $event)" v-bind:style="{ backgroundImage: 'url(' + item.url + ')' }"></div>
+					<figure>
+					<div class="fbimg highlight" v-on:click="getSrc(item.url, null, $event)" v-bind:style="{ backgroundImage: 'url(' + item.url + ')' }"></div>
+					</figure>
 	            </div>
 	     
 	

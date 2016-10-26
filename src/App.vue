@@ -32,12 +32,24 @@
            
               <div id="scene-scroll" class="scroll">
               
-                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
-                <img v-on:click="getSrc" src="./assets/template2_thumb.png">
-                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
-                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
-                <img v-on:click="getSrc" src="./assets/template2_thumb.png">
-                <img v-on:click="getSrc" src="./assets/template1_thumb.png">
+                <figure>
+                <img class="highlight" v-on:click="swapScene(0)" src="./assets/template1_thumb.png">
+                </figure>
+                <figure>
+                <img class="highlight" v-on:click="swapScene(1)" src="./assets/template2_thumb.png">
+                </figure>
+                <figure>
+                <img class="highlight" v-on:click="swapScene(0)" src="./assets/template1_thumb.png">
+                </figure>
+                <figure>
+                <img class="highlight" v-on:click="swapScene(0)" src="./assets/template1_thumb.png">
+                </figure>
+                <figure>
+                <img class="highlight" v-on:click="swapScene(1)" src="./assets/template2_thumb.png">
+                </figure>
+                <figure>
+                <img class="highlight" v-on:click="swapScene(0)" src="./assets/template1_thumb.png">
+                </figure>
                
               </div>
           
@@ -114,7 +126,7 @@ import router from 'vue-router';
 var PIXI = require('pixi.js');
 var FastClick = require('fastclick');
 
-//import setting from '../setting';
+import setting from './setting';
 
 var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container;
 
@@ -772,6 +784,63 @@ export default {
            */
           window.scrollTo(0, 0);
       },
+      swapScene: function(n){
+
+          $('#load-panel').addClass('active').delay(500).queue(function(next){
+                  $(this).removeClass("active");
+                  next();
+              });
+
+       
+/*
+        ['wallpaper', width/2, height/inc],
+            ['tree', width/inc, (height/inc) * 3],
+            ['frame', (width/inc)*2, (height/inc)*3],
+            ['portrait', width/2, (height/2) - 100],
+            ['mantle01', (width/inc)*2, (height/inc)*6],
+            ['mantle02', (width/inc)*4, (height/inc)*6],
+            ['mantle03', (width/inc)*6, (height/inc)*6],
+            ['mantle04', (width/inc)*8, (height/inc)*6],
+            ['mantlepiece', (width/inc)*9, (height/inc)*5],
+            ['stocking01', (width/inc)*2, (height/inc)*7],
+            ['stocking02', (width/inc)*4, (height/inc)*7],
+            ['stocking03', (width/inc)*6, (height/inc)*7],
+            ['stocking04', (width/inc)*8, (height/inc)*7],
+            ['fireplace', width/2, (height/inc) * 8],
+            ['gift', (width/inc)*9, (height/inc) * 8]
+*/
+            var path = "./static/images/";
+            var ext = ".png";
+            var img = path + setting.wallpaper[n] + ext;
+            wallpaper.setTexture(PIXI.Texture.from(img));
+
+            var img = path + setting.frame[n] + ext;
+            frame.setTexture(PIXI.Texture.from(img));
+
+            var img = path + setting.fireplace[n] + ext;
+            fireplace.setTexture(PIXI.Texture.from(img));
+
+            var img = path + setting.gift[n] + ext;
+            gift.setTexture(PIXI.Texture.from(img));
+
+            var img = path + setting.tree[n] + ext;
+            tree.setTexture(PIXI.Texture.from(img));
+/*
+              setting.wallpaper[n]+'.png';
+              setting.frame[n]+'.png';
+              setting.mantle[n]+'.png';
+              setting.stockings[n]+'.png';
+              setting.mantlepiece[n]+'.png';
+              setting.fireplace[n]+'.png';
+              setting.gift[n]+'.png';
+              setting.tree[n]+'.png';
+
+
+        var texture01 = PIXI.Texture.from(path)
+        obj.setTexture(texture01);
+        */
+      },
+
       getGallery: function(evt){
         console.log(evt.target.val)
         if (evt.target.val == "portrait"){
@@ -1483,7 +1552,7 @@ h1{
     display: block;
       width: 100% !important;
       height: auto !important;
-      margin-bottom: 5px;
+    //  margin-bottom: 5px;
   }
   
 }
@@ -1725,6 +1794,37 @@ textarea{
 .dz-preview{
  // display: none;
   visibility: hidden;
+}
+
+figure{
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
+    margin: 2px;
+
+}
+
+.highlight{
+    opacity: .7;
+    border: none;
+    transform: scale(1);
+    transition: all .5s ease-out;
+
+
+    &:hover{
+      opacity:1;
+      transform: scale(1.02);
+    }
+
+    &.active{
+      border: 1px solid red;
+      transition: none;
+      opacity:1;
+      transform: scale(1);
+    }
+
 }
 
 

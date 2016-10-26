@@ -9,14 +9,15 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
         </p>
 
-        <div class="spinner" id="fakedots">
-                  <div class="bounce1"></div>
-                  <div class="bounce2"></div>
-                  <div class="bounce3"></div>
-                  <div class="bounce1"></div>
-                  <div class="bounce2"></div>
-
-                </div>
+        <div class="owl-carousel owl-theme">
+          <div> Your Content </div>
+          <div> Your Content </div>
+          <div> Your Content </div>
+          <div> Your Content </div>
+          <div> Your Content </div>
+          <div> Your Content </div>
+          <div> Your Content </div>
+        </div>
 <!--
           <swiper :options="swiperOption">
             <swiper-slide>
@@ -52,25 +53,18 @@
 var $ = require('jquery');
 import Vue from 'vue'
 import router from 'vue-router'
-import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
+//import 'jquery';
+//import 'owl.carousel';
+//import 'owl.carousel/dist/assets/owl.carousel.min.css';
+//import 'imports?jQuery=jquery!owl.carousel';
 
 
   export default {
-    components: {
-      swiper,
-      swiperSlide
-    },
+
    data() {
       return {
         msg: 'CHOOSE A PHOTO',
-        swiperOption: {
-          pagination: '.swiper-pagination',
-          slidesPerView: 2,
-          paginationClickable: true,
-          nextButton: '.swiper-button-next',
-          prevButton: '.swiper-button-prev',
-          spaceBetween: 10
-        }
+        
         
       }
     },
@@ -106,6 +100,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
       }, false);
       */
       $('#social_action').fadeIn();
+     // $('.owl-carousel').owlCarousel();
      // document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
       document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
   

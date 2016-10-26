@@ -39,6 +39,7 @@
     "node-sass": "^3.10.1",
     "opn": "^4.0.2",
     "ora": "^0.3.0",
+    "owl.carousel": "^2.2.0",
     "pixi.js": "^4.0.3",
     "prompt": "^1.0.0",
     "sass-loader": "^4.0.2",

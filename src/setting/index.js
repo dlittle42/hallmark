@@ -70,14 +70,9 @@ export default  {
     fireplace:[
         'fireplace-01',
         'fireplace-02',
-        'fireplace-01',
-        'fireplace-02',
-        'fireplace-01',
-        'fireplace-02',
-        'fireplace-01',
-        'fireplace-02',
-        'fireplace-01',
-        'fireplace-02'
+        'fireplace-03',
+        'fireplace-04',
+        'fireplace-05'
     
     ],
     gift:[
