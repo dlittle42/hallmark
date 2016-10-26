@@ -35,9 +35,8 @@
   <form action="/file-upload"
       class="dropzone"
       id="my-awesome-dropzone"></form>
+      <img src="../assets/hallmark_gallery.png">
 
-
-        <swiper-slide><img src="../assets/hallmark_gallery.png"></swiper-slide>
           <swiper :options="swiperOption">
             <swiper-slide>
             <img v-on:click="getSrc(null, $event)" src="../assets/portrait_thumb01.png">
@@ -111,7 +110,45 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
         router = this.$router;
         console.log('The current view ' + this.$route.path+' is mounted!!');
 
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone("#my-awesome-dropzone", {
+          autoProcessQueue: false,
+          thumbnailWidth: 400,
+          //thumbnailHeight: 250,
+          //createImageThumbnails: false
+        });
+
+
+       // console.dir(myDropzone)
+
+        var scope =this;
+
+        myDropzone.on("addedfile", function(file) {
+          /* Maybe display some more file information on your page */
+         // alert("Added file." + file); 
+          //$('body').prepend(file.previewElement)
+          //alert($('.dz-image img')[0].src);
+          //console.dir(file);
+        });
+
+        myDropzone.on('thumbnail', function(file, dataUri) {
+            // use dataUri here
+           // alert(dataUri);
+            scope.$emit('imgSelect', dataUri, 'portrait');
+        });
+    /*
+        myDropzone.options = {
+          init: function() {
+            this.on("addedfile", function(file) { 
+              alert("Added file." + file); 
+              console.dir(file);
+            });
+          }
+        };
+        */
+
       })
+
     },
     componentUpdated (el, binding, vnode, oldVNode) { 
       console.log('updated!!!!!!!!');
@@ -123,6 +160,8 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
      */
         getSrc: function(img, event){
               //this.$emit('imgSelect', event.target.src)
+              console.dir(event.target)
+              //var filename = event.target.src.replace(/^.*[\\\/]/, '')
               this.$emit('imgSelect', event.target.src, 'portrait')
               //this.$router.push('home');
         },
@@ -406,6 +445,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 h1.or {
   //color: #42b983;
   margin: 5px auto;
+  padding: 0;
 }
 
 #swiper{
@@ -437,12 +477,13 @@ h1.or {
     border: 2px dashed #aba890;
     color: #aba890;
     border-radius: 5px;
-    max-height: 150px;
-    padding: 60px;
-    margin: 10px 30px;
+    max-height: 100px;
+    padding: 32px;
+    margin: 10px 45px;
     transition: all 0.5s ease;
     background-color: none;
     background:rgba(2,173,231,0) url(../assets/arrow.png) no-repeat center 10px;
+    background-size: 20%;
 }
 
 .dropzone:hover{

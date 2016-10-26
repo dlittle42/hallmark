@@ -58,6 +58,11 @@
                   <div class="bounce3"></div>
                 </div>
               </div>
+              <div id="thanks">
+              <h1>Thanks for creating and sharing your Most Wonderful Mantlepiece of Christmas!</h1>
+                   <p>Remember, to keep the holiday spirit filling your home all season, watch the Most Wonderful Movies of Christmas, only on Hallmark Movies & Mysteries.</p>
+                   <p> [Embedded YouTube playlist] </p>
+              </div>
               <canvas id="mainStage"></canvas>
          
 
@@ -84,7 +89,7 @@
                <button id="facebook" class="social" v-on:click="uploadCanvasData">Share on Facebook</button>
                 <button id="twitter" class="social" >Share on Twitter</button>
                 <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
-               <a id="up" class="social" href="#">Upload</a> 
+             <!--  <a id="up" class="social" href="#">Upload</a> -->
                </div>
          
             </div>
@@ -171,11 +176,16 @@ export default {
      //  if (img.includes('graph.facebook') || img.includes('http')){
       //if(img.length >30){
       if (img.includes('access_token')){
+        //image from facebook
           fullimg = img + '&.png';
+       }else if (img.includes('.png') || img.includes('data:image')){
+        //files from the carousel or dropzone
+          fullimg = img
        }else{
+          //prepopulated images from gallery
           fullimg = "./static/images/"+img+ ".png";
        }
-       console.log("FULLIMAGE="+fullimg)
+       //console.log("FULLIMAGE="+fullimg)
 
        //fullimg = "https://scontent.xx.fbcdn.net/v/t1.0-9/301406_10150280973301594_716561513_n.jpg?oh=31f090bc7c4acefaa14603eeff3156b5&oe=588E9495"
 
@@ -192,8 +202,8 @@ export default {
       
       imageToCanvas: function(path, target){
           this.$router.push('home');
-          console.log('---' + path)
-          console.log('---' + path.toString())
+         // console.log('---' + path)
+        //  console.log('---' + path.toString())
           //$('body').prepend($('<img>',{id:'theImg',src:path}))
 
           //facebook redirects a url to the image
@@ -201,7 +211,7 @@ export default {
         //  var texture01 = PIXI.Texture.from(path+'&.png')
 
         //  eval(target).setTexture(texture01);
-         console.log(path);
+        // console.log(path);
         // console.log(texture01)
          
 
@@ -215,7 +225,7 @@ export default {
                   height: image.naturalHeight
               };
               console.log(dimension); // Actual image dimension
-              console.log(this.src)
+            //  console.log(this.src)
 
               var obj = eval(target);
               var texture01 = PIXI.Texture.from(path)
@@ -341,8 +351,26 @@ export default {
           portrait.position.y = height/2 - 100;
           portrait.anchor.set(0.5);
           portrait.interactive = true;
-          portrait.on('mousedown', this.onDown);
-          portrait.on('touchstart', this.onDown);
+          portrait.buttonMode = true;
+
+         // stage.on('mousedown', this.onDragStart)
+        
+/*
+          portrait
+        // events for drag start
+        .on('mousedown', this.onDragStart)
+        .on('touchstart', this.onDragStart)
+        // events for drag end
+        .on('mouseup', this.onDragEnd)
+        .on('mouseupoutside', this.onDragEnd)
+        .on('touchend', this.onDragEnd)
+        .on('touchendoutside', this.onDragEnd)
+        // events for drag move
+        .on('mousemove', this.onDragMove)
+        .on('touchmove', this.onDragMove);
+*/
+
+
 
           stage.addChild(container);
           container.addChild(portrait);
@@ -395,11 +423,13 @@ export default {
        stage.interactive = true;
        stage.button = true;
 
-      stage
+       stage.on('mousedown', this.onDragStart)
+
+     // stage
 
             // set the mouseover callback...
-            .on('mouseover', this.onStageOver)
-            .on('mouseout', this.onStageOut)
+          //  stage.on('mouseover', this.onStageOver)
+         //   stage.on('mouseout', this.onStageOut)
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
@@ -645,6 +675,38 @@ export default {
         marker_container.position.x = 800;
 
       },
+      onDragStart: function(event)
+      {
+          // store a reference to the data
+          // the reason for this is because of multitouch
+          // we want to track the movement of this particular touch
+        //  this.data = event.data;
+        //  this.alpha = 0.5;
+        //  this.dragging = true;
+          console.log('drag start');
+      },
+      onDragEnd: function()
+      {
+          this.alpha = 1;
+
+          this.dragging = false;
+
+          // set the interaction data to null
+          this.data = null;
+          console.log('drag end');
+      },
+
+      onDragMove: function()
+      {
+          if (this.dragging)
+          {
+              var newPosition = this.data.getLocalPosition(this.parent);
+              this.position.x = newPosition.x;
+              this.position.y = newPosition.y;
+              console.log('drag move');
+          }
+      },
+
       resize: function (){
         /**
          * Add listeners for canvas scaling with window resizing and device rotation
@@ -752,6 +814,7 @@ export default {
                     console.log("Posted story to facebook");
                     console.log(response);
                     $('#load-panel').removeClass('active');
+                    $('#thanks').addClass('active');
                 }
             }
         );
@@ -848,6 +911,7 @@ export default {
                 },
                 complete: function (data) {
                     console.log('Post to facebook Complete');
+                   // $('#thanks').addClass('active');
                 }
             });
         },
@@ -1201,6 +1265,15 @@ h1{
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   max-height: 100%;
+
+    justify-content: center;
+    display: flex;
+    /* flex-direction: column; */
+    flex-flow: row wrap;
+
+    img{
+      max-width: 100%;
+    }
 }
 
 #scene-scroll{
@@ -1349,7 +1422,37 @@ textarea{
   }
 }
 
+#thanks{
+    background-color: rgba(0,0,0,.5);
+    
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity .25s ease-out;
+   -moz-transition: opacity .25s ease-out;
+   -webkit-transition: opacity .25s ease-out;
+   pointer-events:none;
+    flex-direction: column;
+    /* align-items: center; */
 
+    padding: 115px;
+    box-sizing: border-box;
+
+   p{
+    width: 76%;
+    text-align: center;
+    margin: 0 auto;
+   }
+
+}
+
+#thanks.active{
+    opacity: 1;
+  
+}
 
 ///// loader //////
 
@@ -1400,6 +1503,7 @@ textarea{
   animation-delay: -0.16s;
 }
 
+
 @-webkit-keyframes sk-bouncedelay {
   0%, 80%, 100% { -webkit-transform: scale(0) }
   40% { -webkit-transform: scale(1.0) }
@@ -1415,6 +1519,10 @@ textarea{
   }
 }
 
+.dz-preview{
+ // display: none;
+  visibility: hidden;
+}
 
 
 </style>

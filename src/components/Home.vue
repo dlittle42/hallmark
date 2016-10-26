@@ -4,9 +4,30 @@
       <!-- message browser only -->
       <div>
         <h1>Share</h1>
-        <textarea>
-          write your message here
-        </textarea>
+
+          <swiper :options="swiperOption">
+            <swiper-slide>
+            <p>1. Some text goes right here ...</p>
+            </swiper-slide>
+            <swiper-slide>
+             <p>2. Some text goes right here ...</p>
+            </swiper-slide>
+             <p>3. Some text goes right here ...</p>
+            </swiper-slide>
+            <swiper-slide>
+             <p>4. Some text goes right here ...</p>
+            </swiper-slide>
+             <p>5. Some text goes right here ...</p>
+            </swiper-slide>
+            <swiper-slide>
+             <p>6. Some text goes right here ...</p>
+            </swiper-slide>
+            
+            <div class="swiper-pagination" slot="pagination"></div>
+            <div class="swiper-button-prev" slot="button-prev"></div>
+            <div class="swiper-button-next" slot="button-next"></div>
+          </swiper>
+
         
 
       </div>
@@ -18,12 +39,25 @@
 var $ = require('jquery');
 import Vue from 'vue'
 import router from 'vue-router'
+import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
 
   export default {
+    components: {
+      swiper,
+      swiperSlide
+    },
    data() {
       return {
         msg: 'CHOOSE A PHOTO',
+        swiperOption: {
+          pagination: '.swiper-pagination',
+          slidesPerView: 2,
+          paginationClickable: true,
+          nextButton: '.swiper-button-next',
+          prevButton: '.swiper-button-prev',
+          spaceBetween: 10
+        }
         
       }
     },
@@ -292,9 +326,9 @@ h1 {
 }
 .swiper-container{
       width: 80%;
-    position: absolute;
-    bottom: 20px;
-    left: 10%;
+   // position: absolute;
+  //  bottom: 20px;
+  //  left: 10%;
  // transform: translateY(-100%);
   //  display: inline-block;
 }

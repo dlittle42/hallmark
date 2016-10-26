@@ -1,6 +1,6 @@
 <template>
 
-      <div>
+      <div id="gallery">
         <h1>CHOOSE A PHOTO</h1>
         <!-- {{$route.params.imgset}} -->
 
@@ -89,12 +89,17 @@ export default {
 
 <style lang="scss" scoped>
 .scroll{
-	width: 80%;
+	//width: 80%;
 }
 
 .img-gallery{
 	color: black;
 
+}
+
+#gallery{
+	height: 100%;
+	width: 100%;
 }
 
 .gallery-img{
