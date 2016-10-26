@@ -75,7 +75,7 @@
 
 
               <transition name="fade" mode="out-in">
-                <router-view v-on:imgSelect="updateImage"></router-view>
+                <router-view v-on:imgSelect="updateImage" v-on:FBauth="getFBstatus">></router-view>
               </transition>
               <div id="intro">
                 <img class="logo" src="./assets/title_christmas.png">
@@ -87,8 +87,8 @@
 
               <div id="social_action">
               <h1>Share Your Greeting</h1>
-               <button id="facebook" class="social" v-on:click="uploadCanvasData">Share on Facebook</button>
-                <button id="twitter" class="social" >Share on Twitter</button>
+               <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
+                <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
              <!--  <a id="up" class="social" href="#">Upload</a> -->
                </div>
@@ -131,7 +131,8 @@ export default {
       // with hot-reload because the reloaded component
       // preserves its current state and we are modifying
       // its initial state.
-      accessToken:'unknown',
+      accessToken:'',
+      allPhotos: [],
       layout: ""
 
     }
@@ -862,22 +863,25 @@ export default {
           xhr.send(formData);
       },
       completeRequest: function(response){
-        alert('completed '+ response);
+        //alert('completed '+ response);
         console.log(response)
        //this.postToFacebook()
       },
+      /*
       checkFacebookLogin: function(){
         console.log('check' + FB)
         FB.getLoginStatus(function(response) {
           console.log(response);
         });
       },
+      */
       uploadToAlbum: function(){
+        $('#load-panel').addClass('active');
         var data = $('#mainStage')[0].toDataURL("image/png");
         var blob = this.dataURItoBlob(data);
-        this.postImageToFacebook(this.accessToken, blob, 'message')
+        this.postImageToFacebookAlbum(this.accessToken, blob, 'message')
       },
-      postImageToFacebook(token, imageData, message) {
+      postImageToFacebookAlbum(token, imageData, message) {
             var fd = new FormData();
             fd.append("access_token", token);
             fd.append("source", imageData);
@@ -901,6 +905,7 @@ export default {
                         function (response) {
                             if (response && !response.error) {
                               console.log("go post to wall!!!!!!");
+                              $('#load-panel').removeClass('active');
                                 console.log(response.images[0].source);
 
                             }
@@ -912,10 +917,196 @@ export default {
                 },
                 complete: function (data) {
                     console.log('Post to facebook Complete');
+                    $('#thanks').addClass('active');
                    // $('#thanks').addClass('active');
                 }
             });
         },
+        getFBstatus: function(callback){
+
+
+
+         // this.FBlogin(this.statusChangeCallback);
+
+         if (this.accessToken==''){
+          console.log('NO TOKEN HERE')
+           // this.FBlogin(callback);
+            if (callback=='gallery') {
+              this.FBlogin(this.getFacebookGallery);
+            }else if (callback=='album') {
+              this.FBlogin(this.uploadToAlbum);
+            }else{
+              this.FBlogin(this.uploadCanvasData);
+
+            }
+         }else{
+          console.log('GOT TOKEN ALREADY')
+            //callback();
+             if (callback=='gallery') {
+              this.getFacebookGallery();
+            }else if (callback=='album') {
+              this.uploadToAlbum();
+            }else{
+              this.uploadCanvasData();
+
+            }
+         }
+
+        },
+
+
+        FBlogin( callback ) {
+          var scope = this;
+          FB.login(function(response) {
+            if (response.authResponse) {
+              console.log('Welcome!  Fetching your information.... ');
+              scope.accessToken = response.authResponse.accessToken || '';
+              console.log("SET ACCESS TOKEN "+ scope.accessToken);
+              console.log('Logged into app and Facebook.');
+              if (callback) {
+                callback(response);
+              }
+            } else if (response.status === 'not_authorized') {
+              //console.log('User cancelled login or did not fully authorize.');
+              console.log('The person is logged into Facebook, but not your app.');
+
+            } else {
+              console.log('Not logged in to Facebook')
+            }
+          }, {
+              scope: 'user_photos,publish_actions', 
+              return_scopes: true
+          });
+        },
+        getFacebookGallery: function(){
+
+          $('#load-panel').addClass('active');
+          console.log('ACCESSTOKEN = '+this.accessToken)
+          //console.log('outside router='+ this.router)
+          //passed scope through getPhotos callback???
+          var scope = this;
+          this.getPhotos( this, function( photos ) {
+            console.log("**********READY**********")
+            console.dir(photos);
+            console.log('url======'+photos[0].url);
+            $('#load-panel').removeClass('active');
+            scope.$router.push({ name: 'gallery', params : { 'fbset': photos }});
+         // router.push({ path: 'album', params : { imgset: 'backgrounds' }});
+           // router.push('album');
+            
+            //console.log('****'+photos[0].url)
+           // self.imageToCanvas(photos[0].url, photos[0].name);
+            
+          });
+        },
+        getPhotos(scope, callback) {
+
+          //var allPhotos = [];
+
+          //var accessToken = '';
+          var scope = this;
+         // scope.login(function(loginResponse) {
+          //    scope.accessToken = loginResponse.authResponse.accessToken || '';
+              scope.getAlbums(function(albumResponse) {
+                  console.dir(albumResponse);
+                  var i, album, deferreds = {}, listOfDeferreds = [];
+
+                  for (i = 0; i < albumResponse.data.length; i++) {
+                    album = albumResponse.data[i];
+                    console.log(album.name);
+                    deferreds[album.id] = $.Deferred();
+                    listOfDeferreds.push( deferreds[album.id] );
+                    scope.getPhotosForAlbumId( album.id, album.name, function( albumId, albumName, albumPhotosResponse ) {
+                        var i, facebookPhoto;
+                        console.dir(albumPhotosResponse );
+                        for (i = 0; i < albumPhotosResponse.data.length; i++) {
+                          facebookPhoto = albumPhotosResponse.data[i];
+
+                          scope.allPhotos.push({
+                            'id'  : facebookPhoto.id,
+                            'added' : facebookPhoto.count,
+                            'name'  : albumName,
+                            'url' : scope.makeFacebookPhotoURL( facebookPhoto.id, scope.accessToken )
+                          });
+                        }
+                        deferreds[albumId].resolve();
+                      });
+
+                  }
+
+
+                  $.when.apply($, listOfDeferreds ).then( function() {
+                    if (callback) {
+
+                      callback( scope.allPhotos );
+                    }
+                  }, function( error ) {
+                    if (callback) {
+                      callback( scope.allPhotos, error );
+                    }
+                  });
+                });
+           // });
+        },
+        getAlbums( callback ) {
+          FB.api(
+              '/me/albums',
+              {fields: 'id,cover_photo,name'},
+              function(albumResponse) {
+                console.log( ' got albums ' );
+                if (callback) {
+                  callback(albumResponse);
+                }
+              }
+            );
+
+        },
+        getPhotosForAlbumId( albumId, albumName, callback ) {
+          FB.api(
+              '/'+albumId+'/photos',
+              {fields: 'id'},
+              function(albumPhotosResponse) {
+                console.log( ' got photos for album ' + albumId );
+                //console.dir(albumPhotosResponse);
+                if (callback) {
+                  callback( albumId, albumName, albumPhotosResponse );
+                }
+              }
+            );
+        },
+        makeFacebookPhotoURL( id, accessToken ) {
+          var path = 'https://graph.facebook.com/' + id + '/picture?access_token=' + accessToken;
+          console.log(path);
+          $('#images').append('<img src="'+path+'" height="64px" width="64px">');
+          return path;
+        },
+        /*
+        statusChangeCallback(response) {
+          console.log('statusChangeCallback');
+          console.log(response);
+          // The response object is returned with a status field that lets the
+          // app know the current login status of the person.
+          // Full docs on the response object can be found in the documentation
+          // for FB.getLoginStatus().
+          if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            //testAPI();
+            console.log('Logged into app and Facebook.');
+            return true;
+          } else if (response.status === 'not_authorized') {
+            // The person is logged into Facebook, but not your app.
+            console.log('The person is logged into Facebook, but not your app.');
+            return false;
+            //document.getElementById('status').innerHTML = 'Please log ' +'into this app.';
+          } else {
+            // The person is not logged into Facebook, so we're not sure if
+            // they are logged into this app or not.
+            console.log('Not logged in to Facebook')
+            return false;
+           // document.getElementById('status').innerHTML = 'Please log ' +'into Facebook.';
+          }
+        },
+        */
 
   }
 }
