@@ -93,7 +93,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
       }, false);
       */
       $('#social_action').fadeIn();
-      document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
+     // document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
       document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
   
     })
