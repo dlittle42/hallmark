@@ -424,13 +424,13 @@ export default {
        stage.interactive = true;
        stage.button = true;
 
-       stage.on('mousedown', this.onDragStart)
+       //stage.on('mousedown', this.onDragStart)
 
      // stage
 
             // set the mouseover callback...
-          //  stage.on('mouseover', this.onStageOver)
-         //   stage.on('mouseout', this.onStageOut)
+            stage.on('mouseover', this.onStageOver)
+            stage.on('mouseout', this.onStageOut)
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
