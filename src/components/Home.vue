@@ -4,7 +4,7 @@
       <!-- message browser only -->
       <div>
         <h1>Choose Your Message</h1>
-
+<!--
         <p id="msg">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
         </p>
@@ -18,6 +18,25 @@
           <div> Your Content </div>
           <div> Your Content </div>
         </div>
+-->
+        <div class="carousel"
+  data-flickity='{ "wrapAround": true }'>
+  <div class="carousel-cell"><p>
+        1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
+        </p></div>
+  <div class="carousel-cell"><p>
+        2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
+        </p></div>
+  <div class="carousel-cell"><p>
+        3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
+        </p></div>
+  <div class="carousel-cell"><p>
+        4. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
+        </p></div>
+  <div class="carousel-cell"><p>
+        5. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
+        </p></div>
+</div>
 <!--
           <swiper :options="swiperOption">
             <swiper-slide>
@@ -55,7 +74,8 @@ import Vue from 'vue'
 import router from 'vue-router'
 //import 'jquery';
 //import 'owl.carousel';
-//import 'owl.carousel/dist/assets/owl.carousel.min.css';
+
+import Flickity from 'flickity';
 //import 'imports?jQuery=jquery!owl.carousel';
 
 
@@ -103,6 +123,8 @@ import router from 'vue-router'
      // $('.owl-carousel').owlCarousel();
      // document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
       document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
+
+      
   
     })
   },
@@ -341,7 +363,7 @@ h1 {
   //  display: inline-block;
 }
 
-#msg{
+p{
     box-sizing: border-box;
     padding: 4px 20px;
     color: #3c3b3b;
@@ -381,4 +403,8 @@ h1 {
  // -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
  // animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
+
+
+
+
 </style>

@@ -125,6 +125,7 @@ var $ = require('jquery');
 import router from 'vue-router';
 var PIXI = require('pixi.js');
 var FastClick = require('fastclick');
+import 'flickity/dist/flickity.min.css';
 
 import setting from './setting';
 
@@ -1825,6 +1826,47 @@ figure{
       transform: scale(1);
     }
 
+}
+
+.carousel {
+ // background: #EEE;
+}
+
+.carousel-cell {
+  width: 100%;
+  height: 160px;
+  margin-right: 10px;
+ // background: #8C8;
+  box-sizing: border-box;
+ // padding: 10px 30px;
+  color: black;
+  //border-radius: 5px;
+ // counter-increment: carousel-cell;
+}
+
+
+
+.flickity-prev-next-button.previous,
+.flickity-prev-next-button.next {
+    width: 24px;
+    height: 24px;
+    top: 90%;
+    z-index:2;
+    background: hsl(46, 77%, 79%);
+}
+.flickity-page-dots {
+    top: 85%;
+    z-index:1;
+  }
+.flickity-page-dots > li.dot {
+
+    margin: 0 6px;
+    background: #dcc26a;
+    opacity: .4;
+}
+
+.flickity-prev-next-button > svg > path.arrow {
+    fill: #cf151b;
 }
 
 
