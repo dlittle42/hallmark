@@ -35,30 +35,7 @@
   <form action="/file-upload"
       class="dropzone"
       id="my-awesome-dropzone"></form>
-      <img src="../assets/hallmark_gallery.png">
-
-          <swiper :options="swiperOption">
-            <swiper-slide>
-            <img v-on:click="getSrc(null, $event)" src="../assets/portrait_thumb01.png">
-            </swiper-slide>
-            <swiper-slide>
-            <img v-on:click="getSrc(null, $event)"src="../assets/portrait_thumb02.png">
-            </swiper-slide>
-            <img v-on:click="getSrc(null, $event)" src="../assets/portrait_thumb01.png">
-            </swiper-slide>
-            <swiper-slide>
-            <img v-on:click="getSrc(null, $event)"src="../assets/portrait_thumb02.png">
-            </swiper-slide>
-            <img v-on:click="getSrc(null, $event)" src="../assets/portrait_thumb01.png">
-            </swiper-slide>
-            <swiper-slide>
-            <img v-on:click="getSrc(null, $event)"src="../assets/portrait_thumb02.png">
-            </swiper-slide>
-            
-            <div class="swiper-pagination" slot="pagination"></div>
-            <div class="swiper-button-prev" slot="button-prev"></div>
-            <div class="swiper-button-next" slot="button-next"></div>
-          </swiper>
+      
         
 
       </div>
@@ -106,7 +83,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
     mounted: function () {
       this.$nextTick(function () {
         // code that assumes this.$el is in-document
-         $('#social_action').fadeOut();
+         //$('#social_action').fadeOut();
         router = this.$router;
         console.log('The current view ' + this.$route.path+' is mounted!!');
 
@@ -217,7 +194,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 h1.or {
   //color: #42b983;
   margin: 5px auto;
-  padding: 0;
+  //padding: 0;
 }
 
 #swiper{
@@ -249,13 +226,14 @@ h1.or {
     border: 2px dashed #aba890;
     color: #aba890;
     border-radius: 5px;
-    max-height: 100px;
+    max-height: 130px;
+    height: 130px;
     padding: 32px;
     margin: 10px 45px;
     transition: all 0.5s ease;
     background-color: none;
-    background:rgba(2,173,231,0) url(../assets/arrow.png) no-repeat center 10px;
-    background-size: 20%;
+    background:rgba(2,173,231,0) url(../assets/arrow.png) no-repeat center center;
+   // background-size: 20%;
 }
 
 .dropzone:hover{
