@@ -46,7 +46,9 @@ export default {
 	    this.$nextTick(function () {
 	      // code that assumes this.$el is in-document
 	      console.log('gallery mounted');
-	      $('#social_action').fadeOut();
+
+	      if ($('.m-active').length == 0) $('#social_action').fadeOut();
+
 	    //  console.log(assets);
 	      console.log(this.$route.params.imgset);
 	      //var set = eval(this.$route.params.imgset);

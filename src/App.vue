@@ -107,6 +107,7 @@
                 <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
+                <a id="mobilesave" class="social"  href="#">Mobile Save</a> 
              <!--  <a id="up" class="social" href="#">Upload</a> -->
                </div>
         
@@ -169,12 +170,11 @@ export default {
       /*
       FastClick.attach(document.body);
       */
-      $('#mainStage').height($('#main_block').width() / 1);
-      $(window).resize(function(){
-         $('#mainStage').height($('#mainStage').width() / 1);
-      });
-      
       this.setupPixi();
+     // $('#mainStage').height($('#main_block').width() / 1);
+      
+      
+      
     })
   },
   componentUpdated (el, binding, vnode, oldVNode) { 
@@ -187,6 +187,7 @@ export default {
       },
       updateImage: function(img, target){
         $('#load-panel').addClass('active');
+        $('.m-active').removeClass('m-active');
        // alert('update image '+img);
        // this.imageToCanvas(img);
        //alert(img + " and "+target)
@@ -319,9 +320,9 @@ export default {
 
         // create the root of the scene graph
         var canvas = document.getElementById('mainStage'),
-        scale = 1,// window.devicePixelRatio,
-        width = $('#mainStage').width(),
-        height = $('#mainStage').height();
+        scale = window.devicePixelRatio,
+        width = 500,//$('#mainStage').width(),
+        height = 500;//$('#mainStage').height();
         console.log('w='+width+',h='+height);
 
 
@@ -331,6 +332,13 @@ export default {
         preserveDrawingBuffer:true 
        });
        console.dir(renderer);
+
+       $('#mainStage').width($('#main_block').width() / 1);
+         $('#mainStage').height($('#mainStage').width() / 1);
+       $(window).resize(function(){
+        $('#mainStage').width($('#main_block').width() / 1);
+         $('#mainStage').height($('#mainStage').width() / 1);
+      });
 
 /*
        PIXI.loader.add([    
@@ -446,8 +454,8 @@ export default {
      // stage
 
             // set the mouseover callback...
-            stage.on('mouseover', this.onStageOver)
-            stage.on('mouseout', this.onStageOut)
+          //  stage.on('mouseover', this.onStageOver)
+         //   stage.on('mouseout', this.onStageOut)
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
@@ -553,8 +561,8 @@ export default {
       },
       setupMarkers: function() {
 
-        var width = $('#mainStage').width(),
-        height = $('#mainStage').height();
+        var width = 500,//$('#mainStage').width(),
+        height = 500;//$('#mainStage').height();
 
         marker_container = new PIXI.DisplayObjectContainer();
         marker_container.width = width;
@@ -622,24 +630,25 @@ export default {
 
             button
                 // set the mousedown and touchstart callback...
-                .on('mousedown', this.onMarkerDown)
+              //  .on('mousedown', this.onMarkerDown)
                 .on('touchstart', this.onMarkerDown)
 
                 // set the mouseup and touchend callback...
-                .on('mouseup', this.onMarkerUp)
+             //   .on('mouseup', this.onMarkerUp)
                 .on('touchend', this.onMarkerUp)
-                .on('mouseupoutside', this.onMarkerUp)
+            //    .on('mouseupoutside', this.onMarkerUp)
                 .on('touchendoutside', this.onMarkerUp)
 
                 // set the mouseover callback...
-                .on('mouseover', this.onMarkerOver)
+            //    .on('mouseover', this.onMarkerOver)
 
                 // set the mouseout callback...
-                .on('mouseout', this.onMarkerOut)
+            //    .on('mouseout', this.onMarkerOut)
 
 
                 // you can also listen to click and tap events :
-                .on('click', this.getGallery)
+              .on('click', this.getGallery)
+              .on('tap', this.getGallery)
                 
           //button.tap = noop;
          // button.click = noop;
@@ -657,6 +666,8 @@ export default {
        var obj = eval(evt.target.val);
         obj.scale.x -= 0.01;
         obj.scale.y -= 0.01;
+
+        console.log('onMarkerDown');
      //  alert('touched');
 
       },
@@ -666,6 +677,7 @@ export default {
        var obj = eval(evt.target.val);
         obj.scale.x += 0.01;
         obj.scale.y += 0.01;
+        console.log('onMarkerUp');
 
       },
       onMarkerOver: function(evt){
@@ -790,10 +802,14 @@ export default {
       },
       swapScene: function(n){
 
+          console.log('swap scene');
+
           $('#load-panel').addClass('active').delay(500).queue(function(next){
                   $(this).removeClass("active");
                   next();
               });
+
+          $(".m-active").removeClass("m-active");
 
        
 /*
@@ -830,12 +846,6 @@ export default {
             var img = path + setting.tree[n] + ext;
             tree.setTexture(PIXI.Texture.from(img));
 
-            if ($('#mainStage').width() <= 599 ){
-
-              // is mobile device
-              $('#layout_block').fadeOut();
-
-           }
 /*
               setting.wallpaper[n]+'.png';
               setting.frame[n]+'.png';
@@ -854,6 +864,7 @@ export default {
 
       getGallery: function(evt){
         console.log(evt.target.val)
+        $('#photo_block').addClass('m-active');
         if (evt.target.val == "portrait"){
           this.$router.push('photos');
 
@@ -1161,12 +1172,14 @@ export default {
           return path;
         },
         showMessages: function(){
-          $('#photo_block').addClass('mobile_active')
-          $('#layout_block').removeClass('mobile_active')
+          $('.m-active').removeClass('m-active');
+          console.log('show messages panel');
+          $('#photo_block').addClass('m-active');
         },
         showLayouts: function(){
-          $('#layout_block').addClass('mobile_active')
-          $('#photo_block').removeClass('mobile_active')
+          $('.m-active').removeClass('m-active');
+          console.log('show layouts panel');
+          $('#layout_block').addClass('m-active');
 
         }
         /*
@@ -1313,8 +1326,9 @@ h1{
 
 
 #mainStage{
-  width: 100%;
-  height: 100%;
+ // width: 100%;
+ // height: 100%;
+  margin: 0 auto;
   align-self: center;
   justify-content: center;
   background-color: lightgrey;
@@ -1842,7 +1856,8 @@ figure{
 
   .wrapper, .header {
 
-    flex-flow: column;
+   // flex-flow: column;
+    display: block;
   }
 
   #main_block{
@@ -1850,7 +1865,8 @@ figure{
     display: block;
     padding: 0px;
     margin-top: -100vw;
-    z-index: -1;
+    z-index: 2;
+    position: relative;
   }
 
   #mainStage{
@@ -1869,6 +1885,9 @@ figure{
     height: 100vw;
     opacity: 0;
     transition: opacity .5s ease-out;
+    z-index: 9;
+     pointer-events: none;
+     position: relative;
 
 
     .transparent{
@@ -1878,7 +1897,11 @@ figure{
 
 
   }
-
+ #layout_block.m-active{
+    opacity: 1;
+    z-index: 400;
+     pointer-events: auto;
+  }
   
   #mobile_buttons{
     //display: block;
@@ -1895,6 +1918,8 @@ figure{
     position: relative;
     margin-top: -100vw;
     padding: 0;
+    z-index: 1;
+
 
 
     .transparent{
@@ -1904,13 +1929,22 @@ figure{
       margin: 0;
       opacity: 0;
       transition: opacity .5s ease-out;
+      pointer-events: none;
+    }
+
+    &.m-active {
+      z-index: 400;
+
+      .transparent{
+        opacity: 1;
+        
+        pointer-events: auto;
+      }
     }
     
   }
 
-  #photo_block.mobile_active{
-    opacity: 1;
-  }
+
 
   #photos_title{
     display: none;
@@ -1939,13 +1973,13 @@ figure{
     overflow-y: auto;
    }
 
-   figure{
+   #layout_block figure{
     width: 30%;
     height: 30%;
+   }
 
-    .highlight{
+   figure .highlight{
       opacity: 1;
-    }
    }
 
    #social_action{
@@ -1971,6 +2005,27 @@ figure{
       font-size: 12px;
       line-height: 14px;
     }
+  }
+
+  .gallery_img{
+    margin: 2px;
+    width: 30%;
+
+  }
+
+  .gallery_img figure{
+
+      width: 100%;
+      height: 100%;
+
+  }
+
+  .img-gallery.scroll{
+    height: 80%;
+  }
+
+  .social{
+    text-shadow: none;
   }
 
 

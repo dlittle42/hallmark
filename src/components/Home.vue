@@ -132,6 +132,8 @@ import Flickity from 'flickity';
      // document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
       document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
 
+      document.getElementById("mobilesave").addEventListener('click', this.dlCanvasToMobile, false);
+
       
   
     })
@@ -307,6 +309,14 @@ import Flickity from 'flickity';
 
           
           evt.target.href = dt;
+
+       
+        },
+         dlCanvasToMobile: function(evt) {
+
+
+          var dt = document.getElementById("mainStage").toDataURL('image/png');
+          window.open(dt, '_blank');
        
         },
         /*
