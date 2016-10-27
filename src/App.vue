@@ -107,7 +107,7 @@
                 <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
-                <a id="mobilesave" class="social"  href="#">Mobile Save</a> 
+              <!--  <a id="mobilesave" class="social"  href="#">Mobile Save</a> -->
              <!--  <a id="up" class="social" href="#">Upload</a> -->
                </div>
         
