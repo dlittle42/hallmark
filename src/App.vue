@@ -87,25 +87,28 @@
 
 
               <transition name="fade" mode="out-in">
-                <router-view v-on:imgSelect="updateImage" v-on:FBauth="getFBstatus">></router-view>
+                <router-view v-on:imgSelect="updateImage" v-on:FBauth="getFBstatus"></router-view>
               </transition>
               <div id="intro">
                 <img class="logo" src="./assets/title_christmas.png">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus. Vivamus eleifend.</p>
+              </div>
+              
+         
+            </div>
 
-                <button id="message_btn" class="social" v-on:click="">Choose a message</button>
-                <button id="layout_btn" class="social" v-on:click="">Select a layout</button>
+            <div id="mobile_buttons">
+                <button id="message_btn" class="social" v-on:click="showMessages">Choose a message</button>
+                <button id="layout_btn" class="social" v-on:click="showLayouts">Select a layout</button>
               </div>
 
               <div id="social_action">
-              <h1>Share Your Greeting</h1>
-               <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
+                <h1>Share Your Greeting</h1>
+                <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
              <!--  <a id="up" class="social" href="#">Upload</a> -->
                </div>
-         
-            </div>
         
           </div>
 
@@ -826,6 +829,13 @@ export default {
 
             var img = path + setting.tree[n] + ext;
             tree.setTexture(PIXI.Texture.from(img));
+
+            if ($('#mainStage').width() <= 599 ){
+
+              // is mobile device
+              $('#layout_block').fadeOut();
+
+           }
 /*
               setting.wallpaper[n]+'.png';
               setting.frame[n]+'.png';
@@ -1150,6 +1160,15 @@ export default {
           $('#images').append('<img src="'+path+'" height="64px" width="64px">');
           return path;
         },
+        showMessages: function(){
+          $('#photo_block').addClass('mobile_active')
+          $('#layout_block').removeClass('mobile_active')
+        },
+        showLayouts: function(){
+          $('#layout_block').addClass('mobile_active')
+          $('#photo_block').removeClass('mobile_active')
+
+        }
         /*
         statusChangeCallback(response) {
           console.log('statusChangeCallback');
@@ -1273,6 +1292,8 @@ h1{
   //height: 100%;
   height: calc(100vh - 215px);
 
+    min-height: 400px;
+    max-height: 500px;
   //box-shadow: 0px 0px 40px 2px rgba(0,0,0,0.25);
   box-shadow: rgba(255, 206, 84, 0.5) 0px 0px 40px 2px;
   //z-index: 4;
@@ -1389,6 +1410,13 @@ h1{
 
 }
 
+.aside { flex: 1; }
+  
+  .aside-1 { order: 1; } 
+  .main    { order: 2; flex:2; }
+  .aside-2 { order: 3; }
+  .footer  { order: 4; }
+
 
 #social_action{
     position: absolute;
@@ -1405,123 +1433,8 @@ h1{
     padding: 20px 30px;
     box-sizing: border-box;
     color: black;
+ 
 }
-
-@media (max-width:1092px) {
-  #layout_block,
-  #layout_title{
-    display: none;
-  }
-  #photo_block{
-  position: relative;
-  }
-  #photos_title{
-    display: none;
-  }
-}
-
-@media (min-width:1091px) {
-  #intro{
-    display: none;
-  }
-}
-
-
-@media all and (max-width: 767px) {
-  .aside { flex: 1 auto; }
-  //.main  { max-width: 100% }
-  #photo_block{
-    position: absolute;
-   // top: 135px;
-  //  left: 0px;
-    width: 100%;
-    padding: 0px;
-   // box-sizing: border-box;
-    //opacity: .5;
-    //display: none;
-        pointer-events: none;
-
-    .transparent{
-      height: 100vw;
-    }
-  }
-
-  #main_block {
-    padding: 0;
-  }
-
-  #main_block .transparent{
-    display: block;
-    height: 100%;
-    margin: 0 0 20px 0;
-  }
-
-  .header{
-    height: 30%;
-  }
-
-  #photos_title{
-    display: none;
-  }
-  #intro{
-    display: none;
-  }
-
-  .content-block {
-    position: absolute;
-    top: 10vh;
-    left: 0px;
-    height: auto;
-    display: block; 
-    width: 100vw;
-  }
-
-  .footer{
-    position: absolute;
-    top: calc(100vw + 100px);
-    left: 0;
-  }
-
-  #social_action{
-    //margin-top: 80px;
-  }
-
-  #layout_block,
-  #photo_block{
-   // visibility: hidden;
-    display: none;
-    pointer-events: none;
-
-  }
-
-  .social{
-  
-    float: left;
-    transform: scale(.8,.8);
-    margin: 0 -7px;
-    font-size: 14px;
-    line-height: 16px;
-  }
-
-
-}
-
-//@media all and (min-width: 600px) {
-//  .aside { flex: 1; }
-
-//}
-
-@media all and (min-width: 768px) {
-  //.main    { flex: 3 0px; }
-  .aside { flex: 1; }
-  .main    { flex: 2; }
-  .aside-1 { order: 1; } 
-  .main    { order: 2; }
-  .aside-2 { order: 3; }
-  .footer  { order: 4; }
-}
-
-
 
 
 
@@ -1535,7 +1448,7 @@ h1{
 
     justify-content: center;
     display: flex;
-    /* flex-direction: column; */
+
     flex-flow: row wrap;
 
     img{
@@ -1672,22 +1585,9 @@ textarea{
   //width: 80%;
 }
 
-@media (max-width:744px) {
 
 
-}
 
-//@media (max-width:968px) {
-@media (max-width:1092px) {
-  #layout_block,
-  #layout_title,{
-    display: none;
-  }
-
-  #intro{
-    display: visible;
-  }
-}
 
 #thanks{
     background-color: rgba(0,0,0,.5);
@@ -1703,7 +1603,7 @@ textarea{
    -webkit-transition: opacity .25s ease-out;
    pointer-events:none;
     flex-direction: column;
-    /* align-items: center; */
+
 
    // padding: 115px;
     padding: 30% 45px;
@@ -1868,6 +1768,218 @@ figure{
 .flickity-prev-next-button > svg > path.arrow {
     fill: #cf151b;
 }
+
+
+/* breakpoints        768 --- 800 -- xxx minor ---> 1366 */
+
+@media only screen and (min-width:801px) and (max-width: 1024px){
+  .transparent{
+
+  }
+}
+
+// starting at 800 +
+@media all and (min-width: 801px) {
+  //.main    { flex: 3 0px; }
+  .aside { flex: 1; }
+  
+  .aside-1 { order: 1; } 
+  .main    { order: 2; }
+  .aside-2 { order: 3; }
+  .footer  { order: 4; }
+
+  #intro,
+  #mobile_buttons{
+    display: none;
+  }
+}
+
+
+@media only screen and (min-width:600px) and (max-width: 800px){
+  //two col view
+  #layout_block,
+  #layout_title,
+  #photos_title{
+    display: none;
+  }
+
+  #photo_block{
+        height: auto;
+  }
+
+  .main{ 
+    flex: 2; 
+    order: 1;
+  }
+
+   #photo_block{
+    order: 2;
+   }
+
+   .footer{
+    order: 3;
+   }
+
+   #mobile_buttons{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+   }
+
+   #social_action{
+    bottom: 15px;
+   }
+
+}
+
+
+
+
+
+
+@media (max-width:599px) {
+
+  .wrapper, .header {
+
+    flex-flow: column;
+  }
+
+  #main_block{
+    height: 100vw;
+    display: block;
+    padding: 0px;
+    margin-top: -100vw;
+    z-index: -1;
+  }
+
+  #mainStage{
+    align-self:auto;
+  }
+ 
+
+  #layout_title{
+    display: none;
+  }
+
+  #layout_block{
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vw;
+    opacity: 0;
+    transition: opacity .5s ease-out;
+
+
+    .transparent{
+      height: 100%;
+      min-height: 100%;
+    }
+
+
+  }
+
+  
+  #mobile_buttons{
+    //display: block;
+
+    .social{
+
+        width: 40%;
+    margin: 8px 4px;
+    display: inline-block;
+    }
+  }
+
+  #photo_block{
+    position: relative;
+    margin-top: -100vw;
+    padding: 0;
+
+
+    .transparent{
+      height: 100vw;
+      min-height: 100vw;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+      transition: opacity .5s ease-out;
+    }
+    
+  }
+
+  #photo_block.mobile_active{
+    opacity: 1;
+  }
+
+  #photos_title{
+    display: none;
+  }
+
+  #intro{
+
+        display: none;
+  }
+
+  .aside { flex: 1 auto; }
+
+  .footer{
+   // order: 2;
+       margin: 10px 5px;
+   }
+
+   .scene_scroll{
+    height: 100vw;
+   }
+
+   .scroll{
+    height: auto;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+   }
+
+   figure{
+    width: 30%;
+    height: 30%;
+
+    .highlight{
+      opacity: 1;
+    }
+   }
+
+   #social_action{
+    position: relative;
+    bottom: auto;
+
+    h1{
+          padding: 10px 0 0 0;
+    }
+
+    a#dl{
+      //WHY??
+      transform: translateY(6px);
+      background-position-x: 7px;
+      padding: 8px 6px 8px 35px;
+    }
+
+    .social{
+      width: 30%;
+      height: 33px;
+      margin: 8px 4px;
+      display: inline-block;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+
+ 
+}
+
+
+
+
 
 
 </style>
