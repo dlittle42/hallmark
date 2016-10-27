@@ -132,7 +132,7 @@ import Flickity from 'flickity';
      // document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
       document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
 
-      document.getElementById("mobilesave").addEventListener('click', this.dlCanvasToMobile, false);
+    //  document.getElementById("mobilesave").addEventListener('click', this.dlCanvasToMobile, false);
 
       
   
