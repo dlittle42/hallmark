@@ -133,7 +133,7 @@ import 'flickity/dist/flickity.min.css';
 
 import setting from './setting';
 
-var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container;
+var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04;
 
 export default {
 
@@ -511,7 +511,19 @@ export default {
         this.setObjEvents(fireplace);
         this.setObjEvents(gift);
         this.setObjEvents(tree);
-       
+
+        var inc=10;
+        stocking01 = PIXI.Sprite.fromImage('./static/images/stocking-01.png');
+
+        stocking01.scale.x = stocking01.scale.y = .6;
+        stocking01.position.x = (width/inc)*2;
+        stocking01.position.y = (height/inc)*7;
+        stocking01.val = 'stocking01';
+        stocking01.anchor.set(.5);
+        stage.addChild(stocking01);
+
+
+
 
         //parent.setupMarkers();
 
@@ -897,7 +909,8 @@ export default {
       },
 
       getGallery: function(evt){
-        console.log(evt.target.val)
+       // console.dir(evt);
+       // alert("target ="+ evt.target.val)
         $('#photo_block').addClass('m-active');
         if (evt.target.val == "portrait"){
           this.$router.push('photos');
@@ -1281,12 +1294,13 @@ body {
   //overflow: hidden;
   margin: 0px;
   box-sizing: border-box;
+  font-size: 14px;
 
 }
 
 p{
   font-family: Source Sans Pro, Helvetica, sans-serif;
-    font-size: 14px;
+    
 }
 
 #app {
@@ -1557,8 +1571,15 @@ h1{
     box-shadow: 0 4px 2px -2px gray;
     text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
     margin: 8px auto;
+    transition: all .4s ease-out;
+
+    &:hover{
+      background-color: yellow;
+    }
     
 }
+
+
 
 button#layout_btn {
     border-color: #2d5073;
@@ -1641,7 +1662,8 @@ textarea{
 
 
 #thanks{
-    background-color: rgba(0,0,0,.5);
+   // background-color: rgba(0,0,0,.5);
+    background-color: rgba(251, 247, 216, .9);
     
     width: 100%;
     height: 100%;
@@ -1654,6 +1676,7 @@ textarea{
    -webkit-transition: opacity .25s ease-out;
    pointer-events:none;
     flex-direction: column;
+    color: #3c3b3b;
 
 
    // padding: 115px;
@@ -1667,7 +1690,7 @@ textarea{
    }
 
    h1{
-    text-shadow: rgba(6, 0, 0, .8) 1px 1px 0;
+   // text-shadow: rgba(6, 0, 0, .8) 1px 1px 0;
     font-size: 34px;
    }
 
@@ -1925,6 +1948,7 @@ figure{
     z-index: 9;
      pointer-events: none;
      position: relative;
+     background-color: rgba(251, 247, 216, .9);
 
 
     .transparent{
@@ -1967,6 +1991,7 @@ figure{
       opacity: 0;
       transition: opacity .5s ease-out;
       pointer-events: none;
+      background-color: rgba(251, 247, 216, .9);
     }
 
     &.m-active {
@@ -1979,6 +2004,19 @@ figure{
       }
     }
     
+  }
+
+  #message_block{
+    height: 100%;
+  }
+
+  .carousel{
+    height: 65%;
+
+    p{
+      font-size: 20px;
+    }
+
   }
 
 
@@ -2063,6 +2101,11 @@ figure{
 
   .social{
     text-shadow: none;
+  }
+
+  #thanks{
+    padding: 20px;
+    color: #383838;
   }
 
 

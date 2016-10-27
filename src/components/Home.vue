@@ -2,7 +2,7 @@
 
   <template>
       <!-- message browser only -->
-      <div>
+      <div id="message_block">
         <h1>Choose Your Message</h1>
 <!--
         <p id="msg">
@@ -387,7 +387,7 @@ p{
     color: #3c3b3b;
     /* font-weight: 300; */
     font-family: Source Sans Pro, Helvetica, sans-serif;
-    font-size: 14px;
+   // font-size: 14px;
 }
 
 .dropzone {
