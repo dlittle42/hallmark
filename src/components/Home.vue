@@ -19,8 +19,7 @@
           <div> Your Content </div>
         </div>
 -->
-        <div class="carousel"
-  data-flickity='{ "wrapAround": true }'>
+        <div class="carousel">
   <div class="carousel-cell"><p>
         1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
         </p></div>
@@ -120,6 +119,15 @@ import Flickity from 'flickity';
       }, false);
       */
       $('#social_action').fadeIn();
+
+
+        const carousel = $('.carousel')[0];
+        const options = {
+            wraparound: true
+        }
+
+        this.flkty = new Flickity(carousel, options);
+      //  this.flkty.on('cellSelect', this.updateSelected);
      // $('.owl-carousel').owlCarousel();
      // document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
       document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
