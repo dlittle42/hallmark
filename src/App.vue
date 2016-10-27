@@ -361,6 +361,7 @@ export default {
 
           frame.position.x = width/2;
           frame.position.y = height/2 - 100;
+          frame.val='frame';
           frame.anchor.set(0.5);
 
 
@@ -375,6 +376,7 @@ export default {
           //portrait.image.crossOrigin = "anonymous";
           portrait.position.x = width/2;
           portrait.position.y = height/2 - 100;
+          portrait.val='portrait';
           portrait.anchor.set(0.5);
           portrait.interactive = true;
           portrait.buttonMode = true;
@@ -454,8 +456,8 @@ export default {
      // stage
 
             // set the mouseover callback...
-          //  stage.on('mouseover', this.onStageOver)
-         //   stage.on('mouseout', this.onStageOut)
+       stage.on('mouseover', this.onStageOver)
+       stage.on('mouseout', this.onStageOut)
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
@@ -468,6 +470,7 @@ export default {
         wallpaper.height = width;
         wallpaper.position.x = width/2;
         wallpaper.position.y = height/2;
+        wallpaper.val='wallpaper';
         wallpaper.anchor.set(0.5);
 
 
@@ -478,6 +481,7 @@ export default {
         fireplace.scale.x = fireplace.scale.y = .6;
         fireplace.position.x = width/2;
         fireplace.position.y = height - (height/4);
+        fireplace.val = 'fireplace';
         fireplace.anchor.set(0.5);
         stage.addChild(fireplace);
 
@@ -487,6 +491,7 @@ export default {
         gift.scale.x = gift.scale.y = .6;
         gift.position.x = width;
         gift.position.y = height;
+        gift.val = 'gift';
         gift.anchor.set(1);
         stage.addChild(gift);
 
@@ -496,13 +501,16 @@ export default {
         tree.scale.x = tree.scale.y = .6;
         tree.position.x = 0;
         tree.position.y = 0;
+        tree.val = 'tree';
         //tree.anchor.set(0.5);
         stage.addChild(tree);
 
-
-        
-
-
+       // this.setObjEvents(frame);
+       // this.setObjEvents(portrait);
+        this.setObjEvents(wallpaper);
+        this.setObjEvents(fireplace);
+        this.setObjEvents(gift);
+        this.setObjEvents(tree);
        
 
         //parent.setupMarkers();
@@ -558,6 +566,32 @@ export default {
 
           // render the stage
           renderer.render(stage);
+      },
+      setObjEvents: function(obj){
+        console.log('setObjEvents on '+obj)
+
+        obj.interactive = true;
+        obj.button = true;
+
+          obj.on('mousedown', this.onMarkerDown)
+              .on('touchstart', this.onMarkerDown)
+
+                // set the mouseup and touchend callback...
+                .on('mouseup', this.onMarkerUp)
+                .on('touchend', this.onMarkerUp)
+                .on('mouseupoutside', this.onMarkerUp)
+                .on('touchendoutside', this.onMarkerUp)
+
+                // set the mouseover callback...
+                .on('mouseover', this.onMarkerOver)
+
+                // set the mouseout callback...
+                .on('mouseout', this.onMarkerOut)
+
+
+                // you can also listen to click and tap events :
+              .on('click', this.getGallery)
+              .on('tap', this.getGallery)
       },
       setupMarkers: function() {
 
@@ -630,20 +664,20 @@ export default {
 
             button
                 // set the mousedown and touchstart callback...
-              //  .on('mousedown', this.onMarkerDown)
+                .on('mousedown', this.onMarkerDown)
                 .on('touchstart', this.onMarkerDown)
 
                 // set the mouseup and touchend callback...
-             //   .on('mouseup', this.onMarkerUp)
+                .on('mouseup', this.onMarkerUp)
                 .on('touchend', this.onMarkerUp)
-            //    .on('mouseupoutside', this.onMarkerUp)
+                .on('mouseupoutside', this.onMarkerUp)
                 .on('touchendoutside', this.onMarkerUp)
 
                 // set the mouseover callback...
-            //    .on('mouseover', this.onMarkerOver)
+                .on('mouseover', this.onMarkerOver)
 
                 // set the mouseout callback...
-            //    .on('mouseout', this.onMarkerOut)
+                .on('mouseout', this.onMarkerOut)
 
 
                 // you can also listen to click and tap events :
@@ -1263,7 +1297,7 @@ p{
   width: 100vw;
  // height: 100%;
  // height: 100vh;
-  max-width: 1366px;
+  max-width: 1200px;//1366px;
   font-family: 'bebas_neueregular', Source Sans Pro, Helvetica, sans-serif;
   text-align: center;
   font-weight: normal;
@@ -1320,6 +1354,8 @@ h1{
 #main_block .transparent{
   display: flex;
   position: relative;
+      margin: 0 auto;
+    max-width: 500px;
 }
 
 
@@ -1332,6 +1368,7 @@ h1{
   align-self: center;
   justify-content: center;
   background-color: lightgrey;
+  max-width: 500px;
   //padding: 10px;
  //position: absolute;
  //top: 0;

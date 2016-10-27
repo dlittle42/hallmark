@@ -38,7 +38,8 @@ export default {
 	data: function () {
 	   return {
         assets: '',
-        fbgallery: ''
+        fbgallery: '',
+        imgset: 'fireplace'
         
       }
 	},
@@ -57,8 +58,10 @@ export default {
 	     	this.fbgallery = this.$route.params.fbset;
 	     	console.log("fbgallery");
 	     	console.dir(this.fbgallery);
-	     }else{
+	     }else if (this.$route.params.imgset){
 	     	this.assets = setting[this.$route.params.imgset];
+	     }else{
+	     	this.assets = setting[this.imgset];
 	     }
 	     
 	 		
