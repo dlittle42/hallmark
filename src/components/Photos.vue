@@ -84,6 +84,8 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
       this.$nextTick(function () {
         // code that assumes this.$el is in-document
          //$('#social_action').fadeOut();
+         if ($('.header').width() > 599) $('#social_action').fadeOut();
+         
         router = this.$router;
         console.log('The current view ' + this.$route.path+' is mounted!!');
 
