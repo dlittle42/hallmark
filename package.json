@@ -30,6 +30,7 @@
     "flickity": "^2.0.5",
     "function-bind": "^1.0.2",
     "gcloud": "^0.37.0",
+    "gsap": "^1.19.0",
     "html-webpack-plugin": "^2.8.1",
     "http-proxy-middleware": "^0.17.2",
     "jquery": "^3.1.1",

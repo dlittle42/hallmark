@@ -15,24 +15,16 @@ export default  {
     wallpaper: [
           'wallpaper-01',
           'wallpaper-02',
-          'wallpaper-01',
-          'wallpaper-02',
-          'wallpaper-01',
-          'wallpaper-02'
+          'wallpaper-03',
+          'wallpaper-04',
+          'wallpaper-05'
     ],
     frame: [
           'frame-01a',
           'frame-02a',
-          'frame-01a',
-          'frame-02a',
-          'frame-01a',
-          'frame-02a',
-          'frame-01a',
-          'frame-02a',
-          'frame-01a',
-          'frame-02a',
-          'frame-01a',
-          'frame-02a'
+          'frame-03',
+          'frame-04',
+          'frame-05'
     ],
     mantle:[
         'mantle-01',

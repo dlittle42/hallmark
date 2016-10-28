@@ -130,6 +130,7 @@ import router from 'vue-router';
 var PIXI = require('pixi.js');
 var FastClick = require('fastclick');
 import 'flickity/dist/flickity.min.css';
+import { TweenMax, TimelineMax, Power0 } from 'gsap';
 
 import setting from './setting';
 
@@ -476,6 +477,9 @@ export default {
 
         stage.addChild(wallpaper);
 
+
+
+
         fireplace = PIXI.Sprite.fromImage('./static/images/fireplace-01.png');
 
         fireplace.scale.x = fireplace.scale.y = .6;
@@ -510,7 +514,7 @@ export default {
         this.setObjEvents(wallpaper);
         this.setObjEvents(fireplace);
         this.setObjEvents(gift);
-        this.setObjEvents(tree);
+      //  this.setObjEvents(tree);
 
         var inc=10;
         stocking01 = PIXI.Sprite.fromImage('./static/images/stocking-01.png');
@@ -633,7 +637,7 @@ export default {
 
         var buttonPositions = [
             ['wallpaper', width/2, height/inc],
-            ['tree', width/inc, (height/inc) * 3],
+          //  ['tree', width/inc, (height/inc) * 3],
             ['frame', (width/inc)*2, (height/inc)*3],
             ['portrait', width/2, (height/2) - 100],
             ['mantle01', (width/inc)*2, (height/inc)*6],
@@ -710,8 +714,9 @@ export default {
         //portrait.scale.x += 0.3;
        // portrait.scale.y += 0.3;
        var obj = eval(evt.target.val);
-        obj.scale.x -= 0.01;
-        obj.scale.y -= 0.01;
+       // obj.scale.x -= 0.01;
+      //  obj.scale.y -= 0.01;
+        
 
         console.log('onMarkerDown');
      //  alert('touched');
@@ -721,23 +726,29 @@ export default {
         //portrait.scale.x -= 0.3;
        // portrait.scale.y -= 0.3;
        var obj = eval(evt.target.val);
-        obj.scale.x += 0.01;
-        obj.scale.y += 0.01;
+       // obj.scale.x += 0.01;
+       // obj.scale.y += 0.01;
         console.log('onMarkerUp');
+       // obj.tint = null;
 
       },
       onMarkerOver: function(evt){
         var obj = eval(evt.target.val);
         console.log(obj);
-        obj.scale.x += 0.01;
-        obj.scale.y += 0.01;
+       // obj.scale.x += 0.01;
+      //  obj.scale.y += 0.01;
+       // evt.target.tint = 0xFF0000; // Make a sprite reddish
+        var targ = evt.target;
+         TweenMax.to(targ.scale, .3, {x: targ.scale.x+.01, y:targ.scale.y+.01, repeat: 1, yoyo: true});
         
 
       },
       onMarkerOut: function(evt){
         var obj = eval(evt.target.val);
-        obj.scale.x -= 0.01;
-        obj.scale.y -= 0.01;
+      //  obj.scale.x -= 0.01;
+      //  obj.scale.y -= 0.01;
+       //evt.target.tint = 0xFFFFFF;
+      
 
       },
       onStageOver: function(evt){
@@ -889,8 +900,8 @@ export default {
             var img = path + setting.gift[n] + ext;
             gift.setTexture(PIXI.Texture.from(img));
 
-            var img = path + setting.tree[n] + ext;
-            tree.setTexture(PIXI.Texture.from(img));
+         //   var img = path + setting.tree[n] + ext;
+         //   tree.setTexture(PIXI.Texture.from(img));
 
 /*
               setting.wallpaper[n]+'.png';
