@@ -73,7 +73,7 @@
               <div id="thanks">
               <h1>Thanks for creating and sharing your Most Wonderful Mantlepiece of Christmas!</h1>
                    <p>Remember, to keep the holiday spirit filling your home all season, watch the Most Wonderful Movies of Christmas, only on Hallmark Movies & Mysteries.</p></br>
-                   <p> [Embedded YouTube playlist] </p>
+                   <iframe width="400" height="315" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>
               </div>
               <canvas id="mainStage"></canvas>
          
@@ -224,6 +224,8 @@ export default {
       },
       
       imageToCanvas: function(path, target){
+
+         console.warn(target);
           this.$router.push('home');
          // console.log('---' + path)
         //  console.log('---' + path.toString())
@@ -431,6 +433,7 @@ export default {
 
         stage.addChild(marker1);
         */
+          parent.setupMantle();
           parent.setupMarkers();
         
 
@@ -517,15 +520,7 @@ export default {
       //  this.setObjEvents(gift);
       //  this.setObjEvents(tree);
 
-        var inc=10;
-        stocking01 = PIXI.Sprite.fromImage('./static/images/stocking-01.png');
-
-        stocking01.scale.x = stocking01.scale.y = .6;
-        stocking01.position.x = (width/inc)*2;
-        stocking01.position.y = (height/inc)*7;
-        stocking01.val = 'stocking01';
-        stocking01.anchor.set(.5);
-        stage.addChild(stocking01);
+        
 
 
 
@@ -609,6 +604,92 @@ export default {
                 // you can also listen to click and tap events :
               .on('click', this.getGallery)
               .on('tap', this.getGallery)
+      },
+      setupMantle: function(){
+
+        var width = 500,
+        height = 500;
+
+        var inc=10;
+        stocking01 = PIXI.Sprite.fromImage('./static/images/stocking-01.png');
+
+        stocking01.scale.x = stocking01.scale.y = .6;
+        stocking01.position.x = (width/inc)*2;
+        stocking01.position.y = (height/inc)*7;
+        stocking01.val = 'stocking01';
+        stocking01.anchor.set(.5);
+        stage.addChild(stocking01);
+
+      
+        stocking02 = PIXI.Sprite.fromImage('./static/images/stocking-02.png');
+
+        stocking02.scale.x = stocking02.scale.y = .6;
+        stocking02.position.x = (width/inc)*4;
+        stocking02.position.y = (height/inc)*7;
+        stocking02.val = 'stocking02';
+        stocking02.anchor.set(.5);
+        stage.addChild(stocking02);
+
+       
+        stocking03 = PIXI.Sprite.fromImage('./static/images/stocking-01.png');
+
+        stocking03.scale.x = stocking03.scale.y = .6;
+        stocking03.position.x = (width/inc)*6;
+        stocking03.position.y = (height/inc)*7;
+        stocking03.val = 'stocking03';
+        stocking03.anchor.set(.5);
+        stage.addChild(stocking03);
+
+    
+        stocking04 = PIXI.Sprite.fromImage('./static/images/stocking-02.png');
+
+        stocking04.scale.x = stocking04.scale.y = .6;
+        stocking04.position.x = (width/inc)*8;
+        stocking04.position.y = (height/inc)*7;
+        stocking04.val = 'stocking04';
+        stocking04.anchor.set(.5);
+        stage.addChild(stocking04);
+
+
+        mantle01 = PIXI.Sprite.fromImage('./static/images/mantle-01.png');
+
+        mantle01.scale.x = mantle01.scale.y = .6;
+        mantle01.position.x = (width/inc)*2;
+        mantle01.position.y = (height/inc)*5;
+        mantle01.val = 'mantle01';
+        mantle01.anchor.set(.5);
+        stage.addChild(mantle01);
+
+      
+        mantle02 = PIXI.Sprite.fromImage('./static/images/mantle-02.png');
+
+        mantle02.scale.x = mantle02.scale.y = .6;
+        mantle02.position.x = (width/inc)*4;
+        mantle02.position.y = (height/inc)*5;
+        mantle02.val = 'mantle02';
+        mantle02.anchor.set(.5);
+        stage.addChild(mantle02);
+
+       
+        mantle03 = PIXI.Sprite.fromImage('./static/images/mantle-01.png');
+
+        mantle03.scale.x = mantle03.scale.y = .6;
+        mantle03.position.x = (width/inc)*6;
+        mantle03.position.y = (height/inc)*5;
+        mantle03.val = 'mantle03';
+        mantle03.anchor.set(.5);
+        stage.addChild(mantle03);
+
+    
+        mantle04 = PIXI.Sprite.fromImage('./static/images/mantle-02.png');
+
+        mantle04.scale.x = mantle04.scale.y = .6;
+        mantle04.position.x = (width/inc)*8;
+        mantle04.position.y = (height/inc)*5;
+        mantle04.val = 'mantle04';
+        mantle04.anchor.set(.5);
+        stage.addChild(mantle04);
+
       },
       setupMarkers: function() {
 
@@ -985,7 +1066,9 @@ export default {
         if (evt.target.val == "portrait"){
           this.$router.push('photos');
 
-        }else if (evt.target.val == "mantle01" 
+        }else{
+/*
+        else if (evt.target.val == "mantle01" 
           || evt.target.val =="mantle02" 
           || evt.target.val =="mantle03" 
           || evt.target.val =="mantle04"){
@@ -996,6 +1079,7 @@ export default {
           evt.target.val =="stocking04"){
           this.$router.push({ name: 'gallery', params : { 'imgset': 'stockings' }});
         }else{
+          */
           this.$router.push({ name: 'gallery', params : { 'imgset': evt.target.val }});
         }
         

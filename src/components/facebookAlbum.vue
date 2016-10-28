@@ -59,7 +59,28 @@ export default {
 	     	console.log("fbgallery");
 	     	console.dir(this.fbgallery);
 	     }else if (this.$route.params.imgset){
-	     	this.assets = setting[this.$route.params.imgset];
+
+		     if (this.$route.params.imgset == "mantle01" 
+	          || this.$route.params.imgset =="mantle02" 
+	          || this.$route.params.imgset =="mantle03" 
+	          || this.$route.params.imgset =="mantle04"){
+
+	          	this.assets = setting['mantle'];
+
+	         }else if (this.$route.params.imgset == "stocking01" || 
+	          this.$route.params.imgset =="stocking02" || 
+	          this.$route.params.imgset =="stocking03" || 
+	          this.$route.params.imgset =="stocking04"){
+
+	          	this.assets = setting['stockings'];
+
+	         }else{
+	         	this.assets = setting[this.$route.params.imgset];
+	         }
+
+	         this.imgset = this.$route.params.imgset;
+
+	     	
 	     }else{
 	     	this.assets = setting[this.imgset];
 	     }
@@ -74,7 +95,8 @@ export default {
 
     	if(img==null){
     		//default gallery
-    		this.$emit('imgSelect', item, this.$route.params.imgset)
+    		this.$emit('imgSelect', item, this.imgset)
+    		//alert('set '+ this.imgset);
     	}else{
     		//fb gallery
     		console.warn(img)
