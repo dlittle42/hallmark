@@ -137,6 +137,8 @@ import setting from './setting';
 
 var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04;
 
+ var buttons = [];
+
 export default {
 
   
@@ -458,8 +460,8 @@ export default {
      // stage
 
             // set the mouseover callback...
-  //     stage.on('mouseover', this.onStageOver)
-  //     stage.on('mouseout', this.onStageOut)
+       stage.on('mouseover', this.onStageOver)
+       stage.on('mouseout', this.onStageOut)
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
@@ -622,7 +624,7 @@ export default {
 
         stage.addChild(marker_container);
 */
-        var buttons = [];
+       
 /*
         var buttonPositions = [
             175, 75,
@@ -702,11 +704,25 @@ export default {
               .on('click', this.getGallery)
               .on('tap', this.getGallery)
 */
+
+              button.mousedown = this.onMarkerDown.bind(undefined, button);
+              button.mouseup = this.onMarkerUp.bind(undefined, button);
+              button.mouseupoutside = this.onMarkerUp.bind(undefined, button);
               button.mouseover = this.onMarkerOver.bind(undefined, button);
-
-
+              button.touchstart = this.onMarkerOver.bind(undefined, button);
               button.mouseout = this.onMarkerOut.bind(undefined, button);
-                
+              button.touchend = this.onMarkerOut.bind(undefined, button);
+              button.touchendoutside = this.onMarkerOut.bind(undefined, button);
+
+
+              button.on('click', this.getGallery)
+              button.on('tap', this.getGallery)
+
+
+
+
+              TweenMax.fromTo(button, 2, {alpha:0},{alpha:1, ease:Power2.easeOut, delay: 1+ (i/10)});
+               // TweenLite.to($box, 0.7, {x: '-=200px', y: '-100%', ease:Back.easeInOut, delay: 3}
           //button.tap = noop;
          // button.click = noop;
             // add it to the stage
@@ -718,46 +734,44 @@ export default {
             buttons.push(button);
         }
       },
+      hideMarkers: function(){
 
-      onMarkerDown: function(evt){
-        //portrait.scale.x += 0.3;
-       // portrait.scale.y += 0.3;
-       console.log("DOWN: this="+ this + " or evt="+evt.target)
-       var obj = eval(evt.target.val);
-       // obj.scale.x -= 0.01;
-      //  obj.scale.y -= 0.01;
-        
+        for (var i = 0; i < buttons.length; i++)
+        {
+              TweenMax.to(buttons[i], 1,{alpha:0, ease:Power2.easeOut, delay: (i/30)});
+        }
+      },
+      showMarkers: function(){
+
+        for (var i = 0; i < buttons.length; i++)
+        {
+              TweenMax.to(buttons[i], 1, {alpha:1, ease:Power2.easeOut, delay: (i/30)});
+        }
+      },
+
+      onMarkerDown: function(obj, e){
+
+       TweenMax.to(obj.scale, 0.2, {x:"-=.1",y:"-=.1" , ease: Power2.easeOut});
 
         console.log('onMarkerDown');
      //  alert('touched');
 
       },
-      onMarkerUp: function(evt){
-        console.log("UP: this="+ this + " or evt="+evt.target)
-        //portrait.scale.x -= 0.3;
-       // portrait.scale.y -= 0.3;
-       var obj = eval(evt.target.val);
-       // obj.scale.x += 0.01;
-       // obj.scale.y += 0.01;
+      onMarkerUp: function(obj, e){
+        
+        TweenMax.to(obj.scale, 0.2, {x:"+=.1",y:"+=.1" , ease: Power2.easeOut});
         console.log('onMarkerUp');
        // obj.tint = null;
 
       },
       onMarkerOver: function(obj, e){
         console.log("OVER:" + obj, e);
-/*
-          TweenMax.to(targ, 0.2, {colorProps: {
-              tint: 0xFF0000, format:"number"
-            }, yoyo: true, repeat: 1, ease: Power2.easeOut
-          });
-*/
-
 
       var targObj = eval(obj.val);
 
-        TweenMax.to(targObj.scale, 0.2, {x:"+=.01",y:"+=.01" , ease: Power2.easeOut});
+        TweenMax.to(targObj.scale, 1, {x:"+=.01",y:"+=.01" , ease: Power2.easeOut});
 
-         TweenMax.to(targObj, 0.2, {colorProps: {
+         TweenMax.to(targObj, 0.5, {colorProps: {
               tint: 0xEDE6AF, format:"number"
             }, ease: Power2.easeOut
           });
@@ -780,9 +794,9 @@ export default {
         
         var targObj = eval(obj.val);
 
-        TweenMax.to(targObj.scale, 0.2, {x:"-=.01",y:"-=.01", ease: Power2.easeOut});
+        TweenMax.to(targObj.scale, 0.5, {x:"-=.01",y:"-=.01", ease: Power2.easeOut});
 
-        TweenMax.to(targObj, 0.2, {colorProps: {
+        TweenMax.to(targObj, 0.5, {colorProps: {
               tint: 0xFFFFFF, format:"number"
             }, ease: Power2.easeOut
           });
@@ -796,13 +810,15 @@ export default {
       },
       onStageOver: function(evt){
         console.log('over stage');
-        marker_container.position.x = 0;
+       // marker_container.position.x = 0;
+        this.showMarkers();
         
 
       },
       onStageOut: function(evt){
         console.log('out stage');
-        marker_container.position.x = 800;
+        //marker_container.position.x = 800;
+         this.hideMarkers();
 
       },
       onDragStart: function(event)
