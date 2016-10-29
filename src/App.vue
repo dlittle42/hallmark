@@ -815,6 +815,13 @@ export default {
             buttons.push(button);
         }
       },
+      hideMarkersNow: function(){
+
+        for (var i = 0; i < buttons.length; i++)
+        {
+            buttons[i].alpha=0;
+        }
+      },
       hideMarkers: function(){
 
         for (var i = 0; i < buttons.length; i++)
@@ -1122,6 +1129,60 @@ export default {
           }
           return new Blob([ab], {type: 'image/png'});
       },
+      resizedataURL: function()
+      {
+
+         var mainstage = $('#mainStage')[0]
+        // create an off-screen canvas
+        var elementID = 'canvas' + $('canvas').length; // Unique ID
+
+        $('<canvas>').attr({
+            id: elementID
+        }).css({
+            width: '1200px',
+            height: '1200px',
+            display: 'none'
+        }).appendTo('body');
+
+        var canvas = document.getElementById(elementID);
+        var ctx = canvas.getContext('2d');
+
+        var width = 1200;
+        var height = 1200;
+
+        // set its dimension to target size
+        canvas.width = width;
+        canvas.height = height;
+
+        // draw source image into the off-screen canvas:
+        ctx.drawImage(mainstage, 95, 95, 1010, 1010);
+       // alert(canvas.toDataURL())
+
+       var scope = this;
+
+       var image = new Image();
+        image.src = './static/images/message-01.png';
+        image.onload = function () {
+
+            ctx.drawImage(image, canvas.width / 2 - image.width / 2, 40 )
+        }
+
+        var base_image = new Image();
+        base_image.src = './static/images/photoframe.png';
+        base_image.onload = function(){
+          ctx.drawImage(base_image, 0, 0, 1200, 1200);
+          scope.hideMarkersNow();
+
+          var data= canvas.toDataURL("image/png");
+
+          var blob = scope.dataURItoBlob(data);
+
+          scope.postImageToFacebookAlbum(scope.accessToken, blob, 'message')
+        }
+
+
+      },
+
       uploadCanvasData: function()
       {
 
@@ -1228,7 +1289,10 @@ export default {
             }else if (callback=='album') {
               this.FBlogin(this.uploadToAlbum);
             }else{
-              this.FBlogin(this.uploadCanvasData);
+             // this.FBlogin(this.uploadCanvasData);
+
+              this.FBlogin(this.resizedataURL);
+
 
             }
          }else{
@@ -1239,7 +1303,8 @@ export default {
             }else if (callback=='album') {
               this.uploadToAlbum();
             }else{
-              this.uploadCanvasData();
+            //  this.uploadCanvasData();
+              this.resizedataURL();
 
             }
          }
@@ -1834,11 +1899,11 @@ textarea{
 
 
    // padding: 115px;
-    padding: 30% 45px;
+    padding: 10px 45px;
     box-sizing: border-box;
 
    p{
-    width: 76%;
+    width: 90%;
     text-align: center;
     margin: 0 auto;
    }
@@ -1852,6 +1917,7 @@ textarea{
 
 #thanks.active{
     opacity: 1;
+    pointer-events: auto;
   
 }
 
