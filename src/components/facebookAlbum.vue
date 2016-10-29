@@ -43,47 +43,34 @@ export default {
         
       }
 	},
+
+	  // when route changes when this component is already rendered,
+	  // the logic will be slightly different.
+	  watch: {
+	    $route () {
+	    	console.log('watch Route fired!!!');
+	    	this.setGallery(this.$route.params.imgset);
+	    	/*
+	      this.post = null
+	      getPost(this.$route.params.id, (err, post) => {
+	        if (err) {
+	          this.error = err.toString()
+	        } else {
+	          this.post = post
+	        }
+	      })
+	      */
+	    }
+	  },
 	mounted: function () {
+
 	    this.$nextTick(function () {
 	      // code that assumes this.$el is in-document
 	      console.log('gallery mounted');
 	      console.log($('.header').width())
-	      if ($('.header').width() > 599) $('#social_action').fadeOut();
 
-	    //  console.log(assets);
-	      console.log(this.$route.params.imgset);
-	      //var set = eval(this.$route.params.imgset);
-	     // console.log(set)
-	     if (this.$route.params.fbset){
-	     	this.fbgallery = this.$route.params.fbset;
-	     	console.log("fbgallery");
-	     	console.dir(this.fbgallery);
-	     }else if (this.$route.params.imgset){
-
-		     if (this.$route.params.imgset == "mantle01" 
-	          || this.$route.params.imgset =="mantle02" 
-	          || this.$route.params.imgset =="mantle03" 
-	          || this.$route.params.imgset =="mantle04"){
-
-	          	this.assets = setting['mantle'];
-
-	         }else if (this.$route.params.imgset == "stocking01" || 
-	          this.$route.params.imgset =="stocking02" || 
-	          this.$route.params.imgset =="stocking03" || 
-	          this.$route.params.imgset =="stocking04"){
-
-	          	this.assets = setting['stockings'];
-
-	         }else{
-	         	this.assets = setting[this.$route.params.imgset];
-	         }
-
-	         this.imgset = this.$route.params.imgset;
-
-	     	
-	     }else{
-	     	this.assets = setting[this.imgset];
-	     }
+	      this.setGallery(this.$route.params.imgset);
+	      
 	     
 	 		
 	    })
@@ -112,6 +99,43 @@ export default {
       	this.$emit('imgSelect', item, this.$route.params.imgset)
       	//this.$router.push('home');
       	*/
+	},
+	setGallery: function(route){
+
+		if ($('.header').width() > 599) $('#social_action').fadeOut();
+
+	     if (route =="facebook"){
+
+	     	this.fbgallery = this.$route.params.fbset;
+	     	console.log("fbgallery");
+	     	console.dir(this.fbgallery);
+	     }else if (route){
+
+		     if (route == "mantle01" 
+	          || route =="mantle02" 
+	          || route =="mantle03" 
+	          || route =="mantle04"){
+
+	          	this.assets = setting['mantle'];
+
+	         }else if (route == "stocking01" || 
+	          route =="stocking02" || 
+	          route =="stocking03" || 
+	          route =="stocking04"){
+
+	          	this.assets = setting['stockings'];
+
+	         }else{
+	         	this.assets = setting[route];
+	         }
+
+	         this.imgset = route;
+
+	     	
+	     }else{
+	     	this.assets = setting[this.imgset];
+	     }
+
 	}
   },
 

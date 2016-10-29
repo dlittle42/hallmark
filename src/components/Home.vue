@@ -20,21 +20,31 @@
         </div>
 -->
         <div class="carousel">
-  <div class="carousel-cell"><p>
-        1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
-        </p></div>
-  <div class="carousel-cell"><p>
-        2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
-        </p></div>
-  <div class="carousel-cell"><p>
-        3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
-        </p></div>
-  <div class="carousel-cell"><p>
-        4. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
-        </p></div>
-  <div class="carousel-cell"><p>
-        5. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu sapien a tortor gravida imperdiet. Praesent quis justo sed augue sodales suscipit in mattis risus.
-        </p></div>
+  <div class="carousel-cell">
+    <div class="panel">
+    <img src="../assets/message-01-thumb.png">
+    </div>
+  </div>
+  <div class="carousel-cell">
+    <div class="panel">
+    <img src="../assets/message-02-thumb.png">
+    </div>
+  </div>
+  <div class="carousel-cell">
+    <div class="panel">
+    <img src="../assets/message-03-thumb.png">
+    </div>
+  </div>
+  <div class="carousel-cell">
+    <div class="panel">
+    <img src="../assets/message-04-thumb.png">
+    </div>
+  </div>
+  <div class="carousel-cell">
+    <div class="panel">
+    <img src="../assets/message-05-thumb.png">
+    </div>
+  </div>
 </div>
 <!--
           <swiper :options="swiperOption">
@@ -121,12 +131,10 @@ import Flickity from 'flickity';
       $('#social_action').fadeIn();
 
 
-        const carousel = $('.carousel')[0];
-        const options = {
-            wraparound: true
-        }
+    
 
-        this.flkty = new Flickity(carousel, options);
+        this.initSlider();
+
       //  this.flkty.on('cellSelect', this.updateSelected);
      // $('.owl-carousel').owlCarousel();
      // document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
@@ -165,6 +173,21 @@ import Flickity from 'flickity';
         postFB: function(){
           //console.log('postFB');
           this.$emit('fbPost');
+        },
+        initSlider: function(){
+
+          const carousel = $('.carousel')[0];
+        const options = {
+            wrapAround: true
+        }
+          this.flkty = new Flickity(carousel, options);
+          var scope = this;
+
+        this.flkty.on( 'select', function(e) {
+          console.log( 'Flickity select ' + this.selectedIndex )
+          scope.$emit('msgSelect', this.selectedIndex);
+         
+        })
         },
         
         postImageToFacebook(token, filename, mimeType, imageData, message) {
@@ -410,17 +433,8 @@ p{
 }
 
 
-#fakedots > div {
-  width: 10px;
-  height: 10px;
-  background-color: #c7bd8b;
 
-  border-radius: 100%;
-  display: inline-block;
-  animation: none;
- // -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
- // animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-}
+
 
 
 

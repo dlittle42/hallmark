@@ -6,8 +6,9 @@
 -->
     <header class="header">
       <div id="layout_title" class="aside aside-1">
-
-        <router-link :to="'home'"><img class="logo" src="./assets/hallmark_main_logo.png"></router-link>
+      <a href="http://www.hallmarkmoviesandmysteries.com/" target="_blank">
+        <img class="logo" src="./assets/hallmark_main_logo.png">
+        </a>
 
       </div>
       <div id="main_title" class="main">
@@ -16,8 +17,9 @@
 
       </div>
       <div id="photos_title" class="aside aside-2">
-
+      <a href="http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas" target="_blank">
         <img class="logo" src="./assets/title_christmas.png">
+        </a>
       </div>
     </header>
     <!--
@@ -87,7 +89,7 @@
 
 
               <transition name="fade" mode="out-in">
-                <router-view v-on:imgSelect="updateImage" v-on:FBauth="getFBstatus"></router-view>
+                <router-view v-on:imgSelect="updateImage" v-on:FBauth="getFBstatus" v-on:msgSelect="updateMessage"></router-view>
               </transition>
               <div id="intro">
                 <img class="logo" src="./assets/title_christmas.png">
@@ -154,7 +156,8 @@ export default {
       // its initial state.
       accessToken:'',
       allPhotos: [],
-      layout: ""
+      layout: "",
+      selectedMsg: ""
 
     }
    
@@ -188,6 +191,9 @@ export default {
   methods: {
       getAlert() {
         alert('function call');
+      },
+      updateMessage: function(idx){
+        this.selectedMsg = idx+1;
       },
       updateImage: function(img, target){
         $('#load-panel').addClass('active');
@@ -226,7 +232,7 @@ export default {
       imageToCanvas: function(path, target){
 
          console.warn(target);
-          this.$router.push('home');
+          this.$router.push({ name: 'home'});
          // console.log('---' + path)
         //  console.log('---' + path.toString())
           //$('body').prepend($('<img>',{id:'theImg',src:path}))
@@ -853,7 +859,7 @@ export default {
 
       },
       onMarkerOver: function(obj, e){
-        console.log("OVER:" + obj, e);
+       // console.log("OVER:" + obj, e);
 
       var targObj = eval(obj.val);
 
@@ -877,7 +883,7 @@ export default {
 
       },
       onMarkerOut: function(obj, e){
-        console.log("OUT:"+obj, e);
+       // console.log("OUT:"+obj, e);
 
         
         var targObj = eval(obj.val);
@@ -1071,7 +1077,7 @@ export default {
        // alert("target ="+ evt.target.val)
         $('#photo_block').addClass('m-active');
         if (evt.target.val == "portrait"){
-          this.$router.push('photos');
+          this.$router.push({ name: 'photos'});
 
         }else{
 /*
@@ -1161,7 +1167,8 @@ export default {
        var scope = this;
 
        var image = new Image();
-        image.src = './static/images/message-01.png';
+        image.src = './static/images/message-0'+this.selectedMsg+'.png';
+ 
         image.onload = function () {
 
             ctx.drawImage(image, canvas.width / 2 - image.width / 2, 40 )
@@ -1347,7 +1354,7 @@ export default {
             console.dir(photos);
             console.log('url======'+photos[0].url);
             $('#load-panel').removeClass('active');
-            scope.$router.push({ name: 'gallery', params : { 'fbset': photos }});
+            scope.$router.push({ name: 'gallery', params : { 'fbset': photos, 'imgset': 'facebook' }});
          // router.push({ path: 'album', params : { imgset: 'backgrounds' }});
            // router.push('album');
             
@@ -2024,18 +2031,38 @@ figure{
 
 .carousel {
  // background: #EEE;
+     width: 100%;
+    
 }
+
 
 .carousel-cell {
   width: 100%;
   height: 160px;
-  margin-right: 10px;
- // background: #8C8;
-  box-sizing: border-box;
- // padding: 10px 30px;
-  color: black;
-  //border-radius: 5px;
+ // margin: 10px;
+ display: flex;
+
  // counter-increment: carousel-cell;
+ .panel{
+    align-self: center;
+    width: 100%;
+    height: 70%;
+    margin: 0px 10px 40px;
+   // margin: 0 auto;
+    background: #f1dea1;
+    box-sizing: border-box;
+    padding: 30px 2px;
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.5);
+
+    img{
+      max-width: 100%
+     }
+
+ }
+
+ 
 }
 
 
