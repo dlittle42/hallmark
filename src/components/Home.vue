@@ -129,6 +129,10 @@ import Flickity from 'flickity';
       }, false);
       */
       $('#social_action').fadeIn();
+      if ($('.header').width() > 600 && $('.header').width() <800){
+        $('#mobile_buttons').fadeIn();
+
+      } 
 
 
     

@@ -102,7 +102,11 @@ export default {
 	},
 	setGallery: function(route){
 
-		if ($('.header').width() > 599) $('#social_action').fadeOut();
+		if ($('.header').width() > 599){
+			$('#social_action').fadeOut();
+			$('#mobile_buttons').fadeOut();
+
+		} 
 
 	     if (route =="facebook"){
 

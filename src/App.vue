@@ -91,11 +91,12 @@
               <transition name="fade" mode="out-in">
                 <router-view v-on:imgSelect="updateImage" v-on:FBauth="getFBstatus" v-on:msgSelect="updateMessage"></router-view>
               </transition>
+              <!--
               <div id="intro">
                 <img class="logo" src="./assets/title_christmas.png">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus. Vivamus eleifend.</p>
               </div>
-              
+              -->
          
             </div>
 
@@ -1951,6 +1952,11 @@ textarea{
   
 }
 
+ #intro{
+
+        display: none;
+  }
+
 .spinner {
   margin: 0 auto;
   width: 70px;
@@ -1976,6 +1982,8 @@ textarea{
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
+
+
 
 
 @-webkit-keyframes sk-bouncedelay {
@@ -2118,19 +2126,95 @@ figure{
 
 @media only screen and (min-width:600px) and (max-width: 800px){
   //two col view
-  #layout_block,
-  #layout_title,
-  #photos_title{
+
+  h1{
+        font-size: 22px;
+  }
+
+  #layout_title{
     display: none;
   }
 
+  .header{
+    width: 100vw;
+    max-width: 1366px;
+    height: 100px;//15%;
+
+  }
+
+  #layout_block{
+        margin: 0;
+    /* width: 100vw; */
+    /* height: 100vw; */
+    opacity: 0; 
+    transition: opacity .5s ease-out;
+    z-index: 9;
+    pointer-events: none;
+    position: relative;
+    background-color: rgba(251, 247, 216, 0.9);
+    /* position: absolute; */
+    /* max-width: 450px; */
+    /* max-height: 450px; */
+    /* top: 13.5%; */
+    /* width: 62.5vw; */
+    /* height: 63.5vw; */
+    background-color: pink;
+    /* padding: 0 10px; */
+    /* flex: 2; */
+
+    display: block;
+    position: absolute;
+    flex: none;
+   // display: none;
+    top: 100px;
+    left: 0;
+    width: 64vw;
+    height: 64vw;
+    margin: 0;
+    padding: 0;
+
+    .transparent{
+      height: 100%;
+      min-height: 100%;
+    }
+
+
+  }
+
+
+
+ #layout_block.m-active{
+    opacity: 1;
+    z-index: 400;
+     pointer-events: auto;
+  }
+
+
+  #main_block{
+    display: block;
+    position: relative;
+    flex: none;
+    /* margin-top: -17vh; */
+    /* max-width: 450px; */
+    /* max-height: 450px; */
+    float: left;
+    width: 64vw;
+    height: 64vw;
+  }
+
   #photo_block{
-        height: auto;
+     flex: none;
+    /* float: right; */
+    position: relative;
+    /* width: 130px; */
+    width: 29vw;
+    /* height: 30vw; */
+    /* margin-top: -450px; */
   }
 
   .main{ 
     flex: 2; 
-    order: 1;
+    //order: 1;
   }
 
    #photo_block{
@@ -2143,9 +2227,13 @@ figure{
 
    #mobile_buttons{
     position: absolute;
-    top: 50%;
+    top: 44%;
     left: 0;
     width: 100%;
+   }
+
+   #message_btn{
+    display: none;
    }
 
    #social_action{
@@ -2160,6 +2248,7 @@ figure{
 
 
 @media (max-width:599px) {
+
 
   .wrapper, .header {
 
@@ -2272,10 +2361,7 @@ figure{
     display: none;
   }
 
-  #intro{
-
-        display: none;
-  }
+ 
 
   .aside { flex: 1 auto; }
 
