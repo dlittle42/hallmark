@@ -1,6 +1,6 @@
 {"frames": {
 
-"Fire_00000.png":
+"Fire_00000.jpg":
 {
     "frame": {"x":483,"y":692,"w":169,"h":226},
     "rotated": false,
@@ -8,7 +8,7 @@
     "spriteSourceSize": {"x":3,"y":4,"w":169,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00001.png":
+"Fire_00001.jpg":
 {
     "frame": {"x":468,"y":2,"w":169,"h":226},
     "rotated": false,
@@ -16,7 +16,7 @@
     "spriteSourceSize": {"x":3,"y":4,"w":169,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00002.png":
+"Fire_00002.jpg":
 {
     "frame": {"x":639,"y":2,"w":167,"h":226},
     "rotated": false,
@@ -24,7 +24,7 @@
     "spriteSourceSize": {"x":3,"y":5,"w":167,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00003.png":
+"Fire_00003.jpg":
 {
     "frame": {"x":808,"y":2,"w":165,"h":226},
     "rotated": false,
@@ -32,7 +32,7 @@
     "spriteSourceSize": {"x":3,"y":5,"w":165,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00004.png":
+"Fire_00004.jpg":
 {
     "frame": {"x":654,"y":688,"w":161,"h":226},
     "rotated": false,
@@ -40,7 +40,7 @@
     "spriteSourceSize": {"x":3,"y":5,"w":161,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00005.png":
+"Fire_00005.jpg":
 {
     "frame": {"x":817,"y":458,"w":151,"h":226},
     "rotated": false,
@@ -48,7 +48,7 @@
     "spriteSourceSize": {"x":6,"y":5,"w":151,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00006.png":
+"Fire_00006.jpg":
 {
     "frame": {"x":817,"y":686,"w":137,"h":226},
     "rotated": false,
@@ -56,7 +56,7 @@
     "spriteSourceSize": {"x":11,"y":5,"w":137,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00007.png":
+"Fire_00007.jpg":
 {
     "frame": {"x":290,"y":2,"w":113,"h":228},
     "rotated": false,
@@ -64,7 +64,7 @@
     "spriteSourceSize": {"x":22,"y":3,"w":113,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00008.png":
+"Fire_00008.jpg":
 {
     "frame": {"x":284,"y":692,"w":79,"h":228},
     "rotated": false,
@@ -72,7 +72,7 @@
     "spriteSourceSize": {"x":40,"y":3,"w":79,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00009.png":
+"Fire_00009.jpg":
 {
     "frame": {"x":405,"y":2,"w":61,"h":228},
     "rotated": false,
@@ -80,7 +80,7 @@
     "spriteSourceSize": {"x":53,"y":3,"w":61,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00010.png":
+"Fire_00010.jpg":
 {
     "frame": {"x":444,"y":462,"w":49,"h":228},
     "rotated": false,
@@ -88,7 +88,7 @@
     "spriteSourceSize": {"x":64,"y":3,"w":49,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00011.png":
+"Fire_00011.jpg":
 {
     "frame": {"x":377,"y":462,"w":65,"h":228},
     "rotated": false,
@@ -96,7 +96,7 @@
     "spriteSourceSize": {"x":52,"y":3,"w":65,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00012.png":
+"Fire_00012.jpg":
 {
     "frame": {"x":272,"y":462,"w":103,"h":228},
     "rotated": false,
@@ -104,7 +104,7 @@
     "spriteSourceSize": {"x":37,"y":3,"w":103,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00013.png":
+"Fire_00013.jpg":
 {
     "frame": {"x":143,"y":692,"w":139,"h":228},
     "rotated": false,
@@ -112,7 +112,7 @@
     "spriteSourceSize": {"x":20,"y":3,"w":139,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00014.png":
+"Fire_00014.jpg":
 {
     "frame": {"x":2,"y":462,"w":163,"h":228},
     "rotated": false,
@@ -120,7 +120,7 @@
     "spriteSourceSize": {"x":7,"y":3,"w":163,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00015.png":
+"Fire_00015.jpg":
 {
     "frame": {"x":2,"y":2,"w":171,"h":228},
     "rotated": false,
@@ -128,7 +128,7 @@
     "spriteSourceSize": {"x":2,"y":3,"w":171,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00016.png":
+"Fire_00016.jpg":
 {
     "frame": {"x":2,"y":232,"w":163,"h":228},
     "rotated": false,
@@ -136,7 +136,7 @@
     "spriteSourceSize": {"x":4,"y":3,"w":163,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00017.png":
+"Fire_00017.jpg":
 {
     "frame": {"x":2,"y":692,"w":139,"h":228},
     "rotated": false,
@@ -144,7 +144,7 @@
     "spriteSourceSize": {"x":16,"y":3,"w":139,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00018.png":
+"Fire_00018.jpg":
 {
     "frame": {"x":167,"y":462,"w":103,"h":228},
     "rotated": false,
@@ -152,7 +152,7 @@
     "spriteSourceSize": {"x":35,"y":3,"w":103,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00019.png":
+"Fire_00019.jpg":
 {
     "frame": {"x":365,"y":692,"w":65,"h":228},
     "rotated": false,
@@ -160,7 +160,7 @@
     "spriteSourceSize": {"x":58,"y":3,"w":65,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00020.png":
+"Fire_00020.jpg":
 {
     "frame": {"x":432,"y":692,"w":49,"h":228},
     "rotated": false,
@@ -168,7 +168,7 @@
     "spriteSourceSize": {"x":62,"y":3,"w":49,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00021.png":
+"Fire_00021.jpg":
 {
     "frame": {"x":389,"y":232,"w":61,"h":228},
     "rotated": false,
@@ -176,7 +176,7 @@
     "spriteSourceSize": {"x":61,"y":3,"w":61,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00022.png":
+"Fire_00022.jpg":
 {
     "frame": {"x":306,"y":232,"w":81,"h":228},
     "rotated": false,
@@ -184,7 +184,7 @@
     "spriteSourceSize": {"x":55,"y":3,"w":81,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00023.png":
+"Fire_00023.jpg":
 {
     "frame": {"x":175,"y":2,"w":113,"h":228},
     "rotated": false,
@@ -192,7 +192,7 @@
     "spriteSourceSize": {"x":39,"y":3,"w":113,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00024.png":
+"Fire_00024.jpg":
 {
     "frame": {"x":167,"y":232,"w":137,"h":228},
     "rotated": false,
@@ -200,7 +200,7 @@
     "spriteSourceSize": {"x":26,"y":3,"w":137,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00025.png":
+"Fire_00025.jpg":
 {
     "frame": {"x":664,"y":458,"w":151,"h":226},
     "rotated": false,
@@ -208,7 +208,7 @@
     "spriteSourceSize": {"x":18,"y":5,"w":151,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00026.png":
+"Fire_00026.jpg":
 {
     "frame": {"x":792,"y":230,"w":161,"h":226},
     "rotated": false,
@@ -216,7 +216,7 @@
     "spriteSourceSize": {"x":11,"y":5,"w":161,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00027.png":
+"Fire_00027.jpg":
 {
     "frame": {"x":623,"y":230,"w":167,"h":226},
     "rotated": false,
@@ -224,7 +224,7 @@
     "spriteSourceSize": {"x":6,"y":5,"w":167,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00028.png":
+"Fire_00028.jpg":
 {
     "frame": {"x":495,"y":460,"w":167,"h":226},
     "rotated": false,
@@ -232,7 +232,7 @@
     "spriteSourceSize": {"x":5,"y":5,"w":167,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00029.png":
+"Fire_00029.jpg":
 {
     "frame": {"x":452,"y":232,"w":169,"h":226},
     "rotated": false,
@@ -240,7 +240,7 @@
     "spriteSourceSize": {"x":3,"y":4,"w":169,"h":226},
     "sourceSize": {"w":175,"h":240}
 }},
-"Fire_00030.png":
+"Fire_00030.jpg":
 {
     "frame": {"x":444,"y":462,"w":49,"h":228},
     "rotated": false,
@@ -248,7 +248,7 @@
     "spriteSourceSize": {"x":64,"y":3,"w":49,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00031.png":
+"Fire_00031.jpg":
 {
     "frame": {"x":377,"y":462,"w":65,"h":228},
     "rotated": false,
@@ -256,7 +256,7 @@
     "spriteSourceSize": {"x":52,"y":3,"w":65,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00032.png":
+"Fire_00032.jpg":
 {
     "frame": {"x":272,"y":462,"w":103,"h":228},
     "rotated": false,
@@ -264,7 +264,7 @@
     "spriteSourceSize": {"x":37,"y":3,"w":103,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00033.png":
+"Fire_00033.jpg":
 {
     "frame": {"x":143,"y":692,"w":139,"h":228},
     "rotated": false,
@@ -272,7 +272,7 @@
     "spriteSourceSize": {"x":20,"y":3,"w":139,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00034.png":
+"Fire_00034.jpg":
 {
     "frame": {"x":2,"y":462,"w":163,"h":228},
     "rotated": false,
@@ -280,7 +280,7 @@
     "spriteSourceSize": {"x":7,"y":3,"w":163,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00035.png":
+"Fire_00035.jpg":
 {
     "frame": {"x":2,"y":2,"w":171,"h":228},
     "rotated": false,
@@ -288,7 +288,7 @@
     "spriteSourceSize": {"x":2,"y":3,"w":171,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00036.png":
+"Fire_00036.jpg":
 {
     "frame": {"x":2,"y":232,"w":163,"h":228},
     "rotated": false,
@@ -296,7 +296,7 @@
     "spriteSourceSize": {"x":4,"y":3,"w":163,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00037.png":
+"Fire_00037.jpg":
 {
     "frame": {"x":2,"y":692,"w":139,"h":228},
     "rotated": false,
@@ -304,7 +304,7 @@
     "spriteSourceSize": {"x":16,"y":3,"w":139,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00038.png":
+"Fire_00038.jpg":
 {
     "frame": {"x":167,"y":462,"w":103,"h":228},
     "rotated": false,
@@ -312,7 +312,7 @@
     "spriteSourceSize": {"x":35,"y":3,"w":103,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00039.png":
+"Fire_00039.jpg":
 {
     "frame": {"x":365,"y":692,"w":65,"h":228},
     "rotated": false,
@@ -320,7 +320,7 @@
     "spriteSourceSize": {"x":58,"y":3,"w":65,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00040.png":
+"Fire_00040.jpg":
 {
     "frame": {"x":432,"y":692,"w":49,"h":228},
     "rotated": false,
@@ -328,7 +328,7 @@
     "spriteSourceSize": {"x":62,"y":3,"w":49,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00041.png":
+"Fire_00041.jpg":
 {
     "frame": {"x":389,"y":232,"w":61,"h":228},
     "rotated": false,
@@ -336,7 +336,7 @@
     "spriteSourceSize": {"x":61,"y":3,"w":61,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00042.png":
+"Fire_00042.jpg":
 {
     "frame": {"x":306,"y":232,"w":81,"h":228},
     "rotated": false,
@@ -344,7 +344,7 @@
     "spriteSourceSize": {"x":55,"y":3,"w":81,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00043.png":
+"Fire_00043.jpg":
 {
     "frame": {"x":175,"y":2,"w":113,"h":228},
     "rotated": false,
@@ -352,7 +352,7 @@
     "spriteSourceSize": {"x":39,"y":3,"w":113,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00044.png":
+"Fire_00044.jpg":
 {
     "frame": {"x":167,"y":232,"w":137,"h":228},
     "rotated": false,
@@ -360,7 +360,7 @@
     "spriteSourceSize": {"x":26,"y":3,"w":137,"h":228},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00045.png":
+"Fire_00045.jpg":
 {
     "frame": {"x":664,"y":458,"w":151,"h":226},
     "rotated": false,
@@ -368,7 +368,7 @@
     "spriteSourceSize": {"x":18,"y":5,"w":151,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00046.png":
+"Fire_00046.jpg":
 {
     "frame": {"x":792,"y":230,"w":161,"h":226},
     "rotated": false,
@@ -376,7 +376,7 @@
     "spriteSourceSize": {"x":11,"y":5,"w":161,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00047.png":
+"Fire_00047.jpg":
 {
     "frame": {"x":623,"y":230,"w":167,"h":226},
     "rotated": false,
@@ -384,7 +384,7 @@
     "spriteSourceSize": {"x":6,"y":5,"w":167,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00048.png":
+"Fire_00048.jpg":
 {
     "frame": {"x":495,"y":460,"w":167,"h":226},
     "rotated": false,
@@ -392,7 +392,7 @@
     "spriteSourceSize": {"x":5,"y":5,"w":167,"h":226},
     "sourceSize": {"w":175,"h":240}
 },
-"Fire_00049.png":
+"Fire_00049.jpg":
 {
     "frame": {"x":452,"y":232,"w":169,"h":226},
     "rotated": false,

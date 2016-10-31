@@ -30,7 +30,7 @@
             
             <div class="transparent">
   
-              <h1>CHOOSE A LAYOUT</h1>
+              <h1>CHOOSE A LAYOUT<a href="#" class="help" id="help-layout">?</a></h1> 
            
               <div id="scene-scroll" class="scroll">
               
@@ -71,6 +71,9 @@
                   <div class="bounce2"></div>
                   <div class="bounce3"></div>
                 </div>
+              </div>
+              <div id="help-panel">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus.</p>
               </div>
               <div id="thanks">
               <h1>Thanks for creating and sharing your Most Wonderful Mantlepiece of Christmas!</h1>
@@ -140,6 +143,8 @@ import 'flickity/dist/flickity.min.css';
 import { TweenMax, TimelineMax, Power0 } from 'gsap';
 var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 
+import SpriteUtilities  from './js/spriteUtilities';
+
 import setting from './setting';
 
 var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04, mantlepiece, yulelog;
@@ -184,6 +189,7 @@ export default {
       */
       this.setupPixi();
      // $('#mainStage').height($('#main_block').width() / 1);
+     document.getElementById("help-layout").addEventListener('click', this.showHelp('layout'), false);
       
       
       
@@ -415,23 +421,21 @@ export default {
         portrait.on('touchmove', this.onDragMove);
 
 
+        stage.addChild(container);
+        container.addChild(portrait);
+        stage.addChild(frame);
 
+        var mask_rect = new PIXI.Graphics();
+        mask_rect.beginFill(0xFF700B, 1);
+        var buffer = 5;
+        var adjustedX = frame.position.x - frame.width/2 + buffer;
+        var adjustedY = frame.position.y - frame.height/2 +buffer;
+        mask_rect.drawRect(adjustedX, adjustedY, frame.width - buffer*2, frame.height - buffer*2);
+       // mask_rect.anchor.set(0.5);
 
-          stage.addChild(container);
-          container.addChild(portrait);
-          stage.addChild(frame);
+        stage.addChild(mask_rect);
 
-          var mask_rect = new PIXI.Graphics();
-          mask_rect.beginFill(0xFF700B, 1);
-          var buffer = 5;
-          var adjustedX = frame.position.x - frame.width/2 + buffer;
-          var adjustedY = frame.position.y - frame.height/2 +buffer;
-          mask_rect.drawRect(adjustedX, adjustedY, frame.width - buffer*2, frame.height - buffer*2);
-         // mask_rect.anchor.set(0.5);
-
-          stage.addChild(mask_rect);
-
-          container.mask = mask_rect;
+        container.mask = mask_rect;
 
 /*
            var marker1 = PIXI.Sprite.fromImage('./static/images/marker.png');
@@ -444,7 +448,7 @@ export default {
 
         stage.addChild(marker1);
         */
-         // parent.setUpFireplace();
+         // 
           parent.setupMantle();
           parent.setupMarkers();
         
@@ -453,7 +457,7 @@ export default {
 
 
 
-        
+   
 
      //  document.getElementById('mainStage').appendChild(renderer.view);
        mainStage = $('#mainStage canvas');
@@ -525,6 +529,7 @@ export default {
         //tree.anchor.set(0.5);
         stage.addChild(tree);
 
+      // this.setupFireplace();
        
 
        // this.setObjEvents(frame);
@@ -533,10 +538,6 @@ export default {
       //  this.setObjEvents(fireplace);
       //  this.setObjEvents(gift);
       //  this.setObjEvents(tree);
-
-        
-
-
 
 
         //parent.setupMarkers();
@@ -621,12 +622,54 @@ export default {
       },
       setupFireplace: function(){
 
+     //   var u = new SpriteUtilities();
+
         PIXI.loader
             .add('../static/images/Fire/yulelog.json')
             .load(this.onAssetsLoaded);
 
+   //     var frameTextures = u.frameSeries(0, 69, "Fire_", ".jpg");
+     //   var anySprite = u.sprite(frameTextures);
+
       },
       onAssetsLoaded: function(){
+        console.log('.......assets loaded......');
+
+        // create an array to store the textures
+        var explosionTextures = [];
+        
+        for (var i=0; i < 26; i++) 
+        {
+          var texture = PIXI.Texture.fromFrame("Explosion_Sequence_A " + (i+1) + ".png");
+          explosionTextures.push(texture);
+        };
+        
+        // create a texture from an image path
+        // add a bunch of aliens
+        for (var i = 0; i < 50; i++) 
+        {
+          // create an explosion MovieClip
+          var explosion = new PIXI.MovieClip(explosionTextures);
+          
+        
+          explosion.position.x = Math.random() * 800;
+          explosion.position.y = Math.random() * 600;
+          explosion.anchor.x = 0.5;
+          explosion.anchor.y = 0.5;
+          
+          explosion.rotation = Math.random() * Math.PI;
+          explosion.scale.x = explosion.scale.y = 0.75 + Math.random() * 0.5
+          
+          explosion.gotoAndPlay(Math.random() * 27);
+          
+          stage.addChild(explosion);
+        }
+    
+
+    /*
+    
+
+  
         // create an array of textures from an image path
         var frames = [];
 
@@ -636,7 +679,6 @@ export default {
             // magically works since the spritesheet was loaded with the pixi loader
             frames.push(PIXI.Texture.fromFrame('Fire_000' + val + '.jpg'));
         }
-
 
         yulelog = new PIXI.extras.MovieClip(frames);
 
@@ -648,6 +690,7 @@ export default {
         yulelog.play();
 
         stage.addChild(yulelog);
+        */
       },
 
       setupMantle: function(){
@@ -1019,6 +1062,11 @@ export default {
               this.position.y = newPosition.y;
               console.log('drag move');
           }
+      },
+      showHelp: function(obj){
+        $('#help-panel').fadeIn();
+
+
       },
 
       resize: function (){
@@ -1637,6 +1685,27 @@ p{
     
 }
 
+a.help{
+      background: #666;
+    border-radius: 0.8em;
+    -moz-border-radius: 0.8em;
+    -webkit-border-radius: 12px;
+    color: #ffffff;
+    display: inline-block;
+    /* font-weight: bold; */
+    line-height: 12px;
+    justify-content: center;
+    /* margin-right: 15px; */
+    text-align: center;
+    width: 12px;
+    font-size: 12px;
+    transition: all .3s ease-out;
+
+    &:hover{
+         background: #cf151b;
+    }
+}
+
 #app {
   //color: #2c3e50;
  // background-color: $trans-yellow;
@@ -1658,7 +1727,7 @@ p{
 }
 
 #app a {
-  color: #42b983;
+ // color: #42b983;
   text-decoration: none;
 }
 
@@ -1839,7 +1908,7 @@ h1{
     width: 100%;
 }
 
-#intro{
+#help-panel{
     position: absolute;
     top: 0;
     left: 0;
@@ -2081,9 +2150,28 @@ textarea{
   
 }
 
- #intro{
+ #help-panel{
 
         display: none;
+          background-color: rgba(251, 247, 216, .9);
+    
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+   // opacity: 0;
+    transition: opacity .25s ease-out;
+   -moz-transition: opacity .25s ease-out;
+   -webkit-transition: opacity .25s ease-out;
+   pointer-events:none;
+    flex-direction: column;
+    color: #3c3b3b;
+
+
+   // padding: 115px;
+    padding: 10px 45px;
+    box-sizing: border-box;
   }
 
 .spinner {
@@ -2246,7 +2334,7 @@ figure{
   .aside-2 { order: 3; }
   .footer  { order: 4; }
 
-  #intro,
+
   #mobile_buttons{
     display: none;
   }

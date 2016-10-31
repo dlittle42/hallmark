@@ -3,7 +3,7 @@
   <template>
     
       <div>
-        <h1>CHOOSE A PHOTO</h1>
+        <h1>CHOOSE A PHOTO<a href="#" class="help">?</a></h1>
         <!--
         <div class="fb-login-button" scope="public_profile,email" onlogin="this.checkLoginState();">
         </div>
@@ -67,7 +67,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
     },
     data() {
       return {
-        msg: 'CHOOSE A PHOTO',
+        //msg: 'CHOOSE A PHOTO',
         router: '',
        // accessToken:'',
         allPhotos: [],
