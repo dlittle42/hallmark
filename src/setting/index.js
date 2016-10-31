@@ -34,13 +34,13 @@ export default  {
         'bowl-01', 
         'bowl-02',
         'bowl-03',
+        'orn-01',
+        'orn-02',
+        'orn-03',
         'pin-01',
         'pin-02',
         'pin-03',
         'pin-04',
-        'pin-01',
-        'pin-02',
-        'pin-03',
         'clear'
     ],
     stockings:[

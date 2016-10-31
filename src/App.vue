@@ -937,7 +937,7 @@ export default {
 
       var targObj = eval(obj.val);
 
-        TweenMax.to(targObj.scale, 1, {x:"+=.01",y:"+=.01" , ease: Power2.easeOut});
+     //   TweenMax.to(targObj.scale, 1, {x:"+=.01",y:"+=.01" , ease: Power2.easeOut});
 
          TweenMax.to(targObj, 0.5, {colorProps: {
               tint: 0xEDE6AF, format:"number"
@@ -962,7 +962,7 @@ export default {
         
         var targObj = eval(obj.val);
 
-        TweenMax.to(targObj.scale, 0.5, {x:"-=.01",y:"-=.01", ease: Power2.easeOut});
+     //   TweenMax.to(targObj.scale, 0.5, {x:"-=.01",y:"-=.01", ease: Power2.easeOut});
 
         TweenMax.to(targObj, 0.5, {colorProps: {
               tint: 0xFFFFFF, format:"number"
