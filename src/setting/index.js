@@ -27,36 +27,40 @@ export default  {
           'frame-05'
     ],
     mantle:[
-        'mantle-01',
-        'mantle-02',
-        'mantle-01',
-        'mantle-02',
-        'mantle-01',
-        'mantle-02',
-        'mantle-01',
-        'mantle-02'
+        'candle-01',
+        'candle-02',
+        'candle-03',
+        'candle-04',
+        'bowl-01', 
+        'bowl-02',
+        'bowl-03',
+        'pin-01',
+        'pin-02',
+        'pin-03',
+        'pin-04',
+        'pin-01',
+        'pin-02',
+        'pin-03',
+        'clear'
     ],
     stockings:[
         'stocking-01',
         'stocking-02',
-        'stocking-01',
-        'stocking-02',
-        'stocking-01',
-        'stocking-02',
-        'stocking-01',
-        'stocking-02',
-        'stocking-01',
-        'stocking-02'
+        'stocking-03',
+        'stocking-04',
+        'stocking-05',
+        'stocking-06',
+        'stocking-07',
+        'stocking-08',
+        'clear'
 
     ],
     mantlepiece:[
-        'mantle01_thumb.png',
-        'mantle01_thumb.png',
-        'mantle01_thumb.png',
-        'mantle01_thumb.png',
-        'mantle01_thumb.png',
-        'mantle01_thumb.png',
-        'mantle01_thumb.png'
+        'garlands-01',
+        'garlands-02',
+        'garlands-03',
+        'garlands-04',
+        'clear'
 
     ],
     fireplace:[

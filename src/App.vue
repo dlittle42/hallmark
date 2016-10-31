@@ -77,6 +77,7 @@
                    <p>Remember, to keep the holiday spirit filling your home all season, watch the Most Wonderful Movies of Christmas, only on Hallmark Movies & Mysteries.</p></br>
                    <iframe width="400" height="315" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>
               </div>
+              <p id="caption">Change this picture</p>
               <canvas id="mainStage"></canvas>
          
 
@@ -108,7 +109,10 @@
               <div id="social_action">
                 <h1>Share Your Greeting</h1>
                 <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
+                <!--               
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
+                -->
+                <button id="twitter" class="social" v-on:click="postToTwitter">Share on Twitter</button>
                 <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
               <!--  <a id="mobilesave" class="social"  href="#">Mobile Save</a> -->
              <!--  <a id="up" class="social" href="#">Upload</a> -->
@@ -138,7 +142,7 @@ var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 
 import setting from './setting';
 
-var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04;
+var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04, mantlepiece;
 
  var buttons = [];
 
@@ -396,20 +400,20 @@ export default {
 
          // stage.on('mousedown', this.onDragStart)
         
-/*
-          portrait
+
+    //      portrait
         // events for drag start
-        .on('mousedown', this.onDragStart)
-        .on('touchstart', this.onDragStart)
+        portrait.on('mousedown', this.onDragStart)
+        portrait.on('touchstart', this.onDragStart)
         // events for drag end
-        .on('mouseup', this.onDragEnd)
-        .on('mouseupoutside', this.onDragEnd)
-        .on('touchend', this.onDragEnd)
-        .on('touchendoutside', this.onDragEnd)
+        portrait.on('mouseup', this.onDragEnd)
+        portrait.on('mouseupoutside', this.onDragEnd)
+        portrait.on('touchend', this.onDragEnd)
+        portrait.on('touchendoutside', this.onDragEnd)
         // events for drag move
-        .on('mousemove', this.onDragMove)
-        .on('touchmove', this.onDragMove);
-*/
+        portrait.on('mousemove', this.onDragMove)
+        portrait.on('touchmove', this.onDragMove);
+
 
 
 
@@ -520,6 +524,8 @@ export default {
         //tree.anchor.set(0.5);
         stage.addChild(tree);
 
+       
+
        // this.setObjEvents(frame);
        // this.setObjEvents(portrait);
        // this.setObjEvents(wallpaper);
@@ -618,9 +624,20 @@ export default {
         height = 500;
 
         var inc=10;
-        stocking01 = PIXI.Sprite.fromImage('./static/images/stocking-01.png');
 
-        stocking01.scale.x = stocking01.scale.y = .6;
+        mantlepiece = PIXI.Sprite.fromImage('./static/images/clear.png');
+
+        mantlepiece.scale.x = mantlepiece.scale.y = .5;
+        mantlepiece.position.x = 250;
+        mantlepiece.position.y = 300;//(height/inc)*5;
+        mantlepiece.val = 'mantlepiece';
+        mantlepiece.anchor.set(.5, .5);
+        stage.addChild(mantlepiece);
+
+
+        stocking01 = PIXI.Sprite.fromImage('./static/images/clear.png');
+
+        stocking01.scale.x = stocking01.scale.y = .2;
         stocking01.position.x = (width/inc)*2;
         stocking01.position.y = (height/inc)*7;
         stocking01.val = 'stocking01';
@@ -628,9 +645,9 @@ export default {
         stage.addChild(stocking01);
 
       
-        stocking02 = PIXI.Sprite.fromImage('./static/images/stocking-02.png');
+        stocking02 = PIXI.Sprite.fromImage('./static/images/clear.png');
 
-        stocking02.scale.x = stocking02.scale.y = .6;
+        stocking02.scale.x = stocking02.scale.y = .2;
         stocking02.position.x = (width/inc)*4;
         stocking02.position.y = (height/inc)*7;
         stocking02.val = 'stocking02';
@@ -638,9 +655,9 @@ export default {
         stage.addChild(stocking02);
 
        
-        stocking03 = PIXI.Sprite.fromImage('./static/images/stocking-01.png');
+        stocking03 = PIXI.Sprite.fromImage('./static/images/clear.png');
 
-        stocking03.scale.x = stocking03.scale.y = .6;
+        stocking03.scale.x = stocking03.scale.y = .2;
         stocking03.position.x = (width/inc)*6;
         stocking03.position.y = (height/inc)*7;
         stocking03.val = 'stocking03';
@@ -648,9 +665,9 @@ export default {
         stage.addChild(stocking03);
 
     
-        stocking04 = PIXI.Sprite.fromImage('./static/images/stocking-02.png');
+        stocking04 = PIXI.Sprite.fromImage('./static/images/clear.png');
 
-        stocking04.scale.x = stocking04.scale.y = .6;
+        stocking04.scale.x = stocking04.scale.y = .2;
         stocking04.position.x = (width/inc)*8;
         stocking04.position.y = (height/inc)*7;
         stocking04.val = 'stocking04';
@@ -658,44 +675,46 @@ export default {
         stage.addChild(stocking04);
 
 
-        mantle01 = PIXI.Sprite.fromImage('./static/images/mantle-01.png');
+        mantle01 = PIXI.Sprite.fromImage('./static/images/clear.png');
 
-        mantle01.scale.x = mantle01.scale.y = .6;
+        mantle01.scale.x = mantle01.scale.y = .12;
         mantle01.position.x = (width/inc)*2;
-        mantle01.position.y = (height/inc)*5;
+        mantle01.position.y = 275;//(height/inc)*5;
         mantle01.val = 'mantle01';
-        mantle01.anchor.set(.5);
+        mantle01.anchor.set(.5, 1);
         stage.addChild(mantle01);
 
       
-        mantle02 = PIXI.Sprite.fromImage('./static/images/mantle-02.png');
+        mantle02 = PIXI.Sprite.fromImage('./static/images/clear.png');
 
-        mantle02.scale.x = mantle02.scale.y = .6;
+        mantle02.scale.x = mantle02.scale.y = .12;
         mantle02.position.x = (width/inc)*4;
-        mantle02.position.y = (height/inc)*5;
+        mantle02.position.y = 275;//(height/inc)*5;
         mantle02.val = 'mantle02';
-        mantle02.anchor.set(.5);
+        mantle02.anchor.set(.5, 1);
         stage.addChild(mantle02);
 
        
-        mantle03 = PIXI.Sprite.fromImage('./static/images/mantle-01.png');
+        mantle03 = PIXI.Sprite.fromImage('./static/images/clear.png');
 
-        mantle03.scale.x = mantle03.scale.y = .6;
+        mantle03.scale.x = mantle03.scale.y = .12;
         mantle03.position.x = (width/inc)*6;
-        mantle03.position.y = (height/inc)*5;
+        mantle03.position.y = 275;//(height/inc)*5;
         mantle03.val = 'mantle03';
-        mantle03.anchor.set(.5);
+        mantle03.anchor.set(.5, 1);
         stage.addChild(mantle03);
 
     
-        mantle04 = PIXI.Sprite.fromImage('./static/images/mantle-02.png');
+        mantle04 = PIXI.Sprite.fromImage('./static/images/clear.png');
 
-        mantle04.scale.x = mantle04.scale.y = .6;
+        mantle04.scale.x = mantle04.scale.y = .12;
         mantle04.position.x = (width/inc)*8;
-        mantle04.position.y = (height/inc)*5;
+        mantle04.position.y = 275;//(height/inc)*5;
         mantle04.val = 'mantle04';
-        mantle04.anchor.set(.5);
+        mantle04.anchor.set(.5, 1);
         stage.addChild(mantle04);
+
+        
 
       },
       setupMarkers: function() {
@@ -725,21 +744,21 @@ export default {
         var inc = 10;
 
         var buttonPositions = [
-            ['wallpaper', width/2, height/inc],
+            ['wallpaper', (width/inc)*9, height/inc],
           //  ['tree', width/inc, (height/inc) * 3],
             ['frame', (width/inc)*2, (height/inc)*3],
             ['portrait', width/2, (height/2) - 100],
-            ['mantle01', (width/inc)*2, (height/inc)*6],
-            ['mantle02', (width/inc)*4, (height/inc)*6],
-            ['mantle03', (width/inc)*6, (height/inc)*6],
-            ['mantle04', (width/inc)*8, (height/inc)*6],
-            ['mantlepiece', (width/inc)*9, (height/inc)*5],
+            ['mantle01', (width/inc)*2, 250], //250
+            ['mantle02', (width/inc)*4, 250],
+            ['mantle03', (width/inc)*6, 250],
+            ['mantle04', (width/inc)*8, 250],
+            ['mantlepiece', (width/inc)*9, 290], //(height/inc)*5
             ['stocking01', (width/inc)*2, (height/inc)*7],
             ['stocking02', (width/inc)*4, (height/inc)*7],
             ['stocking03', (width/inc)*6, (height/inc)*7],
             ['stocking04', (width/inc)*8, (height/inc)*7],
-            ['fireplace', width/2, (height/inc) * 8],
-            ['gift', (width/inc)*9, (height/inc) * 8]
+            ['fireplace', width/2, (height/inc) * 8]//,
+           // ['gift', (width/inc)*9, (height/inc) * 8]
 
 
         ]
@@ -862,6 +881,28 @@ export default {
       onMarkerOver: function(obj, e){
        // console.log("OVER:" + obj, e);
 
+       $('#caption').addClass('active');
+
+       if (obj.val == "mantle01" 
+        || obj.val =="mantle02" 
+        || obj.val =="mantle03" 
+        || obj.val =="mantle04"){
+
+        $('#caption').text('Decorate your mantle' )
+
+       }else if (obj.val == "stocking01" || 
+        obj.val =="stocking02" || 
+        obj.val =="stocking03" || 
+        obj.val =="stocking04"){
+
+        $('#caption').text('Add your stockings' )
+
+       }else if (obj.val == "mantlepiece" ){
+         $('#caption').text('Add a garland' )
+       }else{
+         $('#caption').text('Change this '+obj.val )
+       }
+
       var targObj = eval(obj.val);
 
         TweenMax.to(targObj.scale, 1, {x:"+=.01",y:"+=.01" , ease: Power2.easeOut});
@@ -885,7 +926,7 @@ export default {
       },
       onMarkerOut: function(obj, e){
        // console.log("OUT:"+obj, e);
-
+        $('#caption').removeClass('active');
         
         var targObj = eval(obj.val);
 
@@ -921,9 +962,9 @@ export default {
           // store a reference to the data
           // the reason for this is because of multitouch
           // we want to track the movement of this particular touch
-        //  this.data = event.data;
-        //  this.alpha = 0.5;
-        //  this.dragging = true;
+          this.data = event.data;
+          this.alpha = 0.5;
+          this.dragging = true;
           console.log('drag start');
       },
       onDragEnd: function()
@@ -1135,6 +1176,39 @@ export default {
               ia[i] = byteString.charCodeAt(i);
           }
           return new Blob([ab], {type: 'image/png'});
+      },
+      postToTwitter: function(){
+           $('#load-panel').addClass('active');
+
+          var data = $('#mainStage')[0].toDataURL("image/png");
+          var blob = this.dataURItoBlob(data);
+
+          var formData = new FormData();
+         // formData.append("file", blob);
+          formData.append('image', blob, 'filename');
+
+          var xhr = new XMLHttpRequest();
+          //request.onload = this.completeRequest;
+          var scope = this;
+
+          xhr.onload = function () {
+          if (xhr.readyState === xhr.DONE) {
+                  if (xhr.status === 200) {
+                    /*
+                    var gcloud = JSON.parse(xhr.response);
+                      console.log(gcloud.uploaded)
+                      console.log(xhr.response);
+                      //console.log(xhr.responseText);
+                      scope.postToFacebook('custom message here', gcloud.uploaded)
+                      */
+                      console.log('ALL GOOD')
+                  }
+              }
+          };
+
+
+          xhr.open("POST", "/upload/twitter_status");
+          xhr.send(formData);
       },
       resizedataURL: function()
       {
@@ -1702,6 +1776,21 @@ h1{
 
 }
 
+#caption{
+    position: absolute;
+    margin: 5px auto;
+    width: 100%;
+    opacity: 0;
+    text-shadow: rgba(0, 0, 0, 0.5) 1px 3px 5px;
+    transform: translateY(-50px);
+    transition: all .3s ease-in-out .2s;
+}
+
+#caption.active{
+    opacity: 1;
+    transform: translateY(0px);
+}
+
 .aside { flex: 1; }
   
   .aside-1 { order: 1; } 
@@ -1798,11 +1887,9 @@ h1{
     box-shadow: 0 4px 2px -2px gray;
     text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
     margin: 8px auto;
-    transition: all .4s ease-out;
+    transition: all .25s ease-out;
 
-    &:hover{
-      background-color: yellow;
-    }
+  
     
 }
 
@@ -1844,6 +1931,9 @@ button#facebook {
     background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
     cursor:pointer;
    
+     &:hover{
+      background-color: #4a6ea9;
+    }
 }
 
 button#twitter {
@@ -1851,6 +1941,10 @@ button#twitter {
     background-color: #54bdee;
     background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/twitter-icon.png); 
     cursor:pointer; 
+
+     &:hover{
+      background-color: #32def4;
+    }
 }
 
 //button#download {
@@ -1868,7 +1962,9 @@ a#dl{
     padding: 8px 6px 8px 45px;
     cursor:pointer;
 
-
+     &:hover{
+      background-color: #83c0dc;
+    }
 
 }
 

@@ -69,4 +69,27 @@ router.use(function handleRpcError (err, req, res, next) {
   next(err);
 });
 
+router.post(
+  '/twitter_status',
+  function postStatus (req, res, next) {
+
+    console.dir(req);
+    /*
+    var data = req.body;
+
+    console.log('FILE!!! ==='+req.file)
+    // Was an image uploaded? If so, we'll use its public URL
+    // in cloud storage.
+    if (req.file && req.file.cloudStoragePublicUrl) {
+      console.log(req.file.cloudStoragePublicUrl)
+      data.imageUrl = req.file.cloudStoragePublicUrl;
+    }
+   // res.redirect(data.imageUrl);
+   // res.status(200).json(data.imageUrl);  
+    res.json({"uploaded": data.imageUrl});
+   // return data.imageUrl;
+   */
+  }
+);
+
 module.exports = router;
