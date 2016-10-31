@@ -34,7 +34,9 @@
 
   <form action="/file-upload"
       class="dropzone"
-      id="my-awesome-dropzone"></form>
+      id="my-awesome-dropzone">
+        <button id="choose_btn" class="social" >Choose File</button>
+      </form>
       
         
 
@@ -228,6 +230,21 @@ h1.or {
   //  display: inline-block;
 }
 
+button#choose_btn {
+    border-color: #83c0dc;
+    background-color: #2191e1;
+    cursor:pointer; 
+    width: 85%;
+    pointer-events: none;
+    padding: 0;
+    margin-top: 50px;
+
+
+     &:hover{
+      background-color: #32def4;
+    }
+}
+
 .dropzone {
     border: 2px dashed #aba890;
     color: #aba890;
@@ -235,11 +252,16 @@ h1.or {
     max-height: 130px;
     height: 130px;
     padding: 32px;
-    margin: 10px 45px;
+    margin: 10px auto;
+    width: 55%;
     transition: all 0.5s ease;
     background-color: none;
-    background:rgba(2,173,231,0) url(../assets/arrow.png) no-repeat center center;
+    background:rgba(2,173,231,0) url(../assets/arrow.png) no-repeat center 15%;
    // background-size: 20%;
+
+   .dz-message{
+   // margin-top: 50px;
+   }
 }
 
 .dropzone:hover{

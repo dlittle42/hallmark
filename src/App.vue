@@ -41,16 +41,16 @@
                 <img class="highlight" v-on:click="swapScene(1)" src="./assets/template2_thumb.png">
                 </figure>
                 <figure>
-                <img class="highlight" v-on:click="swapScene(0)" src="./assets/template1_thumb.png">
+                <img class="highlight" v-on:click="swapScene(3)" src="./assets/template1_thumb.png">
                 </figure>
                 <figure>
-                <img class="highlight" v-on:click="swapScene(0)" src="./assets/template1_thumb.png">
+                <img class="highlight" v-on:click="swapScene(4)" src="./assets/template1_thumb.png">
                 </figure>
                 <figure>
-                <img class="highlight" v-on:click="swapScene(1)" src="./assets/template2_thumb.png">
+                <img class="highlight" v-on:click="swapScene(5)" src="./assets/template2_thumb.png">
                 </figure>
                 <figure>
-                <img class="highlight" v-on:click="swapScene(0)" src="./assets/template1_thumb.png">
+                <img class="highlight" v-on:click="swapScene(6)" src="./assets/template1_thumb.png">
                 </figure>
                
               </div>
@@ -142,7 +142,7 @@ var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 
 import setting from './setting';
 
-var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04, mantlepiece;
+var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04, mantlepiece, yulelog;
 
  var buttons = [];
 
@@ -444,6 +444,7 @@ export default {
 
         stage.addChild(marker1);
         */
+         // parent.setUpFireplace();
           parent.setupMantle();
           parent.setupMarkers();
         
@@ -618,6 +619,37 @@ export default {
               .on('click', this.getGallery)
               .on('tap', this.getGallery)
       },
+      setupFireplace: function(){
+
+        PIXI.loader
+            .add('../static/images/Fire/yulelog.json')
+            .load(this.onAssetsLoaded);
+
+      },
+      onAssetsLoaded: function(){
+        // create an array of textures from an image path
+        var frames = [];
+
+        for (var i = 0; i < 49; i++) {
+            var val = i < 10 ? '0' + i : i;
+
+            // magically works since the spritesheet was loaded with the pixi loader
+            frames.push(PIXI.Texture.fromFrame('Fire_000' + val + '.jpg'));
+        }
+
+
+        yulelog = new PIXI.extras.MovieClip(frames);
+
+        yulelog.position.set(300);
+
+        yulelog.anchor.set(0.5);
+        yulelog.animationSpeed = 0.5;
+
+        yulelog.play();
+
+        stage.addChild(yulelog);
+      },
+
       setupMantle: function(){
 
         var width = 500,
@@ -1091,9 +1123,10 @@ export default {
 
             var img = path + setting.fireplace[n] + ext;
             fireplace.setTexture(PIXI.Texture.from(img));
-
+/*
             var img = path + setting.gift[n] + ext;
             gift.setTexture(PIXI.Texture.from(img));
+            */
 
          //   var img = path + setting.tree[n] + ext;
          //   tree.setTexture(PIXI.Texture.from(img));
@@ -2150,12 +2183,12 @@ figure{
  .panel{
     align-self: center;
     width: 100%;
-    height: 70%;
+    height: 75%;
     margin: 0px 10px 40px;
    // margin: 0 auto;
     background: #f1dea1;
     box-sizing: border-box;
-    padding: 30px 2px;
+   // padding: 30px 2px;
     color: black;
     border-radius: 5px;
     box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.5);
