@@ -15,4 +15,4 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(DIST_DIR, "index.html"));
 });
 
-app.listen(PORT);
+app.listen(process.env.PORT || PORT)
