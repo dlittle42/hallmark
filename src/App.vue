@@ -160,7 +160,7 @@ import { TweenMax, TimelineMax, Power0 } from 'gsap';
 var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 
 var FileSaver =require('file-saver');
-//import FileSaver from 'file-saver';
+var UAParser = require('ua-parser-js');
 
 import SpriteUtilities  from './js/spriteUtilities';
 
@@ -186,7 +186,8 @@ export default {
       accessToken:'',
       allPhotos: [],
       layout: "",
-      selectedMsg: ""
+      selectedMsg: "",
+      browser:""
 
     }
    
@@ -214,6 +215,18 @@ export default {
      document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
      document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
       
+      var parser = new UAParser();
+
+      var result = parser.getResult();
+    // this will also produce the same result (without instantiation):
+    // var result = UAParser(uastring);
+   // alert(result.browser.name)
+    this.browser = result.browser.name;
+   // alert(this.browser)
+
+
+
+
       
       
     })
@@ -1317,7 +1330,7 @@ export default {
           xhr.open("POST", "/upload/twitter_status");
           xhr.send(formData);
       },
-      resizeOutput: function(){
+      resizeOutput: function(evt){
 
           this.hideMarkersNow();
          var mainstage = $('#mainStage')[0];
@@ -1363,6 +1376,8 @@ export default {
         var base_image = new Image();
         base_image.src = './static/images/photoframe.png';
 
+        scope = this;
+
         console.log('before load---'+ctx);
         base_image.onload = function(){
           console.log('after load---'+ctx);
@@ -1375,11 +1390,34 @@ export default {
 
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
           // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
-          console.dir(FileSaver)
+          alert(scope.browser)
+          if (scope.browser == "Safari"){
 
-           canvas.toBlob(function(blob) {
+             // var dt = document.getElementById("canvas1").toDataURL('image/png');
+              var dt = data;
+              //alert(dt);
+
+              /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
+              dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+
+              /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
+              dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+
+              
+              evt.target.href = dt;
+
+          }else if (scope.browser == "Mobile Safari"){
+              //not working right???
+             // var dt = document.getElementById("canvas1").toDataURL('image/png');
+               window.open(data, '_blank');
+
+          }else{
+              canvas.toBlob(function(blob) {
                 FileSaver.saveAs(blob, "Hallmark_mantlepiece.png");
             });
+          }
+
+           
 
             
           }
