@@ -302,27 +302,31 @@ export default {
           image = new Image();
           image.src = path;
           image.onload = function() {
-              dimension = {
+
+              var obj = eval(target);
+
+
+
+              obj.dimension = {
                   width: image.naturalWidth,
                   height: image.naturalHeight
               };
               console.log(dimension); // Actual image dimension
             //  console.log(this.src)
 
-              var obj = eval(target);
+              
 
-              if (target == 'portrait'){
-                portrait.position.x = 250;
-                portrait.position.y = 150;
-                portrait.rotation = 0;
-              }
 
               var texture01 = PIXI.Texture.from(path)
               obj.setTexture(texture01);
               if (target == 'portrait'){
-                var ratio = Math.max(frame.width/dimension.width,frame.height/dimension.height);
-               // alert(ratio);
-                obj.scale.x = obj.scale.y = ratio;
+                portrait.position.x = 250;
+                portrait.position.y = 150;
+                portrait.rotation = 0;
+                obj.ratio = Math.max(frame.width/obj.dimension.width,frame.height/obj.dimension.height);
+                obj.alt_ratio = Math.max(frame.width/obj.dimension.height,frame.height/obj.dimension.width);
+                console.log('my ratio is '+obj.ratio);
+                obj.scale.x = obj.scale.y = obj.ratio;
               }
               //$('#load-panel').delay(1000).removeClass('active');
               $('#load-panel').delay(500).queue(function(next){
@@ -519,8 +523,8 @@ export default {
      // stage
 
             // set the mouseover callback...
-     //  stage.on('mouseover', this.onStageOver)
-     //  stage.on('mouseout', this.onStageOut)
+       stage.on('mouseover', this.onStageOver)
+       stage.on('mouseout', this.onStageOut)
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
@@ -679,6 +683,11 @@ export default {
         if (portrait.counter <10){
           console.log('rotate' + e.target);
           e.target.rotation+=1.5708; //radians
+          if(e.target.scale.x == e.target.ratio){
+            e.target.scale.x = e.target.scale.y = e.target.alt_ratio;
+          }else{
+            e.target.scale.x = e.target.scale.y = e.target.ratio;
+          }
         }
       },
       setObjEvents: function(obj){
