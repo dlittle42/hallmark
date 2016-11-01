@@ -35,14 +35,15 @@
               <div id="scene-scroll" class="scroll">
               
                 <figure>
-                <img class="highlight" v-on:click="swapScene(0)" src="./assets/template1_thumb.png">
+                <img class="highlight" v-on:click="swapScene(1)" src="./assets/layout01.png">
                 </figure>
                 <figure>
-                <img class="highlight" v-on:click="swapScene(1)" src="./assets/template2_thumb.png">
+                <img class="highlight" v-on:click="swapScene(2)" src="./assets/layout02.png">
                 </figure>
                 <figure>
-                <img class="highlight" v-on:click="swapScene(3)" src="./assets/template1_thumb.png">
+                <img class="highlight" v-on:click="swapScene(3)" src="./assets/layout03.png">
                 </figure>
+                <!--
                 <figure>
                 <img class="highlight" v-on:click="swapScene(4)" src="./assets/template1_thumb.png">
                 </figure>
@@ -52,6 +53,7 @@
                 <figure>
                 <img class="highlight" v-on:click="swapScene(6)" src="./assets/template1_thumb.png">
                 </figure>
+                -->
                
               </div>
           
@@ -73,14 +75,15 @@
                 </div>
               </div>
               <div id="help-layout" class="help-panel">
-                <h1>Are you a traditionalist or is a modern mantlepiece more to your liking?</h1> Simply click on the layout that best matches your Christmas style!<p>
+                <h1>Are you a traditionalist or is a modern mantlepiece more to your liking?</h1> 
+                <p>Simply click on the layout that best matches your Christmas style!</p>
 
                 <p>Use the scrollbar to move the list up and down and click on the layout you like best. Then click on the squares in the center panel to add your customizations. Don’t forget to share your Most Wonderful Mantlepiece of Christmas with your friends afterwards!</p>
               </div>
               <div id="help-photos" class="help-panel">
-                <h1>No mantlepiece would be complete without a framed photo!<h1>
+                <h1>No mantlepiece would be complete without a framed photo!</h1>
 
-                <p>There are two ways to add a photo to your Mantlepiece:<p>
+                <p>There are two ways to add a photo to your Mantlepiece:</p>
                 <ol>
                   <li>Login with Facebook and choose from your Facebook photos</li>
                   <li>Choose from the photos on your device, either by dragging and dropping or by clicking the Choose files button</li>
@@ -515,7 +518,7 @@ export default {
       //  stage.anchor.set(0.5);
 
 
-    //   stage.interactive = true;
+       stage.interactive = true;
      //  stage.button = true;
 
        //stage.on('mousedown', this.onDragStart)
@@ -1119,14 +1122,14 @@ export default {
 
       },
       onStageOver: function(evt){
-        console.log('over stage');
+       // console.log('over stage');
        // marker_container.position.x = 0;
         this.showMarkers();
         
 
       },
       onStageOut: function(evt){
-        console.log('out stage');
+        //console.log('out stage');
         //marker_container.position.x = 800;
          this.hideMarkers();
 
@@ -1238,6 +1241,8 @@ export default {
 
           console.log('swap scene');
 
+
+
           $('#load-panel').addClass('active').delay(500).queue(function(next){
                   $(this).removeClass("active");
                   next();
@@ -1263,16 +1268,92 @@ export default {
             ['fireplace', width/2, (height/inc) * 8],
             ['gift', (width/inc)*9, (height/inc) * 8]
 */
-            var path = "./static/images/";
+
+          var path = "./static/images/";
             var ext = ".png";
-            var img = path + setting.wallpaper[n] + ext;
+
+          if (n==1){
+            
+            var img = path + 'wallpaper-01' + ext;
             wallpaper.setTexture(PIXI.Texture.from(img));
 
-            var img = path + setting.frame[n] + ext;
+            var img = path + 'frame-01a' + ext;
             frame.setTexture(PIXI.Texture.from(img));
 
-            var img = path + setting.fireplace[n] + ext;
+            var img = path + 'fireplace-01' + ext;
             fireplace.setTexture(PIXI.Texture.from(img));
+
+
+            var img = path + 'clear' + ext;
+            stocking01.setTexture(PIXI.Texture.from(img));
+            stocking02.setTexture(PIXI.Texture.from(img));
+            stocking03.setTexture(PIXI.Texture.from(img));
+            stocking04.setTexture(PIXI.Texture.from(img));
+
+            mantle01.setTexture(PIXI.Texture.from(img));
+            mantle02.setTexture(PIXI.Texture.from(img));
+            mantle03.setTexture(PIXI.Texture.from(img));
+             mantle04.setTexture(PIXI.Texture.from(img));
+          }else if (n==2){
+
+            var img = path + 'wallpaper-02' + ext;
+            wallpaper.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'frame-02a' + ext;
+            frame.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'fireplace-03' + ext;
+            fireplace.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'bowl-03' + ext;
+            mantle04.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'stocking-05' + ext;
+            stocking03.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'clear' + ext;
+            stocking01.setTexture(PIXI.Texture.from(img));
+            stocking02.setTexture(PIXI.Texture.from(img));
+            stocking04.setTexture(PIXI.Texture.from(img));
+
+            mantle01.setTexture(PIXI.Texture.from(img));
+            mantle02.setTexture(PIXI.Texture.from(img));
+            mantle03.setTexture(PIXI.Texture.from(img));
+
+
+
+          }else if (n==3){
+
+            var img = path + 'wallpaper-04' + ext;
+            wallpaper.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'frame-04' + ext;
+            frame.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'fireplace-05' + ext;
+            fireplace.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'orn-02' + ext;
+            mantle03.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'candle-03' + ext;
+            mantle04.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'stocking-03' + ext;
+            stocking02.setTexture(PIXI.Texture.from(img));
+
+            var img = path + 'clear' + ext;
+            stocking01.setTexture(PIXI.Texture.from(img));
+            stocking03.setTexture(PIXI.Texture.from(img));
+            stocking04.setTexture(PIXI.Texture.from(img));
+
+            mantle01.setTexture(PIXI.Texture.from(img));
+            mantle02.setTexture(PIXI.Texture.from(img));
+
+
+
+
+          }
 /*
             var img = path + setting.gift[n] + ext;
             gift.setTexture(PIXI.Texture.from(img));
@@ -1899,19 +1980,22 @@ p{
 
 a.help{
       background: #666;
-    border-radius: 0.8em;
-    -moz-border-radius: 0.8em;
-    -webkit-border-radius: 12px;
+    border-radius: 12px;
     color: #ffffff;
     display: inline-block;
     /* font-weight: bold; */
     line-height: 12px;
+    -ms-flex-pack: center;
     justify-content: center;
-    /* margin-right: 15px; */
+    margin-left: 3px;
     text-align: center;
     width: 12px;
     font-size: 12px;
     transition: all .3s ease-out;
+    position: absolute;
+    top: 40%;
+    /* right: 0; */
+    font-size: 0.5em;
 
     &:hover{
          background: #cf151b;
@@ -1950,6 +2034,7 @@ h1{
     letter-spacing: 1.5px;
     margin: 0;
     padding: 15px;
+    position: relative;
 }
 
 .logo {
@@ -1969,7 +2054,7 @@ h1{
   height: calc(100vh - 215px);
 
     min-height: 400px;
-    max-height: 500px;
+    max-height: 550px;
   //box-shadow: 0px 0px 40px 2px rgba(0,0,0,0.25);
   box-shadow: rgba(255, 206, 84, 0.5) 0px 0px 40px 2px;
   //z-index: 4;
@@ -2130,7 +2215,7 @@ h1{
     color: black;
 
 
-    display: none;
+ //   display: none;
     background-color: rgba(251, 247, 216, .9);
     
     width: 100%;
@@ -2176,6 +2261,7 @@ h1{
     display: block;
       width: 100% !important;
       height: auto !important;
+          max-width: 200px;
     //  margin-bottom: 5px;
   }
   
