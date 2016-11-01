@@ -136,8 +136,10 @@
                 <button id="twitter" class="social" v-on:click="postToTwitter">Share on Twitter</button>
               <!--  <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a>  -->
                 <a id="dl" class="social" href="#">Download</a> 
+                <!--
                 <a id="mobileSave" class="social" href="#">Download Mobile</a> 
                 <a id="safariSave" class="social" download="Hallmark_mantlepiece.png" href="#">Download Safari</a> 
+                -->
               <!--  <a id="mobilesave" class="social"  href="#">Mobile Save</a> -->
              <!--  <a id="up" class="social" href="#">Upload</a> -->
                </div>
@@ -218,8 +220,8 @@ export default {
      document.getElementById("help-layout-btn").addEventListener('click', this.showHelpLayouts, false);
   
      document.getElementById("dl").addEventListener('click', this.resizeOutput, false);
-     document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
-     document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
+     //document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
+     //document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
 
      document.getElementById("help-layout-close").addEventListener('click', this.closeHelp, false);
      document.getElementById("help-photos-close").addEventListener('click', this.closeHelp, false);
