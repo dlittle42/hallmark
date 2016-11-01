@@ -29,7 +29,7 @@
           <div id="layout_block" class="content-block aside aside-1">
             
             <div class="transparent">
-  
+              
               <h1>CHOOSE A LAYOUT<a href="#" class="help" id="help-layout-btn">?</a></h1> 
            
               <div id="scene-scroll" class="scroll">
@@ -75,12 +75,14 @@
                 </div>
               </div>
               <div id="help-layout" class="help-panel">
+                <a href="#" class="help close" id="help-layout-close">X</a>
                 <h1>Are you a traditionalist or is a modern mantlepiece more to your liking?</h1> 
                 <p>Simply click on the layout that best matches your Christmas style!</p>
 
                 <p>Use the scrollbar to move the list up and down and click on the layout you like best. Then click on the squares in the center panel to add your customizations. Don’t forget to share your Most Wonderful Mantlepiece of Christmas with your friends afterwards!</p>
               </div>
               <div id="help-photos" class="help-panel">
+                <a href="#" class="help close" id="help-photos-close">x</a>
                 <h1>No mantlepiece would be complete without a framed photo!</h1>
 
                 <p>There are two ways to add a photo to your Mantlepiece:</p>
@@ -218,6 +220,12 @@ export default {
      document.getElementById("dl").addEventListener('click', this.resizeOutput, false);
      document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
      document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
+
+     document.getElementById("help-layout-close").addEventListener('click', this.closeHelp, false);
+     document.getElementById("help-photos-close").addEventListener('click', this.closeHelp, false);
+
+     
+
       
       var parser = new UAParser();
 
@@ -1173,8 +1181,10 @@ export default {
 
         if ($('#help-layout').hasClass('active')){
 
-            $('#help-layout').removeClass('active');
+           // $('#help-layout').removeClass('active');
+            $('.active').removeClass('active');
           }else{
+            $('.active').removeClass('active');
             $('#help-layout').addClass('active');
           }
 
@@ -1183,21 +1193,13 @@ export default {
 
 
       },
-      showHelpPhotos: function(e){
-        e.preventDefault();
-
-        if ($('#help-photos').hasClass('active')){
-
-            $('#help-photos').removeClass('active');
-          }else{
-            $('#help-photos').addClass('active');
-          }
-
-        $('.m-active').removeClass('m-active');
-     
-
+      closeHelp: function(e){
+          e.preventDefault();
+          $('.active').removeClass('active');
 
       },
+
+      
 
       resize: function (){
         /**
@@ -2285,6 +2287,20 @@ h1{
 #help-photos.active{
     opacity: 1;
     pointer-events: auto;
+  
+}
+
+#help-layout-close{
+  position: absolute;
+  top: 20px;
+  right: 10px;
+
+}
+
+#help-photos-close{
+  position: absolute;
+  top: 20px;
+  right: 10px;
   
 }
 

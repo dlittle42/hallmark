@@ -190,8 +190,25 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
          // this.$router.push('gallery');
           this.router.push({ name: 'gallery', params : { 'imgset': 'backgrounds' }});
          // router.push({ path: 'album', params : { imgset: 'backgrounds' }});
+        },
+        showHelpPhotos: function(e){
+          e.preventDefault();
+
+          if ($('#help-photos').hasClass('active')){
+
+              //$('#help-photos').removeClass('active');
+              $('.active').removeClass('active');
+            }else{
+              $('.active').removeClass('active');
+              $('#help-photos').addClass('active');
+            }
+
+          $('.m-active').removeClass('m-active');
+       
+
+
         }
-        
+          
         
        
     }
