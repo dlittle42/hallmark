@@ -512,7 +512,7 @@ export default {
           parent.setupMarkers();
 
 
-          headline = PIXI.Sprite.fromImage('./static/images/message-01.png');
+          headline = PIXI.Sprite.fromImage('./static/images/clear.png');
 
         headline.scale.x = headline.scale.y = .5;
         headline.position.x = width/2;
@@ -1546,7 +1546,7 @@ export default {
        // alert(canvas.toDataURL())
 
        var scope = this;
-
+/*
        var image = new Image();
       //  image.src = './static/images/message-0'+this.selectedMsg+'.png';
         image.src = './static/images/message-01.png';
@@ -1558,7 +1558,7 @@ export default {
 
             
         }
-
+*/
         var base_image = new Image();
         base_image.src = './static/images/photoframe.png';
 
