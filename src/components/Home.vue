@@ -142,7 +142,7 @@ import Flickity from 'flickity';
       //  this.flkty.on('cellSelect', this.updateSelected);
      // $('.owl-carousel').owlCarousel();
      // document.getElementById("up").addEventListener('click', this.uploadCanvasData, false);
-      document.getElementById("dl").addEventListener('click', this.dlCanvas, false);
+      
 
     //  document.getElementById("mobilesave").addEventListener('click', this.dlCanvasToMobile, false);
 
@@ -193,7 +193,7 @@ import Flickity from 'flickity';
          
         })
         },
-        
+        /*
         postImageToFacebook(token, filename, mimeType, imageData, message) {
             var fd = new FormData();
             fd.append("access_token", token);
@@ -238,7 +238,7 @@ import Flickity from 'flickity';
                                       console.log('feedback: '+response)
                                       console.dir(response);
                                         if (response && !response.error) {
-                                            /* handle the result */
+                                            //handle the result 
                                             console.log("Posted story to facebook");
                                             console.log(response);
                                         }
@@ -256,7 +256,7 @@ import Flickity from 'flickity';
                 }
             });
         },
-        /*
+    
         dataURItoBlob(dataURI) {
             var byteString = atob(dataURI.split(',')[1]);
             var ab = new ArrayBuffer(byteString.length);
@@ -322,6 +322,7 @@ import Flickity from 'flickity';
             link.href = document.getElementById(canvasId).toDataURL();
             link.download = filename;
         },
+        
         dlCanvas: function(evt) {
 
 
@@ -341,9 +342,7 @@ import Flickity from 'flickity';
         },
          dlCanvasToMobile: function(evt) {
 
-
-          var dt = document.getElementById("mainStage").toDataURL('image/png');
-          window.open(dt, '_blank');
+          this.$emit('downloadForMobile');
        
         },
         /*

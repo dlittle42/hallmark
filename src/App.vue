@@ -119,7 +119,10 @@
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 -->
                 <button id="twitter" class="social" v-on:click="postToTwitter">Share on Twitter</button>
-                <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a> 
+              <!--  <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a>  -->
+                <a id="dl" class="social" href="#">Download</a> 
+                <a id="mobileSave" class="social" href="#">Download Mobile</a> 
+                <a id="safariSave" class="social" download="Hallmark_mantlepiece.png" href="#">Download Safari</a> 
               <!--  <a id="mobilesave" class="social"  href="#">Mobile Save</a> -->
              <!--  <a id="up" class="social" href="#">Upload</a> -->
                </div>
@@ -145,6 +148,8 @@ var FastClick = require('fastclick');
 import 'flickity/dist/flickity.min.css';
 import { TweenMax, TimelineMax, Power0 } from 'gsap';
 var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
+
+var FileSaver =require('file-saver');
 
 import SpriteUtilities  from './js/spriteUtilities';
 
@@ -193,6 +198,10 @@ export default {
       this.setupPixi();
      // $('#mainStage').height($('#main_block').width() / 1);
      document.getElementById("help-layout").addEventListener('click', this.showHelp('layout'), false);
+
+     document.getElementById("dl").addEventListener('click', this.resizeOutput, false);
+     document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
+     document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
       
       
       
@@ -1293,6 +1302,85 @@ export default {
 
           xhr.open("POST", "/upload/twitter_status");
           xhr.send(formData);
+      },
+      resizeOutput: function(){
+
+          this.hideMarkersNow();
+         var mainstage = $('#mainStage')[0]
+          // create an off-screen canvas
+          var elementID = 'canvas' + $('canvas').length; // Unique ID
+
+          $('<canvas>').attr({
+              id: elementID
+          }).css({
+              width: '1200px',
+              height: '1200px',
+             // display: 'none'
+          }).appendTo('body');
+
+          var canvas = document.getElementById(elementID);
+          var ctx = canvas.getContext('2d');
+
+          var width = 1200;
+          var height = 1200;
+
+          // set its dimension to target size
+          canvas.width = width;
+          canvas.height = height;
+
+          // draw source image into the off-screen canvas:
+          ctx.drawImage(mainstage, 95, 95, 1010, 1010);
+         // alert(canvas.toDataURL())
+
+         var scope = this;
+
+         var image = new Image();
+        //  image.src = './static/images/message-0'+this.selectedMsg+'.png';
+          image.src = './static/images/message-01.png';
+   
+          image.onload = function () {
+
+              ctx.drawImage(image, canvas.width / 2 - image.width / 2, 40 )
+          }
+
+          var base_image = new Image();
+          base_image.src = './static/images/photoframe.png';
+          base_image.onload = function(){
+            ctx.drawImage(base_image, 0, 0, 1200, 1200);
+           // scope.hideMarkersNow();
+
+         //   var data= canvas.toDataURL("image/png");
+
+          //  var blob = scope.dataURItoBlob(data);
+
+           // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
+           var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
+
+            FileSaver.canvas.toBlob(function(blob) {
+                saveAs(blob, "Hallmark_mantlepiece.png");
+            });
+
+            
+          }
+
+
+      },
+      dlMobile:function(){
+          var dt = document.getElementById("canvas1").toDataURL('image/png');
+          window.open(dt, '_blank');
+      },
+      dlSafari:function(evt){
+         var dt = document.getElementById("canvas1").toDataURL('image/png');
+          //alert(dt);
+
+          /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
+          dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+
+          /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
+          dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+
+          
+          evt.target.href = dt;
       },
       resizedataURL: function()
       {
