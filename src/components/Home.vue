@@ -20,27 +20,27 @@
         </div>
 -->
         <div class="carousel">
-  <div class="carousel-cell">
+  <div class="carousel-cell" v-on:click="getSrc(null, 'message-01', $event)">
     <div class="panel">
     <img src="../assets/message-01-thumb.png">
     </div>
   </div>
-  <div class="carousel-cell">
+  <div class="carousel-cell" v-on:click="getSrc(null, 'message-02', $event)">
     <div class="panel">
     <img src="../assets/message-02-thumb.png">
     </div>
   </div>
-  <div class="carousel-cell">
+  <div class="carousel-cell" v-on:click="getSrc(null, 'message-03', $event)">
     <div class="panel">
     <img src="../assets/message-03-thumb.png">
     </div>
   </div>
-  <div class="carousel-cell">
+  <div class="carousel-cell" v-on:click="getSrc(null, 'message-04', $event)">
     <div class="panel">
     <img src="../assets/message-04-thumb.png">
     </div>
   </div>
-  <div class="carousel-cell">
+  <div class="carousel-cell" v-on:click="getSrc(null, 'message-05', $event)">
     <div class="panel">
     <img src="../assets/message-05-thumb.png">
     </div>
@@ -193,6 +193,11 @@ import Flickity from 'flickity';
          
         })
         },
+        getSrc: function(img, item, event){
+
+            this.$emit('imgSelect', item, 'headline')
+
+       },
         /*
         postImageToFacebook(token, filename, mimeType, imageData, message) {
             var fd = new FormData();

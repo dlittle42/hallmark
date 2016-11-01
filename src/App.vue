@@ -174,7 +174,7 @@ var gesture = require('pixi-simple-gesture')
 
 import setting from './setting';
 
-var mainStage, wallpaper, stage, renderer, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04, mantlepiece, yulelog;
+var mainStage, wallpaper, stage, renderer, headline, frame, portrait, tree, fireplace, gift, marker_container, mantle01,mantle02, mantle03, mantle04,stocking01, stocking02, stocking03, stocking04, mantlepiece, yulelog;
 
  var buttons = [];
 
@@ -445,7 +445,7 @@ export default {
        //   var texture = PIXI.TextureCache["images/anyImage.png"];  
          frame = new PIXI.Sprite(resources.bunny.texture);
 
-
+         frame.scale.x = frame.scale.y = .85;
           frame.position.x = width/2;
           frame.position.y = height/2 - 100;
           frame.val='frame';
@@ -461,6 +461,7 @@ export default {
 
           portrait = PIXI.Sprite.fromImage('./static/images/portrait01.png');
           //portrait.image.crossOrigin = "anonymous";
+          portrait.scale.x = portrait.scale.y = .85;
           portrait.position.x = width/2;
           portrait.position.y = height/2 - 100;
           portrait.val='portrait';
@@ -492,7 +493,8 @@ export default {
         stage.addChild(mask_rect);
 
         portrait.mask = mask_rect;
-      
+
+    
 
 /*
            var marker1 = PIXI.Sprite.fromImage('./static/images/marker.png');
@@ -508,6 +510,17 @@ export default {
          // 
           parent.setupMantle();
           parent.setupMarkers();
+
+
+          headline = PIXI.Sprite.fromImage('./static/images/message-01.png');
+
+        headline.scale.x = headline.scale.y = .5;
+        headline.position.x = width/2;
+        headline.position.y = 50;
+        headline.val='headline';
+        headline.anchor.set(0.5);
+      
+        stage.addChild(headline);
         
 
       });
@@ -2214,6 +2227,9 @@ h1{
     text-shadow: rgba(0, 0, 0, 0.5) 1px 3px 5px;
     transform: translateY(-50px);
     transition: all .3s ease-in-out .2s;
+    background-color: #cf151b;
+
+    height: 20px;
 }
 
 #caption.active{
