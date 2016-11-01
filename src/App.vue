@@ -1329,7 +1329,7 @@ export default {
           }).css({
               width: '1200px',
               height: '1200px',
-             // display: 'none'
+              display: 'none'
           }).appendTo('body');
 
         var canvas = document.getElementById(elementID);
@@ -1375,9 +1375,10 @@ export default {
 
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
           // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
+          console.dir(FileSaver)
 
-            FileSaver.canvas.toBlob(function(blob) {
-                saveAs(blob, "Hallmark_mantlepiece.png");
+           canvas.toBlob(function(blob) {
+                FileSaver.saveAs(blob, "Hallmark_mantlepiece.png");
             });
 
             
