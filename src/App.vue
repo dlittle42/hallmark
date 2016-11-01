@@ -73,10 +73,20 @@
                 </div>
               </div>
               <div id="help-layout" class="help-panel">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus.</p>
+                <h1>Are you a traditionalist or is a modern mantlepiece more to your liking?</h1> Simply click on the layout that best matches your Christmas style!<p>
+
+                <p>Use the scrollbar to move the list up and down and click on the layout you like best. Then click on the squares in the center panel to add your customizations. Don’t forget to share your Most Wonderful Mantlepiece of Christmas with your friends afterwards!</p>
               </div>
               <div id="help-photos" class="help-panel">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus.</p>
+                <h1>No mantlepiece would be complete without a framed photo!<h1>
+
+                <p>There are two ways to add a photo to your Mantlepiece:<p>
+                <ol>
+                  <li>Login with Facebook and choose from your Facebook photos</li>
+                  <li>Choose from the photos on your device, either by dragging and dropping or by clicking the Choose files button</li>
+                </ol>
+
+                  <p>Whichever method you choose, be sure to share your Most Wonderful Mantlepiece of Christmas with your friends afterwards!</p>
               </div>
               <div id="thanks">
               <h1>Thanks for creating and sharing your Most Wonderful Mantlepiece of Christmas!</h1>
@@ -150,6 +160,7 @@ import { TweenMax, TimelineMax, Power0 } from 'gsap';
 var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 
 var FileSaver =require('file-saver');
+//import FileSaver from 'file-saver';
 
 import SpriteUtilities  from './js/spriteUtilities';
 
@@ -930,9 +941,12 @@ export default {
       },
       hideMarkersNow: function(){
 
+        TweenMax.killAll();
+
         for (var i = 0; i < buttons.length; i++)
         {
             buttons[i].alpha=0;
+            console.log('buttons='+buttons[i].alpha)
         }
       },
       hideMarkers: function(){
@@ -1306,7 +1320,7 @@ export default {
       resizeOutput: function(){
 
           this.hideMarkersNow();
-         var mainstage = $('#mainStage')[0]
+         var mainstage = $('#mainStage')[0];
           // create an off-screen canvas
           var elementID = 'canvas' + $('canvas').length; // Unique ID
 
@@ -1318,43 +1332,49 @@ export default {
              // display: 'none'
           }).appendTo('body');
 
-          var canvas = document.getElementById(elementID);
-          var ctx = canvas.getContext('2d');
+        var canvas = document.getElementById(elementID);
+        var ctx = canvas.getContext('2d');
 
-          var width = 1200;
-          var height = 1200;
+        var width = 1200;
+        var height = 1200;
 
-          // set its dimension to target size
-          canvas.width = width;
-          canvas.height = height;
+        // set its dimension to target size
+        canvas.width = width;
+        canvas.height = height;
 
-          // draw source image into the off-screen canvas:
-          ctx.drawImage(mainstage, 95, 95, 1010, 1010);
-         // alert(canvas.toDataURL())
+        // draw source image into the off-screen canvas:
+        ctx.drawImage(mainstage, 95, 95, 1010, 1010);
+       // alert(canvas.toDataURL())
 
-         var scope = this;
+       var scope = this;
 
-         var image = new Image();
-        //  image.src = './static/images/message-0'+this.selectedMsg+'.png';
-          image.src = './static/images/message-01.png';
-   
-          image.onload = function () {
+       var image = new Image();
+      //  image.src = './static/images/message-0'+this.selectedMsg+'.png';
+        image.src = './static/images/message-01.png';
+ 
+        image.onload = function () {
 
-              ctx.drawImage(image, canvas.width / 2 - image.width / 2, 40 )
-          }
+            ctx.drawImage(image, canvas.width / 2 - image.width / 2, 40 )
+      
 
-          var base_image = new Image();
-          base_image.src = './static/images/photoframe.png';
-          base_image.onload = function(){
-            ctx.drawImage(base_image, 0, 0, 1200, 1200);
+            
+        }
+
+        var base_image = new Image();
+        base_image.src = './static/images/photoframe.png';
+
+        console.log('before load---'+ctx);
+        base_image.onload = function(){
+          console.log('after load---'+ctx);
+          ctx.drawImage(base_image, 0, 0, 1200, 1200);
            // scope.hideMarkersNow();
 
-         //   var data= canvas.toDataURL("image/png");
+            var data= canvas.toDataURL("image/png");
 
-          //  var blob = scope.dataURItoBlob(data);
+            var blob = scope.dataURItoBlob(data);
 
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
-           var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
+          // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
 
             FileSaver.canvas.toBlob(function(blob) {
                 saveAs(blob, "Hallmark_mantlepiece.png");
@@ -1362,7 +1382,6 @@ export default {
 
             
           }
-
 
       },
       dlMobile:function(){
