@@ -72,7 +72,10 @@
                   <div class="bounce3"></div>
                 </div>
               </div>
-              <div id="help-panel">
+              <div id="help-layout" class="help-panel">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus.</p>
+              </div>
+              <div id="help-photos" class="help-panel">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus erat non mollis gravida. Nullam laoreet neque eget turpis convallis, a posuere sapien tempor. Donec semper malesuada finibus.</p>
               </div>
               <div id="thanks">
@@ -427,7 +430,7 @@ export default {
 
         var mask_rect = new PIXI.Graphics();
         mask_rect.beginFill(0xFF700B, 1);
-        var buffer = 5;
+        var buffer = 10;
         var adjustedX = frame.position.x - frame.width/2 + buffer;
         var adjustedY = frame.position.y - frame.height/2 +buffer;
         mask_rect.drawRect(adjustedX, adjustedY, frame.width - buffer*2, frame.height - buffer*2);
@@ -1908,7 +1911,7 @@ h1{
     width: 100%;
 }
 
-#help-panel{
+.help-panel{
     position: absolute;
     top: 0;
     left: 0;
@@ -1916,6 +1919,21 @@ h1{
     padding: 20px 30px;
     box-sizing: border-box;
     color: black;
+
+
+    display: none;
+    background-color: rgba(251, 247, 216, .9);
+    
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  //  display: flex;
+    align-items: center;
+   // opacity: 0;
+    transition: opacity .25s ease-out;
+    pointer-events:none;
+    flex-direction: column;
+    color: #3c3b3b;
  
 }
 
@@ -2149,30 +2167,6 @@ textarea{
     opacity: 1;
   
 }
-
- #help-panel{
-
-        display: none;
-          background-color: rgba(251, 247, 216, .9);
-    
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: flex;
-    align-items: center;
-   // opacity: 0;
-    transition: opacity .25s ease-out;
-   -moz-transition: opacity .25s ease-out;
-   -webkit-transition: opacity .25s ease-out;
-   pointer-events:none;
-    flex-direction: column;
-    color: #3c3b3b;
-
-
-   // padding: 115px;
-    padding: 10px 45px;
-    box-sizing: border-box;
-  }
 
 .spinner {
   margin: 0 auto;
