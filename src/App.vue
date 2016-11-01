@@ -169,8 +169,9 @@ var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 var FileSaver =require('file-saver');
 var UAParser = require('ua-parser-js');
 
-import SpriteUtilities  from './js/spriteUtilities';
-var gesture = require('pixi-simple-gesture')
+//import SpriteUtilities  from './js/spriteUtilities';
+//var gesture = require('pixi-simple-gesture')
+//var poly = require('jquery.pointer-events-polyfill');
 
 import setting from './setting';
 
@@ -238,6 +239,9 @@ export default {
     this.browser = result.browser.name;
    // alert(this.browser)
 
+// for ie pointer-events
+     // window.pointerEventsPolyfill();
+
 
 
 
@@ -256,7 +260,7 @@ export default {
       updateMessage: function(idx){
         this.selectedMsg = idx+1;
       },
-      updateImage: function(img, target){
+      updateImage: function(img, target, w, h){
         $('#load-panel').addClass('active');
         $('.m-active').removeClass('m-active');
        // alert('update image '+img);
@@ -282,7 +286,7 @@ export default {
      //  fullimg="https://graph.facebook.com/10153785297671594/picture?access_token=EAAKAylEi…eOGet9RgnZAJubjuwUPqo7fWUZBpvwCON03xLMjpPLdZA2kx364TmzJ5uWA4eLB86GSBXgZDZD"
         //create image to preload:
 
-        this.imageToCanvas(fullimg, target);
+        this.imageToCanvas(fullimg, target, w, h);
       },
       getSrc: function(img){
             this.layout = img.srcElement.src;
@@ -290,7 +294,7 @@ export default {
             $('#load-panel').addClass('active');
       },
       
-      imageToCanvas: function(path, target){
+      imageToCanvas: function(path, target, w, h){
 
          console.warn(target);
           this.$router.push({ name: 'home'});
@@ -488,7 +492,7 @@ export default {
         var adjustedX = frame.position.x - frame.width/2 + buffer;
         var adjustedY = frame.position.y - frame.height/2 +buffer;
         mask_rect.drawRect(adjustedX, adjustedY, frame.width - buffer*2, frame.height - buffer*2);
-       // mask_rect.anchor.set(0.5);
+    //    mask_rect.anchor.set(0.5);
 
         stage.addChild(mask_rect);
 
@@ -614,7 +618,7 @@ export default {
 
         tree = PIXI.Sprite.fromImage('./static/images/tree-01.png');
 
-        tree.scale.x = tree.scale.y = .6;
+        tree.scale.x = tree.scale.y = .75;
         tree.position.x = 0;
         tree.position.y = 0;
         tree.val = 'tree';

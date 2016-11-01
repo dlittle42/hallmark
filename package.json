@@ -37,6 +37,7 @@
     "html-webpack-plugin": "^2.8.1",
     "http-proxy-middleware": "^0.17.2",
     "jquery": "^3.1.1",
+    "jquery.pointer-events-polyfill": "^0.2.4",
     "json-loader": "^0.5.4",
     "kerberos": "^0.0.21",
     "modernizr": "^3.3.1",

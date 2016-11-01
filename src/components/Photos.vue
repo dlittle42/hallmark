@@ -122,7 +122,8 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
         myDropzone.on('thumbnail', function(file, dataUri) {
             // use dataUri here
            // alert(dataUri);
-            scope.$emit('imgSelect', dataUri, 'portrait');
+          // alert(file.width+","+file.height);
+            scope.$emit('imgSelect', dataUri, 'portrait', file.width, file.height);
         });
     /*
         myDropzone.options = {
