@@ -1561,7 +1561,7 @@ export default {
 
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
           // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
-          alert(scope.browser)
+          console.log(scope.browser)
           if (scope.browser == "Safari"){
 
              // var dt = document.getElementById("canvas1").toDataURL('image/png');
