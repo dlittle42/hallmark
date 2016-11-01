@@ -163,6 +163,7 @@ var FileSaver =require('file-saver');
 var UAParser = require('ua-parser-js');
 
 import SpriteUtilities  from './js/spriteUtilities';
+var gesture = require('pixi-simple-gesture')
 
 import setting from './setting';
 
@@ -295,6 +296,9 @@ export default {
 
          var dimension, image;
 
+         //reset img position
+         
+
           image = new Image();
           image.src = path;
           image.onload = function() {
@@ -306,6 +310,13 @@ export default {
             //  console.log(this.src)
 
               var obj = eval(target);
+
+              if (target == 'portrait'){
+                portrait.position.x = 250;
+                portrait.position.y = 150;
+                portrait.rotation = 0;
+              }
+
               var texture01 = PIXI.Texture.from(path)
               obj.setTexture(texture01);
               if (target == 'portrait'){
@@ -439,26 +450,18 @@ export default {
           portrait.anchor.set(0.5);
           portrait.interactive = true;
           portrait.buttonMode = true;
+          portrait.dragging = false;
 
          // stage.on('mousedown', this.onDragStart)
         
 
-    //      portrait
-        // events for drag start
-        portrait.on('mousedown', this.onDragStart)
-        portrait.on('touchstart', this.onDragStart)
-        // events for drag end
-        portrait.on('mouseup', this.onDragEnd)
-        portrait.on('mouseupoutside', this.onDragEnd)
-        portrait.on('touchend', this.onDragEnd)
-        portrait.on('touchendoutside', this.onDragEnd)
-        // events for drag move
-        portrait.on('mousemove', this.onDragMove)
-        portrait.on('touchmove', this.onDragMove);
+          parent.setPortraitEvents();
+    
 
+        stage.addChild(portrait);
 
-        stage.addChild(container);
-        container.addChild(portrait);
+      //  stage.addChild(container);
+      //  container.addChild(portrait);
         stage.addChild(frame);
 
         var mask_rect = new PIXI.Graphics();
@@ -471,7 +474,8 @@ export default {
 
         stage.addChild(mask_rect);
 
-        container.mask = mask_rect;
+        portrait.mask = mask_rect;
+      
 
 /*
            var marker1 = PIXI.Sprite.fromImage('./static/images/marker.png');
@@ -507,16 +511,16 @@ export default {
       //  stage.anchor.set(0.5);
 
 
-       stage.interactive = true;
-       stage.button = true;
+    //   stage.interactive = true;
+     //  stage.button = true;
 
        //stage.on('mousedown', this.onDragStart)
 
      // stage
 
             // set the mouseover callback...
-       stage.on('mouseover', this.onStageOver)
-       stage.on('mouseout', this.onStageOut)
+     //  stage.on('mouseover', this.onStageOver)
+     //  stage.on('mouseout', this.onStageOut)
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
@@ -629,6 +633,53 @@ export default {
 
           // render the stage
           renderer.render(stage);
+      },
+      setPortraitEvents: function(){
+        console.log('set P events')
+/*
+        console.dir(gesture);
+
+        gesture.default.pinchable(portrait, true)
+
+        portrait.on('pinchstart', function() {
+          console.log('pinch start')
+        })
+
+        portrait.on('pinchmove', function(event) {
+          console.log('pinch move', event)
+          portrait.scale.x = event.scale;
+          portrait.scale.y = event.scale;
+        })
+
+        portrait.on('pinchend', function() {
+          console.log('pinch end')
+        })
+
+*/
+
+        //      portrait
+        // events for drag start
+        portrait.on('mousedown', this.onDragStart)
+        portrait.on('touchstart', this.onDragStart)
+        // events for drag end
+        portrait.on('mouseup', this.onDragEnd)
+        portrait.on('mouseupoutside', this.onDragEnd)
+        portrait.on('touchend', this.onDragEnd)
+        portrait.on('touchendoutside', this.onDragEnd)
+        // events for drag move
+        portrait.on('mousemove', this.onDragMove)
+        portrait.on('touchmove', this.onDragMove);
+
+        portrait.on('click', this.rotateImg)
+        portrait.on('tap', this.rotateImg)
+   
+
+      },
+      rotateImg: function(e){
+        if (portrait.counter <10){
+          console.log('rotate' + e.target);
+          e.target.rotation+=1.5708; //radians
+        }
       },
       setObjEvents: function(obj){
         console.log('setObjEvents on '+obj)
@@ -1071,34 +1122,37 @@ export default {
          this.hideMarkers();
 
       },
-      onDragStart: function(event)
+      onDragStart: function(e)
       {
           // store a reference to the data
           // the reason for this is because of multitouch
           // we want to track the movement of this particular touch
-          this.data = event.data;
-          this.alpha = 0.5;
-          this.dragging = true;
+          portrait.data = e.data;
+          portrait.alpha = 0.5;
+          portrait.dragging = true;
+          portrait.counter= 0;
           console.log('drag start');
       },
-      onDragEnd: function()
+      onDragEnd: function(e)
       {
-          this.alpha = 1;
+          portrait.alpha = 1;
 
-          this.dragging = false;
+          portrait.dragging = false;
 
           // set the interaction data to null
-          this.data = null;
+          portrait.data = null;
           console.log('drag end');
       },
 
-      onDragMove: function()
+      onDragMove: function(e)
       {
-          if (this.dragging)
+          if (portrait.dragging)
           {
-              var newPosition = this.data.getLocalPosition(this.parent);
-              this.position.x = newPosition.x;
-              this.position.y = newPosition.y;
+              var newPosition = e.data.getLocalPosition(stage);
+              portrait.position.x = newPosition.x;
+              portrait.position.y = newPosition.y;
+              portrait.counter+=1;
+              console.log(portrait.counter)
               console.log('drag move');
           }
       },
