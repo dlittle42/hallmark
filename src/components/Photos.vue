@@ -3,7 +3,7 @@
   <template>
     
       <div>
-        <h1>CHOOSE A PHOTO<a href="#" class="help">?</a></h1>
+        <h1>CHOOSE A PHOTO<a href="#" class="help" id="help-photos-btn">?</a></h1>
         <!--
         <div class="fb-login-button" scope="public_profile,email" onlogin="this.checkLoginState();">
         </div>
@@ -90,8 +90,11 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
           $('#social_action').fadeOut();
           $('#mobile_buttons').fadeOut();
 
+
         } 
          
+           document.getElementById("help-photos-btn").addEventListener('click', this.showHelpPhotos, false);
+
         router = this.$router;
         console.log('The current view ' + this.$route.path+' is mounted!!');
 

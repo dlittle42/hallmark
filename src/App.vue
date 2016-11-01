@@ -30,7 +30,7 @@
             
             <div class="transparent">
   
-              <h1>CHOOSE A LAYOUT<a href="#" class="help" id="help-layout">?</a></h1> 
+              <h1>CHOOSE A LAYOUT<a href="#" class="help" id="help-layout-btn">?</a></h1> 
            
               <div id="scene-scroll" class="scroll">
               
@@ -213,8 +213,8 @@ export default {
       */
       this.setupPixi();
      // $('#mainStage').height($('#main_block').width() / 1);
-     document.getElementById("help-layout").addEventListener('click', this.showHelp('layout'), false);
-
+     document.getElementById("help-layout-btn").addEventListener('click', this.showHelpLayouts, false);
+  
      document.getElementById("dl").addEventListener('click', this.resizeOutput, false);
      document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
      document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
@@ -1168,8 +1168,33 @@ export default {
               console.log('drag move');
           }
       },
-      showHelp: function(obj){
-        $('#help-panel').fadeIn();
+      showHelpLayouts: function(e){
+        e.preventDefault();
+
+        if ($('#help-layout').hasClass('active')){
+
+            $('#help-layout').removeClass('active');
+          }else{
+            $('#help-layout').addClass('active');
+          }
+
+        $('.m-active').removeClass('m-active');
+     
+
+
+      },
+      showHelpPhotos: function(e){
+        e.preventDefault();
+
+        if ($('#help-photos').hasClass('active')){
+
+            $('#help-photos').removeClass('active');
+          }else{
+            $('#help-photos').addClass('active');
+          }
+
+        $('.m-active').removeClass('m-active');
+     
 
 
       },
@@ -1973,6 +1998,7 @@ body {
 
 }
 
+ol li,
 p{
   font-family: Source Sans Pro, Helvetica, sans-serif;
     
@@ -2151,6 +2177,7 @@ h1{
 
   img {
     max-width: 100%;
+        margin-top: 20px;
   }
 }
 
@@ -2229,6 +2256,36 @@ h1{
     flex-direction: column;
     color: #3c3b3b;
  
+}
+
+#help-layout{
+    opacity: 0;
+    transition: opacity .25s ease-out;
+   pointer-events:none;
+
+
+
+}
+
+#help-layout.active{
+    opacity: 1;
+    pointer-events: auto;
+  
+}
+
+#help-photos{
+    opacity: 0;
+    transition: opacity .25s ease-out;
+   pointer-events:none;
+
+
+
+}
+
+#help-photos.active{
+    opacity: 1;
+    pointer-events: auto;
+  
 }
 
 
