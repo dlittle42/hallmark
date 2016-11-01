@@ -580,6 +580,28 @@ export default {
         stage.addChild(fireplace);
 
 
+         var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
+         var source = texture.baseTexture.source;
+         source.loop = true;
+         console.dir(source);
+       //  source.pause();source.play();
+
+        // create a new Sprite using the video texture (yes it's that easy)
+        var videoSprite = new PIXI.Sprite(texture);
+
+        
+        videoSprite.width = 418*.6;//renderer.width;
+        videoSprite.height = 290*.6;//renderer.height;
+       // videoSprite.scale.x = videoSprite.scale.y = .6;
+        videoSprite.anchor.set(.5, 1);
+        videoSprite.position.x = 250;
+        videoSprite.position.y = 500;
+
+        videoSprite.loop = true;
+
+        stage.addChild(videoSprite);
+
+
         gift = PIXI.Sprite.fromImage('./static/images/gift-01.png');
 
         gift.scale.x = gift.scale.y = .6;
@@ -910,6 +932,9 @@ export default {
         mantle04.val = 'mantle04';
         mantle04.anchor.set(.5, 1);
         stage.addChild(mantle04);
+
+
+       
 
         
 
