@@ -101,7 +101,17 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
         Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("#my-awesome-dropzone", {
           autoProcessQueue: false,
-          thumbnailWidth: 400,
+         // thumbnailWidth: 400,
+          thumbnailWidth: null,
+          thumbnailHeight: null,
+          init: function() {
+              this.on("thumbnail", function(file, dataUrl) {
+                  $('.dz-image').last().find('img').attr({width: '100%', height: '100%'});
+              }),
+              this.on("success", function(file) {
+                  $('.dz-image').css({"width":"100%", "height":"auto"});
+              })
+          }
           //thumbnailHeight: 250,
           //createImageThumbnails: false
         });
@@ -123,6 +133,40 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
             // use dataUri here
            // alert(dataUri);
           // alert(file.width+","+file.height);
+          /*
+
+          /// test image sizing//////
+          
+            console.dir(file)
+            var elementID = 'canvas' + $('canvas').length; // Unique ID
+
+            $('<canvas>').attr({
+              id: elementID
+          }).css({
+              width: file.width+'px',
+              height: file.height+'px',
+             // display: 'none'
+          }).appendTo('body');
+
+        var canvas = document.getElementById(elementID);
+        var ctx = canvas.getContext('2d');
+
+        var width = file.width;
+        var height = file.height;
+
+        // set its dimension to target size
+        canvas.width = width;
+        canvas.height = height;
+
+        var img = new window.Image();
+    img.addEventListener("load", function () {
+        canvas.getContext("2d").drawImage(img, 0, 0);
+    });
+    img.setAttribute("src", dataUri);
+    */
+
+        // draw source image into the off-screen canvas:
+    //    ctx.drawImage(dataUri, 95, 95, 1010, 1010);
             scope.$emit('imgSelect', dataUri, 'portrait', file.width, file.height);
         });
     /*
@@ -283,6 +327,17 @@ button#choose_btn {
    .dz-message{
    // margin-top: 50px;
    }
+}
+
+.dropzone .dz-preview .dz-details, .dropzone-previews .dz-preview .dz-details {
+    width: auto !important;
+    height: auto !important;
+}
+
+.dz-details img {
+    width: auto !important;
+    height: auto !important;
+    position: relative !important;
 }
 
 .dropzone:hover{

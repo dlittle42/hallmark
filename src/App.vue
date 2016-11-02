@@ -339,6 +339,9 @@ export default {
               if (target == 'portrait'){
                 portrait.position.x = 250;
                 portrait.position.y = 150;
+                console.warn('portrait.width='+portrait.width+',height='+portrait.height)
+                console.warn('img.width='+w+',height='+h);
+                 console.warn('dimension.width='+obj.dimension.width+',height='+obj.dimension.height);
                 portrait.rotation = 0;
                 obj.ratio = Math.max(frame.width/obj.dimension.width,frame.height/obj.dimension.height);
                 obj.alt_ratio = Math.max(frame.width/obj.dimension.height,frame.height/obj.dimension.width);
