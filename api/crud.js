@@ -147,7 +147,7 @@ var dataUrl = canvas.pngStream().pipe(out);
       T.post('media/metadata/create', meta_params, function (err, data, response) {
         if (!err) {
           // now we can reference the media and post a tweet (media will attach to the tweet)
-          var params = { status: 'I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out!', media_ids: [mediaIdStr] }
+          var params = { status: 'I just created my Most Wonderful Mantlepiece of Christmas! You can create one, too! http://www.hallmarkmoviesandmysteries.com/ via @HallmarkMovie', media_ids: [mediaIdStr] }
 
           T.post('statuses/update', params, function (err, data, response) {
             console.log(data)

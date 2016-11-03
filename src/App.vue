@@ -426,7 +426,7 @@ export default {
 
        renderer = PIXI.autoDetectRenderer(width , height, { 
         view:canvas, 
-        transparent: true,
+       // transparent: true,
         preserveDrawingBuffer:true 
        });
        console.dir(renderer);
@@ -1598,7 +1598,7 @@ export default {
          //this.hideMarkersNow();
          marker_container.position.x = 1000;
          $('#load-panel').addClass('active');
-         
+
          var mainstage = $('#mainStage')[0];
           // create an off-screen canvas
           var elementID = 'canvas' + $('canvas').length; // Unique ID
@@ -2128,6 +2128,8 @@ p{
   font-family: Source Sans Pro, Helvetica, sans-serif;
     
 }
+
+button:focus {outline:0;}
 
 a.help{
       background: #666;
