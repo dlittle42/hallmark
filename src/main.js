@@ -57,13 +57,13 @@
       window.fbAsyncInit = function() {
         FB.init({
           //appId      : '704556386364970', // hall­m­a­r­k­-dev for Google Cloud
-          appId       : '719330484887560', // for heroku
+            appId      : '719330484887560', // for heroku
        //   appId      : '704923129661629', // hall­m­a­r­k­-dev - Test1 for localhost
         //  channelUrl : '//conor.lavos.local/channel.html',
           status     : true,
           cookie     : true,
           xfbml      : true,
-          version    : 'v2.7' // use graph api version 2.5
+          version    : 'v2.8' // use graph api version 2.8
         });
 
         //This function should be here, inside window.fbAsyncInit
