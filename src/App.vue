@@ -1993,9 +1993,9 @@ export default {
               $('#load-panel').addClass('active');
               this.FBlogin(this.uploadToAlbum);
             }else{
-             // this.FBlogin(this.uploadCanvasData);
+              this.FBlogin(this.uploadCanvasData);
 
-              this.FBlogin(this.resizedataURL);
+             // this.FBlogin(this.resizedataURL);
 
 
             }
@@ -2008,8 +2008,8 @@ export default {
               $('#load-panel').addClass('active');
               this.uploadToAlbum();
             }else{
-            //  this.uploadCanvasData();
-              this.resizedataURL();
+              this.uploadCanvasData();
+            //  this.resizedataURL();
 
             }
          }
