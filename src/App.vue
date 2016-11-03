@@ -275,10 +275,13 @@ export default {
        var fullimg;
      //  if (img.includes('graph.facebook') || img.includes('http')){
       //if(img.length >30){
-      if (img.includes('access_token')){
+     // if (img.includes('access_token')){
+
+      if (img.indexOf('access_token') >= 0){
         //image from facebook
           fullimg = img + '&.png';
-       }else if (img.includes('.png') || img.includes('data:image')){
+      // }else if (img.includes('.png') || img.includes('data:image')){
+       }else if (img.indexOf('.png') >= 0 || img.indexOf('data:image') >= 0){
         //files from the carousel or dropzone
           fullimg = img
        }else{
