@@ -569,7 +569,12 @@ export default {
       
       }else{
         stage.on('mouseover', this.onStageOver)
+        stage.on('pointerover', this.onStageOver)
         stage.on('mouseout', this.onStageOut)
+        stage.on('pointerout', this.onStageOut)
+
+
+
       }
        
 
@@ -734,19 +739,26 @@ export default {
         //      portrait
         // events for drag start
         portrait.on('mousedown', this.onDragStart)
+        portrait.on('pointerdown', this.onDragStart)
         portrait.on('touchstart', this.onDragStart)
         // events for drag end
         portrait.on('mouseup', this.onDragEnd)
         portrait.on('mouseupoutside', this.onDragEnd)
+        portrait.on('pointerup', this.onDragEnd)
+        portrait.on('pointerupoutside', this.onDragEnd)
         portrait.on('touchend', this.onDragEnd)
         portrait.on('touchendoutside', this.onDragEnd)
         // events for drag move
         portrait.on('mousemove', this.onDragMove)
+        portrait.on('pointermove', this.onDragMove)
         portrait.on('touchmove', this.onDragMove);
 
         portrait.on('click', this.rotateImg)
         portrait.on('tap', this.rotateImg)
-   
+
+        portrait.on('pointertap', this.rotateImg)
+  
+
 
       },
       rotateImg: function(e){
@@ -768,23 +780,33 @@ export default {
 
           obj.on('mousedown', this.onMarkerDown)
               .on('touchstart', this.onMarkerDown)
+              .on('pointerdown', this.onMarkerDown)
 
                 // set the mouseup and touchend callback...
                 .on('mouseup', this.onMarkerUp)
+                .on('pointerup', this.onMarkerUp)
                 .on('touchend', this.onMarkerUp)
                 .on('mouseupoutside', this.onMarkerUp)
+                .on('pointerupoutside', this.onMarkerUp)
                 .on('touchendoutside', this.onMarkerUp)
 
                 // set the mouseover callback...
                 .on('mouseover', this.onMarkerOver)
+                .on('pointerover', this.onMarkerOver)
 
                 // set the mouseout callback...
                 .on('mouseout', this.onMarkerOut)
+                .on('pointerout', this.onMarkerOut)
 
 
                 // you can also listen to click and tap events :
               .on('click', this.getGallery)
               .on('tap', this.getGallery)
+              .on('pointertap', this.getGallery)
+
+
+
+
       },
       setupFireplace: function(){
 
@@ -1057,19 +1079,23 @@ export default {
 */
 
               button.mousedown = this.onMarkerDown.bind(undefined, button);
+              button.pointerdown = this.onMarkerDown.bind(undefined, button);
               button.mouseup = this.onMarkerUp.bind(undefined, button);
+              button.pointerup = this.onMarkerUp.bind(undefined, button);
               button.mouseupoutside = this.onMarkerUp.bind(undefined, button);
+              button.pointerupoutside = this.onMarkerUp.bind(undefined, button);
               button.mouseover = this.onMarkerOver.bind(undefined, button);
+              button.pointerover = this.onMarkerOver.bind(undefined, button);
               button.touchstart = this.onMarkerOver.bind(undefined, button);
               button.mouseout = this.onMarkerOut.bind(undefined, button);
+              button.pointerout = this.onMarkerOut.bind(undefined, button);
               button.touchend = this.onMarkerOut.bind(undefined, button);
               button.touchendoutside = this.onMarkerOut.bind(undefined, button);
 
 
               button.on('click', this.getGallery)
               button.on('tap', this.getGallery)
-
-
+              button.on('pointertap', this.getGallery)
 
 
               TweenMax.fromTo(button, 2, {alpha:0},{alpha:1, ease:Power2.easeOut, delay: 1+ (i/10)});
