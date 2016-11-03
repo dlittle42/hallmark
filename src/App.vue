@@ -1732,7 +1732,8 @@ export default {
       },
       resizedataURL: function()
       {
-          $('#load-panel').addClass('active');
+        marker_container.position.x = 1000;
+        $('#load-panel').addClass('active');
 
          var mainstage = $('#mainStage')[0]
         // create an off-screen canvas
@@ -1883,7 +1884,7 @@ export default {
         },
         getFBstatus: function(callback){
 
-
+          marker_container.position.x = 1000;
 
          // this.FBlogin(this.statusChangeCallback);
 
