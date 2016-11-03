@@ -76,14 +76,16 @@
               </div>
               <div id="help-layout" class="help-panel">
                 <a href="#" class="help close" id="help-layout-close">X</a>
-                <h1>Are you a traditionalist or is a modern mantlepiece more to your liking?</h1> 
+                 <h1>Choose a Layout</h1>
+                <p>Are you a traditionalist or is a modern mantlepiece more to your liking?</p> 
                 <p>Simply click on the layout that best matches your Christmas style!</p>
 
                 <p>Use the scrollbar to move the list up and down and click on the layout you like best. Then click on the squares in the center panel to add your customizations. Don’t forget to share your Most Wonderful Mantlepiece of Christmas with your friends afterwards!</p>
               </div>
               <div id="help-photos" class="help-panel">
                 <a href="#" class="help close" id="help-photos-close">x</a>
-                <h1>No mantlepiece would be complete without a framed photo!</h1>
+                <h1>Choose a Photo</h1>
+                <p>No mantlepiece would be complete without a framed photo!</p>
 
                 <p>There are two ways to add a photo to your Mantlepiece:</p>
                 <ol>
@@ -91,7 +93,9 @@
                   <li>Choose from the photos on your device, either by dragging and dropping or by clicking the Choose files button</li>
                 </ol>
 
-                  <p>Whichever method you choose, be sure to share your Most Wonderful Mantlepiece of Christmas with your friends afterwards!</p>
+                  <p>Whichever method you choose, you can then drag the photo around in the frame until it looks perfect.</p> 
+
+                  <p>Be sure to share your Most Wonderful Mantlepiece of Christmas with your friends afterwards!</p>
               </div>
               <div id="thanks">
               <h1>Thanks for creating and sharing your Most Wonderful Mantlepiece of Christmas!</h1>
@@ -1368,6 +1372,9 @@ export default {
             mantle02.setTexture(PIXI.Texture.from(img));
             mantle03.setTexture(PIXI.Texture.from(img));
              mantle04.setTexture(PIXI.Texture.from(img));
+
+             mantlepiece.setTexture(PIXI.Texture.from(img));
+             headline.setTexture(PIXI.Texture.from(img));
           }else if (n==2){
 
             var img = path + 'wallpaper-02' + ext;
@@ -1394,7 +1401,8 @@ export default {
             mantle02.setTexture(PIXI.Texture.from(img));
             mantle03.setTexture(PIXI.Texture.from(img));
 
-
+            mantlepiece.setTexture(PIXI.Texture.from(img));
+             headline.setTexture(PIXI.Texture.from(img));
 
           }else if (n==3){
 
@@ -1424,7 +1432,8 @@ export default {
             mantle01.setTexture(PIXI.Texture.from(img));
             mantle02.setTexture(PIXI.Texture.from(img));
 
-
+            mantlepiece.setTexture(PIXI.Texture.from(img));
+             headline.setTexture(PIXI.Texture.from(img));
 
 
           }
@@ -2693,8 +2702,13 @@ figure{
     border-radius: 5px;
     box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.5);
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     img{
-      max-width: 100%
+      max-width: 100%;
+      max-height: 100%;
      }
 
  }

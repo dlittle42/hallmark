@@ -1,7 +1,7 @@
 <template>
 
       <div id="gallery">
-        <h1>CHOOSE A PHOTO</h1>
+        <h1>CHOOSE ONE</h1>
         <!-- {{$route.params.imgset}} -->
 
 		<div class="img-gallery scroll" v-if="assets">
