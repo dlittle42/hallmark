@@ -216,7 +216,7 @@ export default {
   mounted: function () {
     this.$nextTick(function () {
       // code that assumes this.$el is in-document
-      console.log('mounted!!!!!!!!');
+      //console.log('mounted!!!!!!!!');
       //attachFastClick(document.body);
       /*
       FastClick.attach(document.body);
@@ -256,7 +256,7 @@ export default {
     })
   },
   componentUpdated (el, binding, vnode, oldVNode) { 
-    console.log('updated!!!!!!!!');
+    //console.log('updated!!!!!!!!');
   },
 
   methods: {
@@ -285,7 +285,7 @@ export default {
           //prepopulated images from gallery
           fullimg = "./static/images/"+img+ ".png";
        }
-       //console.log("FULLIMAGE="+fullimg)
+       ////console.log("FULLIMAGE="+fullimg)
 
        //fullimg = "https://scontent.xx.fbcdn.net/v/t1.0-9/301406_10150280973301594_716561513_n.jpg?oh=31f090bc7c4acefaa14603eeff3156b5&oe=588E9495"
 
@@ -302,10 +302,10 @@ export default {
       
       imageToCanvas: function(path, target, w, h){
 
-         console.warn(target);
+         //console.warn(target);
           this.$router.push({ name: 'home'});
-         // console.log('---' + path)
-        //  console.log('---' + path.toString())
+         // //console.log('---' + path)
+        //  //console.log('---' + path.toString())
           //$('body').prepend($('<img>',{id:'theImg',src:path}))
 
           //facebook redirects a url to the image
@@ -313,8 +313,8 @@ export default {
         //  var texture01 = PIXI.Texture.from(path+'&.png')
 
         //  eval(target).setTexture(texture01);
-        // console.log(path);
-        // console.log(texture01)
+        // //console.log(path);
+        // //console.log(texture01)
          
 
          var dimension, image;
@@ -334,8 +334,8 @@ export default {
                   width: image.naturalWidth,
                   height: image.naturalHeight
               };
-              console.log(dimension); // Actual image dimension
-            //  console.log(this.src)
+              //console.log(dimension); // Actual image dimension
+            //  //console.log(this.src)
 
               
 
@@ -345,13 +345,13 @@ export default {
               if (target == 'portrait'){
                 portrait.position.x = 250;
                 portrait.position.y = 150;
-                console.warn('portrait.width='+portrait.width+',height='+portrait.height)
-                console.warn('img.width='+w+',height='+h);
-                 console.warn('dimension.width='+obj.dimension.width+',height='+obj.dimension.height);
+                //console.warn('portrait.width='+portrait.width+',height='+portrait.height)
+                //console.warn('img.width='+w+',height='+h);
+                 //console.warn('dimension.width='+obj.dimension.width+',height='+obj.dimension.height);
                 portrait.rotation = 0;
                 obj.ratio = Math.max(frame.width/obj.dimension.width,frame.height/obj.dimension.height);
                 obj.alt_ratio = Math.max(frame.width/obj.dimension.height,frame.height/obj.dimension.width);
-                console.log('my ratio is '+obj.ratio);
+                //console.log('my ratio is '+obj.ratio);
                 obj.scale.x = obj.scale.y = obj.ratio;
               }
               //$('#load-panel').delay(1000).removeClass('active');
@@ -423,7 +423,7 @@ export default {
         scale = window.devicePixelRatio,
         width = 500,//$('#mainStage').width(),
         height = 500;//$('#mainStage').height();
-        console.log('w='+width+',h='+height);
+        //console.log('w='+width+',h='+height);
 
 
        renderer = PIXI.autoDetectRenderer(width , height, { 
@@ -431,7 +431,7 @@ export default {
        // transparent: true,
         preserveDrawingBuffer:true 
        });
-       console.dir(renderer);
+       //console.dir(renderer);
 
        $('#mainStage').width($('#main_block').width() / 1);
          $('#mainStage').height($('#mainStage').width() / 1);
@@ -470,7 +470,7 @@ export default {
           container.position.y =0;//height / 2;
          // container.anchor.set(0.5);
 
-          console.log(frame.width)
+          //console.log(frame.width)
 
           portrait = PIXI.Sprite.fromImage('./static/images/portrait01.png');
           //portrait.image.crossOrigin = "anonymous";
@@ -605,7 +605,7 @@ export default {
          var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
          var source = texture.baseTexture.source;
          source.loop = true;
-         console.dir(source);
+         //console.dir(source);
        //  source.pause();source.play();
 
         // create a new Sprite using the video texture (yes it's that easy)
@@ -688,15 +688,15 @@ export default {
       /*
       loadProgressHandler:function(loader, resource) {  
          //Display the file `url` currently being loaded  
-         console.log("loading: " + resource.url);  
+         //console.log("loading: " + resource.url);  
          //Display the precentage of files currently loaded  
-         console.log("progress: " + loader.progress + "%");   
+         //console.log("progress: " + loader.progress + "%");   
          //If you gave your files names with the `add` method, you can access  
          //them like this  
-         //console.log("loading: " + resource.name);
+         ////console.log("loading: " + resource.name);
       },
       setup: function() {  
-        console.log("All files loaded");
+        //console.log("All files loaded");
       },
     */
       animate() {
@@ -709,24 +709,24 @@ export default {
           renderer.render(stage);
       },
       setPortraitEvents: function(){
-        console.log('set P events')
+        //console.log('set P events')
 /*
-        console.dir(gesture);
+        //console.dir(gesture);
 
         gesture.default.pinchable(portrait, true)
 
         portrait.on('pinchstart', function() {
-          console.log('pinch start')
+          //console.log('pinch start')
         })
 
         portrait.on('pinchmove', function(event) {
-          console.log('pinch move', event)
+          //console.log('pinch move', event)
           portrait.scale.x = event.scale;
           portrait.scale.y = event.scale;
         })
 
         portrait.on('pinchend', function() {
-          console.log('pinch end')
+          //console.log('pinch end')
         })
 
 */
@@ -751,7 +751,7 @@ export default {
       },
       rotateImg: function(e){
         if (portrait.counter <10){
-          console.log('rotate' + e.target);
+          //console.log('rotate' + e.target);
           e.target.rotation+=1.5708; //radians
           if(e.target.scale.x == e.target.ratio){
             e.target.scale.x = e.target.scale.y = e.target.alt_ratio;
@@ -761,7 +761,7 @@ export default {
         }
       },
       setObjEvents: function(obj){
-        console.log('setObjEvents on '+obj)
+        //console.log('setObjEvents on '+obj)
 
         obj.interactive = true;
         obj.button = true;
@@ -799,7 +799,7 @@ export default {
 
       },
       onAssetsLoaded: function(){
-        console.log('.......assets loaded......');
+        //console.log('.......assets loaded......');
 
         // create an array to store the textures
         var explosionTextures = [];
@@ -1008,7 +1008,7 @@ export default {
         ]
 
        // var noop = function () {
-       //   console.log('click');
+       //   //console.log('click');
        // };
 
         var textureButton = PIXI.Texture.fromImage('./static/images/marker.png');
@@ -1096,7 +1096,7 @@ export default {
             //buttons[i].alpha=0;
 
             buttons[1].visible =false;
-            console.log('buttons='+buttons[i].alpha)
+            //console.log('buttons='+buttons[i].alpha)
         }
     */
       },
@@ -1119,19 +1119,19 @@ export default {
 
        TweenMax.to(obj.scale, 0.2, {x:"-=.1",y:"-=.1" , ease: Power2.easeOut});
 
-        console.log('onMarkerDown');
+        //console.log('onMarkerDown');
      //  alert('touched');
 
       },
       onMarkerUp: function(obj, e){
         
         TweenMax.to(obj.scale, 0.2, {x:"+=.1",y:"+=.1" , ease: Power2.easeOut});
-        console.log('onMarkerUp');
+        //console.log('onMarkerUp');
        // obj.tint = null;
 
       },
       onMarkerOver: function(obj, e){
-       // console.log("OVER:" + obj, e);
+       // //console.log("OVER:" + obj, e);
 
        $('#caption').addClass('active');
 
@@ -1177,7 +1177,7 @@ export default {
 
       },
       onMarkerOut: function(obj, e){
-       // console.log("OUT:"+obj, e);
+       // //console.log("OUT:"+obj, e);
         $('#caption').removeClass('active');
         
         var targObj = eval(obj.val);
@@ -1197,14 +1197,14 @@ export default {
 
       },
       onStageOver: function(evt){
-       // console.log('over stage');
+       // //console.log('over stage');
        // marker_container.position.x = 0;
         this.showMarkers();
         
 
       },
       onStageOut: function(evt){
-        //console.log('out stage');
+        ////console.log('out stage');
         //marker_container.position.x = 800;
          this.hideMarkers();
 
@@ -1226,7 +1226,7 @@ export default {
           portrait.alpha = 0.5;
           portrait.dragging = true;
           portrait.counter= 0;
-          console.log('drag start');
+          //console.log('drag start');
       },
       onDragEnd: function(e)
       {
@@ -1236,7 +1236,7 @@ export default {
 
           // set the interaction data to null
           portrait.data = null;
-          console.log('drag end');
+          //console.log('drag end');
       },
 
       onDragMove: function(e)
@@ -1247,8 +1247,8 @@ export default {
               portrait.position.x = newPosition.x;
               portrait.position.y = newPosition.y;
               portrait.counter+=1;
-              console.log(portrait.counter)
-              console.log('drag move');
+              //console.log(portrait.counter)
+              //console.log('drag move');
           }
       },
       showHelpLayouts: function(e){
@@ -1313,7 +1313,7 @@ export default {
            * Resize the PIXI renderer
            * Let PIXI know that we changed the size of the viewport
            */
-           console.log('RESIZING PIXI: '+ canvas.width+','+canvas.height);
+           //console.log('RESIZING PIXI: '+ canvas.width+','+canvas.height);
           renderer.resize(canvas.width, canvas.height);
 
           /**
@@ -1341,7 +1341,7 @@ export default {
       },
       swapScene: function(n){
 
-          console.log('swap scene');
+          //console.log('swap scene');
 
 
 
@@ -1486,7 +1486,7 @@ export default {
       },
 
       getGallery: function(evt){
-       // console.dir(evt);
+       // //console.dir(evt);
        // alert("target ="+ evt.target.val)
         $('#photo_block').addClass('m-active');
         if (evt.target.val == "portrait"){
@@ -1528,12 +1528,12 @@ export default {
                 }
             },
             function (response) {
-              console.log('feedback: '+response)
-              console.dir(response);
+              //console.log('feedback: '+response)
+              //console.dir(response);
                 if (response && !response.error) {
                     /* handle the result */
-                    console.log("Posted story to facebook");
-                    console.log(response);
+                    //console.log("Posted story to facebook");
+                    //console.log(response);
                     $('#load-panel').removeClass('active');
                     $('#thanks').addClass('active');
                 }
@@ -1579,7 +1579,7 @@ export default {
           if (xhr.readyState === xhr.DONE) {
                   if (xhr.status === 200) {
 
-                     // console.log('ALL GOOD')
+                     // //console.log('ALL GOOD')
                       $('#load-panel').removeClass('active');
                   }
               }
@@ -1646,9 +1646,9 @@ export default {
 
         scope = this;
 
-        console.log('before load---'+ctx);
+        //console.log('before load---'+ctx);
         base_image.onload = function(){
-          console.log('after load---'+ctx);
+          //console.log('after load---'+ctx);
           ctx.drawImage(base_image, 0, 0, 1200, 1200);
            // scope.hideMarkersNow();
 
@@ -1658,7 +1658,7 @@ export default {
 
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
           // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
-          console.log(scope.browser)
+          //console.log(scope.browser)
 
           if (targ == 'twitter'){
 
@@ -1679,9 +1679,9 @@ export default {
               
              //x evt.target.href = dt;
              // window.open(data, '_blank');
-             console.log('safari----------------')
+             //console.log('safari----------------')
              var url = (window.webkitURL || window.URL).createObjectURL(blob);
-             console.log(url);
+             //console.log(url);
             // location.href = url;
              window.open(url, '_blank');
 
@@ -1690,7 +1690,7 @@ export default {
 
           }else if (scope.browser == "Mobile Safari"){
              var url = (window.webkitURL || window.URL).createObjectURL(blob);
-             console.log('mobile- '+url);
+             //console.log('mobile- '+url);
              location.href = url;
 
             // TweenMax.delayedCall(.9, dlMobile, url);
@@ -1808,9 +1808,9 @@ export default {
           if (xhr.readyState === xhr.DONE) {
                   if (xhr.status === 200) {
                     var gcloud = JSON.parse(xhr.response);
-                      console.log(gcloud.uploaded)
-                      console.log(xhr.response);
-                      //console.log(xhr.responseText);
+                      //console.log(gcloud.uploaded)
+                      //console.log(xhr.response);
+                      ////console.log(xhr.responseText);
                       scope.postToFacebook('custom message here', gcloud.uploaded)
                   }
               }
@@ -1822,19 +1822,19 @@ export default {
       },
       completeRequest: function(response){
         //alert('completed '+ response);
-        console.log(response)
+        //console.log(response)
        //this.postToFacebook()
       },
       /*
       checkFacebookLogin: function(){
-        console.log('check' + FB)
+        //console.log('check' + FB)
         FB.getLoginStatus(function(response) {
-          console.log(response);
+          //console.log(response);
         });
       },
       */
       uploadToAlbum: function(){
-        console.log('active?'+ $('#load-panel').hassClass('active'))
+        //console.log('active?'+ $('#load-panel').hassClass('active'))
         $('#load-panel').addClass('active');
         var data = $('#mainStage')[0].toDataURL("image/png");
         var blob = this.dataURItoBlob(data);
@@ -1856,27 +1856,27 @@ export default {
                 contentType: false,
                 cache: false,
                 success: function (data) {
-                    console.log("success: ", data);
+                    //console.log("success: ", data);
 
                     // Get image source url
                     FB.api(
                         "/" + data.id + "?fields=images",
                         function (response) {
                             if (response && !response.error) {
-                              console.log("go post to wall!!!!!!");
+                              //console.log("go post to wall!!!!!!");
                               $('#load-panel').removeClass('active');
-                                console.log(response.images[0].source);
+                                //console.log(response.images[0].source);
 
                             }
                         }
                     );
                 },
                 error: function (shr, status, data) {
-                    console.log("error " + data + " Status " + shr.status);
+                    //console.log("error " + data + " Status " + shr.status);
                      $('#load-panel').removeClass('active');
                 },
                 complete: function (data) {
-                    console.log('Post to facebook Complete');
+                    //console.log('Post to facebook Complete');
                     $('#thanks').addClass('active');
                    // $('#thanks').addClass('active');
                 }
@@ -1889,7 +1889,7 @@ export default {
          // this.FBlogin(this.statusChangeCallback);
 
          if (this.accessToken==''){
-          console.log('NO TOKEN HERE')
+          //console.log('NO TOKEN HERE')
            // this.FBlogin(callback);
             if (callback=='gallery') {
               this.FBlogin(this.getFacebookGallery);
@@ -1904,7 +1904,7 @@ export default {
 
             }
          }else{
-          console.log('GOT TOKEN ALREADY')
+          //console.log('GOT TOKEN ALREADY')
             //callback();
              if (callback=='gallery') {
               this.getFacebookGallery();
@@ -1925,19 +1925,19 @@ export default {
           var scope = this;
           FB.login(function(response) {
             if (response.authResponse) {
-              console.log('Welcome!  Fetching your information.... ');
+              //console.log('Welcome!  Fetching your information.... ');
               scope.accessToken = response.authResponse.accessToken || '';
-              console.log("SET ACCESS TOKEN "+ scope.accessToken);
-              console.log('Logged into app and Facebook.');
+              //console.log("SET ACCESS TOKEN "+ scope.accessToken);
+              //console.log('Logged into app and Facebook.');
               if (callback) {
                 callback(response);
               }
             } else if (response.status === 'not_authorized') {
-              //console.log('User cancelled login or did not fully authorize.');
-              console.log('The person is logged into Facebook, but not your app.');
+              ////console.log('User cancelled login or did not fully authorize.');
+              //console.log('The person is logged into Facebook, but not your app.');
 
             } else {
-              console.log('Not logged in to Facebook')
+              //console.log('Not logged in to Facebook')
             }
           }, {
               scope: 'user_photos,publish_actions', 
@@ -1947,20 +1947,20 @@ export default {
         getFacebookGallery: function(){
 
           $('#load-panel').addClass('active');
-          console.log('ACCESSTOKEN = '+this.accessToken)
-          //console.log('outside router='+ this.router)
+          //console.log('ACCESSTOKEN = '+this.accessToken)
+          ////console.log('outside router='+ this.router)
           //passed scope through getPhotos callback???
           var scope = this;
           this.getPhotos( this, function( photos ) {
-            console.log("**********READY**********")
-            console.dir(photos);
-            console.log('url======'+photos[0].url);
+            //console.log("**********READY**********")
+            //console.dir(photos);
+            //console.log('url======'+photos[0].url);
             $('#load-panel').removeClass('active');
             scope.$router.push({ name: 'gallery', params : { 'fbset': photos, 'imgset': 'facebook' }});
          // router.push({ path: 'album', params : { imgset: 'backgrounds' }});
            // router.push('album');
             
-            //console.log('****'+photos[0].url)
+            ////console.log('****'+photos[0].url)
            // self.imageToCanvas(photos[0].url, photos[0].name);
             
           });
@@ -1974,17 +1974,17 @@ export default {
          // scope.login(function(loginResponse) {
           //    scope.accessToken = loginResponse.authResponse.accessToken || '';
               scope.getAlbums(function(albumResponse) {
-                  console.dir(albumResponse);
+                  //console.dir(albumResponse);
                   var i, album, deferreds = {}, listOfDeferreds = [];
 
                   for (i = 0; i < albumResponse.data.length; i++) {
                     album = albumResponse.data[i];
-                    console.log(album.name);
+                    //console.log(album.name);
                     deferreds[album.id] = $.Deferred();
                     listOfDeferreds.push( deferreds[album.id] );
                     scope.getPhotosForAlbumId( album.id, album.name, function( albumId, albumName, albumPhotosResponse ) {
                         var i, facebookPhoto;
-                        console.dir(albumPhotosResponse );
+                        //console.dir(albumPhotosResponse );
                         for (i = 0; i < albumPhotosResponse.data.length; i++) {
                           facebookPhoto = albumPhotosResponse.data[i];
 
@@ -2019,7 +2019,7 @@ export default {
               '/me/albums',
               {fields: 'id,cover_photo,name'},
               function(albumResponse) {
-                console.log( ' got albums ' );
+                //console.log( ' got albums ' );
                 if (callback) {
                   callback(albumResponse);
                 }
@@ -2032,8 +2032,8 @@ export default {
               '/'+albumId+'/photos',
               {fields: 'id'},
               function(albumPhotosResponse) {
-                console.log( ' got photos for album ' + albumId );
-                //console.dir(albumPhotosResponse);
+                //console.log( ' got photos for album ' + albumId );
+                ////console.dir(albumPhotosResponse);
                 if (callback) {
                   callback( albumId, albumName, albumPhotosResponse );
                 }
@@ -2042,25 +2042,25 @@ export default {
         },
         makeFacebookPhotoURL( id, accessToken ) {
           var path = 'https://graph.facebook.com/' + id + '/picture?access_token=' + accessToken;
-          console.log(path);
+          //console.log(path);
           $('#images').append('<img src="'+path+'" height="64px" width="64px">');
           return path;
         },
         showMessages: function(){
           $('.m-active').removeClass('m-active');
-          console.log('show messages panel');
+          //console.log('show messages panel');
           $('#photo_block').addClass('m-active');
         },
         showLayouts: function(){
           $('.m-active').removeClass('m-active');
-          console.log('show layouts panel');
+          //console.log('show layouts panel');
           $('#layout_block').addClass('m-active');
 
         }
         /*
         statusChangeCallback(response) {
-          console.log('statusChangeCallback');
-          console.log(response);
+          //console.log('statusChangeCallback');
+          //console.log(response);
           // The response object is returned with a status field that lets the
           // app know the current login status of the person.
           // Full docs on the response object can be found in the documentation
@@ -2068,17 +2068,17 @@ export default {
           if (response.status === 'connected') {
             // Logged into your app and Facebook.
             //testAPI();
-            console.log('Logged into app and Facebook.');
+            //console.log('Logged into app and Facebook.');
             return true;
           } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
-            console.log('The person is logged into Facebook, but not your app.');
+            //console.log('The person is logged into Facebook, but not your app.');
             return false;
             //document.getElementById('status').innerHTML = 'Please log ' +'into this app.';
           } else {
             // The person is not logged into Facebook, so we're not sure if
             // they are logged into this app or not.
-            console.log('Not logged in to Facebook')
+            //console.log('Not logged in to Facebook')
             return false;
            // document.getElementById('status').innerHTML = 'Please log ' +'into Facebook.';
           }

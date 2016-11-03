@@ -101,14 +101,14 @@ import Flickity from 'flickity';
       activate() {
           this.$nextTick(function () {
               // => 'DOM loaded and ready'
-              console.log('DOM loaded and ready');
+              //console.log('DOM loaded and ready');
           })
-          console.log('DOM activate');
+          //console.log('DOM activate');
       },
 
       data: function (transition) {
          
-          console.log('The current view is ' + this.$route.params.name);
+          //console.log('The current view is ' + this.$route.params.name);
 
          // this.setupThreejs();
          return {
@@ -122,7 +122,7 @@ import Flickity from 'flickity';
      mounted: function () {
     this.$nextTick(function () {
       // code that assumes this.$el is in-document
-      console.log('home mounted!!!!!!!!');
+      //console.log('home mounted!!!!!!!!');
      // var parent = this;
      /* document.getElementById('download').addEventListener('click', function() {
           parent.downloadCanvas(this, 'mainStage', 'test.png');
@@ -152,21 +152,21 @@ import Flickity from 'flickity';
   },
     ready: function () {
 
-      console.log('home ready!')
+      //console.log('home ready!')
 
       
     },
     watch: {
             'content'(data) {
                 // Load the external link into new tab
-                console.log('watch! content now');
+                //console.log('watch! content now');
 
             }
         },
 
     events: {
       'fade-done': function () {
-        console.log('fade-done!!!!!');
+        //console.log('fade-done!!!!!');
        // this.squaresToFadeOut--
        // this.reload();
       }
@@ -175,7 +175,7 @@ import Flickity from 'flickity';
     methods: {
 
         postFB: function(){
-          //console.log('postFB');
+          ////console.log('postFB');
           this.$emit('fbPost');
         },
         initSlider: function(){
@@ -188,7 +188,7 @@ import Flickity from 'flickity';
           var scope = this;
 
         this.flkty.on( 'select', function(e) {
-          console.log( 'Flickity select ' + this.selectedIndex )
+          //console.log( 'Flickity select ' + this.selectedIndex )
           scope.$emit('msgSelect', this.selectedIndex);
          
         })
@@ -215,15 +215,15 @@ import Flickity from 'flickity';
                 contentType: false,
                 cache: false,
                 success: function (data) {
-                    console.log("success: ", data);
+                    //console.log("success: ", data);
 
                     // Get image source url
                     FB.api(
                         "/" + data.id + "?fields=images",
                         function (response) {
                             if (response && !response.error) {
-                              console.log("go post to wall!!!!!!");
-                                console.log(response.images[0].source);
+                              //console.log("go post to wall!!!!!!");
+                                //console.log(response.images[0].source);
 
                                 // Create facebook post using image
                                 FB.api(
@@ -240,12 +240,12 @@ import Flickity from 'flickity';
                                         }
                                     },
                                     function (response) {
-                                      console.log('feedback: '+response)
-                                      console.dir(response);
+                                      //console.log('feedback: '+response)
+                                      //console.dir(response);
                                         if (response && !response.error) {
                                             //handle the result 
-                                            console.log("Posted story to facebook");
-                                            console.log(response);
+                                            //console.log("Posted story to facebook");
+                                            //console.log(response);
                                         }
                                     }
                                 );
@@ -254,10 +254,10 @@ import Flickity from 'flickity';
                     );
                 },
                 error: function (shr, status, data) {
-                    console.log("error " + data + " Status " + shr.status);
+                    //console.log("error " + data + " Status " + shr.status);
                 },
                 complete: function (data) {
-                    console.log('Post to facebook Complete');
+                    //console.log('Post to facebook Complete');
                 }
             });
         },
@@ -277,7 +277,7 @@ import Flickity from 'flickity';
           var can = document.getElementById('canvas');
           var ctx = can.getContext('2d');
 
-          console.log('canvas time: '+ path);
+          //console.log('canvas time: '+ path);
           var img = new Image();
           img.setAttribute('crossOrigin', 'anonymous');
           img.onload = function(){
@@ -303,8 +303,8 @@ import Flickity from 'flickity';
         },
         */
         statusChangeCallback(response) {
-          console.log('statusChangeCallback');
-          console.log(response);
+          //console.log('statusChangeCallback');
+          //console.log(response);
           // The response object is returned with a status field that lets the
           // app know the current login status of the person.
           // Full docs on the response object can be found in the documentation

@@ -96,7 +96,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
            document.getElementById("help-photos-btn").addEventListener('click', this.showHelpPhotos, false);
 
         router = this.$router;
-        console.log('The current view ' + this.$route.path+' is mounted!!');
+        //console.log('The current view ' + this.$route.path+' is mounted!!');
 
         Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("#my-awesome-dropzone", {
@@ -117,7 +117,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
         });
 
 
-       // console.dir(myDropzone)
+       // //console.dir(myDropzone)
 
         var scope =this;
 
@@ -126,7 +126,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
          // alert("Added file." + file); 
           //$('body').prepend(file.previewElement)
           //alert($('.dz-image img')[0].src);
-          //console.dir(file);
+          ////console.dir(file);
         });
 
         myDropzone.on('thumbnail', function(file, dataUri) {
@@ -137,7 +137,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
           /// test image sizing//////
           
-            console.dir(file)
+            //console.dir(file)
             var elementID = 'canvas' + $('canvas').length; // Unique ID
 
             $('<canvas>').attr({
@@ -174,7 +174,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
           init: function() {
             this.on("addedfile", function(file) { 
               alert("Added file." + file); 
-              console.dir(file);
+              //console.dir(file);
             });
           }
         };
@@ -184,7 +184,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
     },
     componentUpdated (el, binding, vnode, oldVNode) { 
-      console.log('updated!!!!!!!!');
+      //console.log('updated!!!!!!!!');
     },
 
     methods: {
@@ -193,7 +193,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
      */
         getSrc: function(img, event){
               //this.$emit('imgSelect', event.target.src)
-              console.dir(event.target)
+              //console.dir(event.target)
               //var filename = event.target.src.replace(/^.*[\\\/]/, '')
               this.$emit('imgSelect', event.target.src, 'portrait')
               //this.$router.push('home');
@@ -218,11 +218,11 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
         postToFB() { 
           var data = $('#mainStage')[0].toDataURL("image/png");
           var blob = this.dataURItoBlob(data);
-          console.log('blob='+blob);
+          //console.log('blob='+blob);
           this.postImageToFacebook(this.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
           //FB.api('/me/feed', 'post', {message: 'my first status...', source: blob}, function(response) {
 
-            //console.log(response);
+            ////console.log(response);
             //document.getElementById('status').innerHTML = response.id;
           //});
         
@@ -230,8 +230,8 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
  */
 // using???
         gotoAlbum: function(){
-          console.log('go album---------')
-          console.log('outside router='+ this.router)
+          //console.log('go album---------')
+          //console.log('outside router='+ this.router)
          // this.$router.push('gallery');
           this.router.push({ name: 'gallery', params : { 'imgset': 'backgrounds' }});
          // router.push({ path: 'album', params : { imgset: 'backgrounds' }});

@@ -48,7 +48,7 @@ export default {
 	  // the logic will be slightly different.
 	  watch: {
 	    $route () {
-	    	console.log('watch Route fired!!!');
+	    	//console.log('watch Route fired!!!');
 	    	this.setGallery(this.$route.params.imgset);
 	    	/*
 	      this.post = null
@@ -66,8 +66,8 @@ export default {
 
 	    this.$nextTick(function () {
 	      // code that assumes this.$el is in-document
-	      console.log('gallery mounted');
-	      console.log($('.header').width())
+	      //console.log('gallery mounted');
+	      //console.log($('.header').width())
 
 	      this.setGallery(this.$route.params.imgset);
 	      
@@ -86,12 +86,12 @@ export default {
     		//alert('set '+ this.imgset);
     	}else{
     		//fb gallery
-    		console.warn(img)
+    		//console.warn(img)
     		//$('body').prepend($('<img>',{id:'theImg',src:img}))
     		this.$emit('imgSelect', img, 'portrait')
     	}
 /*
-    	console.log('img='+img)
+    	//console.log('img='+img)
     	if (img==null){
     		var img = event.target.src;
     	}
@@ -111,8 +111,8 @@ export default {
 	     if (route =="facebook"){
 
 	     	this.fbgallery = this.$route.params.fbset;
-	     	console.log("fbgallery");
-	     	console.dir(this.fbgallery);
+	     	//console.log("fbgallery");
+	     	//console.dir(this.fbgallery);
 	     }else if (route){
 
 		     if (route == "mantle01" 
