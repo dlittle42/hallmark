@@ -101,7 +101,8 @@
               <a href="#" class="help close" id="thanks-close">X</a>
               <h1>Thanks for creating and sharing your Most Wonderful Mantlepiece of Christmas!</h1>
                    <p>Remember, to keep the holiday spirit filling your home all season, watch the Most Wonderful Movies of Christmas, only on Hallmark Movies & Mysteries.</p></br>
-                   <iframe width="400" height="315" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>
+                   <div id="playlist"></div>
+                   
               </div>
               <p id="caption">Change this picture</p>
               <canvas id="mainStage"></canvas>
@@ -1319,6 +1320,7 @@ export default {
       closeHelp: function(e){
           e.preventDefault();
           $('.active').removeClass('active');
+          $('#playlist').html('');
 
       },
 
@@ -1562,6 +1564,7 @@ export default {
       postToFacebook: function(msg, img){
         $('#load-panel').addClass('active');
         // Create facebook post using image
+        var scope = this;
         FB.api(
             "/me/feed",
             "post",
@@ -1583,7 +1586,9 @@ export default {
                     //console.log("Posted story to facebook");
                     //console.log(response);
                     $('#load-panel').removeClass('active');
+                    scope.toggleIframe();
                     $('#thanks').addClass('active');
+
                 }
             }
         );
@@ -1598,7 +1603,7 @@ export default {
           return new Blob([ab], {type: 'image/png'});
       },
       postToTwitter: function(blob){
-
+          var scope = this;
        /*   marker_container.position.x = 1000;
           var scope = this;
 
@@ -1629,6 +1634,8 @@ export default {
 
                      // //console.log('ALL GOOD')
                       $('#load-panel').removeClass('active');
+                      scope.toggleIframe();
+                    $('#thanks').addClass('active');
                   }
               }
           };
@@ -1894,7 +1901,7 @@ export default {
             fd.append("source", imageData);
             fd.append("message","I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://www.hallmarkmoviesandmysteries.com");
            // fd.append("no_story", true);
-
+           var scope = this;
             // Upload image to facebook without story(post to feed)
             $.ajax({
                 url: "https://graph.facebook.com/me/photos?access_token=" + token,
@@ -1925,11 +1932,23 @@ export default {
                 },
                 complete: function (data) {
                     //console.log('Post to facebook Complete');
+                    scope.toggleIframe();
                     $('#thanks').addClass('active');
                    // $('#thanks').addClass('active');
                 }
             });
         },
+        toggleIframe:function(){
+          /*
+            if ($('#playlist').has('iframe')){
+                $('#playlist').html('');
+            }else{
+              */
+                 $('#playlist').append('<iframe width="400" height="315" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>');
+        
+          //  }
+
+         },
         getFBstatus: function(callback){
 
           marker_container.position.x = 1000;
