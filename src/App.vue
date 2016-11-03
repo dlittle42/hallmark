@@ -98,6 +98,7 @@
                   <p>Be sure to share your Most Wonderful Mantlepiece of Christmas with your friends afterwards!</p>
               </div>
               <div id="thanks">
+              <a href="#" class="help close" id="thanks-close">X</a>
               <h1>Thanks for creating and sharing your Most Wonderful Mantlepiece of Christmas!</h1>
                    <p>Remember, to keep the holiday spirit filling your home all season, watch the Most Wonderful Movies of Christmas, only on Hallmark Movies & Mysteries.</p></br>
                    <iframe width="400" height="315" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>
@@ -133,7 +134,7 @@
 
               <div id="social_action">
                 <h1>Share Your Greeting</h1>
-                <button id="facebook" class="social" v-on:click="FBlogin">Share on Facebook</button>
+                <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
                 <!--               
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 -->
@@ -230,6 +231,7 @@ export default {
 
      document.getElementById("help-layout-close").addEventListener('click', this.closeHelp, false);
      document.getElementById("help-photos-close").addEventListener('click', this.closeHelp, false);
+     document.getElementById("thanks-close").addEventListener('click', this.closeHelp, false);
 
      
 
@@ -1841,7 +1843,7 @@ export default {
             var fd = new FormData();
             fd.append("access_token", token);
             fd.append("source", imageData);
-            fd.append("message","I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://somesite.here.com");
+            fd.append("message","I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://www.hallmarkmoviesandmysteries.com");
            // fd.append("no_story", true);
 
             // Upload image to facebook without story(post to feed)
@@ -2426,6 +2428,13 @@ h1{
 }
 
 #help-photos-close{
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  
+}
+
+#thanks-close{
   position: absolute;
   top: 20px;
   right: 10px;
