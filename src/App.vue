@@ -202,7 +202,8 @@ export default {
       allPhotos: [],
       layout: "",
       selectedMsg: "",
-      browser:""
+      browser:"",
+      base_image:""
 
     }
    
@@ -244,6 +245,9 @@ export default {
     // var result = UAParser(uastring);
    // alert(result.browser.name)
     this.browser = result.browser.name;
+
+    this.base_image = new Image();
+    this.base_image.src = './static/images/photoframe.png';
    // alert(this.browser)
 
 // for ie pointer-events
@@ -732,6 +736,7 @@ export default {
 
           // just for fun, let's rotate mr rabbit a little
          // bkgd.rotation += 0.1;
+
 
           // render the stage
           renderer.render(stage);
@@ -1654,21 +1659,26 @@ export default {
 
          //this.hideMarkersNow();
          marker_container.position.x = 1000;
-         $('#load-panel').addClass('active');
+         // requestAnimationFrame(this.animate);
+        // alert(marker_container.position.x);
+         
 
          var mainstage = $('#mainStage')[0];
+
+         var canvas = document.createElement('canvas');
           // create an off-screen canvas
-          var elementID = 'canvas' + $('canvas').length; // Unique ID
+      /*    var elementID = 'canvas' + $('canvas').length; // Unique ID
 
           $('<canvas>').attr({
               id: elementID
           }).css({
-              width: '1200px',
-              height: '1200px',
+              width: '800px',
+              height: '800px',
               display: 'none'
           }).appendTo('body');
 
         var canvas = document.getElementById(elementID);
+        */
         var ctx = canvas.getContext('2d');
 
         var width = 1200;
@@ -1678,11 +1688,24 @@ export default {
         canvas.width = width;
         canvas.height = height;
 
-        // draw source image into the off-screen canvas:
+        // delay to remove markers
+        setTimeout(this.drawPost, 100, ctx, canvas, mainstage, targ);
+
+        
+
+           
+
+            
+      //    }
+
+      },
+      drawPost: function (ctx, canvas, mainstage, targ){
+
+          // draw source image into the off-screen canvas:
         ctx.drawImage(mainstage, 95, 95, 1010, 1010);
        // alert(canvas.toDataURL())
 
-       var scope = this;
+      // var scope = this;
 /*
        var image = new Image();
       //  image.src = './static/images/message-0'+this.selectedMsg+'.png';
@@ -1696,20 +1719,18 @@ export default {
             
         }
 */
-        var base_image = new Image();
-        base_image.src = './static/images/photoframe.png';
-
-        scope = this;
+    //    var base_image = new Image();
+    //    base_image.src = './static/images/photoframe.png';
 
         //console.log('before load---'+ctx);
-        base_image.onload = function(){
+    //    base_image.onload = function(){
           //console.log('after load---'+ctx);
-          ctx.drawImage(base_image, 0, 0, 1200, 1200);
+          ctx.drawImage(this.base_image, 0, 0, 1200, 1200);
            // scope.hideMarkersNow();
 
             var data= canvas.toDataURL("image/png");
 
-            var blob = scope.dataURItoBlob(data);
+            var blob = this.dataURItoBlob(data);
 
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
           // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
@@ -1717,9 +1738,10 @@ export default {
 
           if (targ == 'twitter'){
 
-            scope.postToTwitter(blob);
+            $('#load-panel').addClass('active');
+            this.postToTwitter(blob);
 
-          }else if (scope.browser == "Safari"){
+          }else if (this.browser == "Safari"){
 
              // var dt = document.getElementById("canvas1").toDataURL('image/png');
               var dt = data;
@@ -1743,23 +1765,27 @@ export default {
             // TweenMax.delayedCall(.9, dlSafari, url);
             // setTimeout(function(){ window.open(url, '_blank'); }, 1000);
 
-          }else if (scope.browser == "Mobile Safari"){
-             var url = (window.webkitURL || window.URL).createObjectURL(blob);
+          }else if (this.browser == "Mobile Safari"){
+            // var url = (window.webkitURL || window.URL).createObjectURL(blob);
              //console.log('mobile- '+url);
-             location.href = url;
+
+             /// Works in own window///
+            // location.href = url;
+
+           //  var dt = document.getElementById("mainStage").toDataURL('image/png');
+            window.open(data, '_blank');
+           // setTimeout(function(){ window.open(data, '_blank');}, 900);
 
             // TweenMax.delayedCall(.9, dlMobile, url);
             // setTimeout(function(){ location.href = url;}, 1000);
        
           }else{
+
+              $('#load-panel').addClass('active');
+
               canvas.toBlob(function(blob) {
                 FileSaver.saveAs(blob, "Hallmark_mantlepiece.png");
             });
-          }
-
-           
-
-            
           }
 
       },
@@ -1952,6 +1978,9 @@ export default {
         getFBstatus: function(callback){
 
           marker_container.position.x = 1000;
+           requestAnimationFrame(this.animate);
+
+
 
          // this.FBlogin(this.statusChangeCallback);
 

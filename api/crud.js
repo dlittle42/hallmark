@@ -19,6 +19,10 @@ var bodyParser = require('body-parser');
 var images = require('../lib/images');
 var Twit = require('twit');
 
+//var https = require('https');
+
+//var OAuth= require('oauth').OAuth;
+
 
 var T = new Twit({
   consumer_key:         'sUXiHWb9dnJaCILp39ISFcRae',
