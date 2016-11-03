@@ -226,7 +226,7 @@ export default {
   
      document.getElementById("dl").addEventListener('click', this.resizeOutput, false);
      //document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
-     //document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
+   //  document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
 
      document.getElementById("help-layout-close").addEventListener('click', this.closeHelp, false);
      document.getElementById("help-photos-close").addEventListener('click', this.closeHelp, false);
@@ -1622,22 +1622,23 @@ export default {
 
              // var dt = document.getElementById("canvas1").toDataURL('image/png');
               var dt = data;
-              //alert(dt);
+             // alert('safari');
 
               /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
-              dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+        //      dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
 
               /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-              dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+        //      dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
 
               
-              evt.target.href = dt;
-
-          }else if (scope.browser == "Mobile Safari"){
-              //not working right???
-             // var dt = document.getElementById("canvas1").toDataURL('image/png');
-               window.open(data, '_blank');
-
+             //x evt.target.href = dt;
+             // window.open(data, '_blank');
+             console.log('safari----------------')
+             var url = (window.webkitURL || window.URL).createObjectURL(blob);
+             console.log(url);
+           //  location.href = url;
+             window.open(url, '_blank');
+       
           }else{
               canvas.toBlob(function(blob) {
                 FileSaver.saveAs(blob, "Hallmark_mantlepiece.png");
@@ -2953,6 +2954,10 @@ figure{
     display: inline-block;
     }
   }
+
+  .carousel-cell {
+  height: 240px;
+}
 
   #photo_block{
     position: relative;
