@@ -15,4 +15,7 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(DIST_DIR, "index.html"));
 });
 
+app.use('/upload', require('../api/crud'));
+
+
 app.listen(process.env.PORT || PORT)
