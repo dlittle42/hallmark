@@ -133,11 +133,11 @@
 
               <div id="social_action">
                 <h1>Share Your Greeting</h1>
-                <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
+                <button id="facebook" class="social" v-on:click="FBlogin">Share on Facebook</button>
                 <!--               
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 -->
-                <button id="twitter" class="social" v-on:click="postToTwitter">Share on Twitter</button>
+                <button id="twitter" class="social" v-on:click="resizeOutput(null,'twitter')">Share on Twitter</button>
               <!--  <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a>  -->
                 <a id="dl" class="social" href="#">Download</a> 
                 <!--
@@ -963,7 +963,7 @@ export default {
 
         var width = 500,//$('#mainStage').width(),
         height = 500;//$('#mainStage').height();
-/*
+
         marker_container = new PIXI.DisplayObjectContainer();
         marker_container.width = width;
         marker_container.height = height;
@@ -972,7 +972,7 @@ export default {
           marker_container.position.y =0;//height / 2;
 
         stage.addChild(marker_container);
-*/
+
        
 /*
         var buttonPositions = [
@@ -1075,8 +1075,8 @@ export default {
           //button.tap = noop;
          // button.click = noop;
             // add it to the stage
-             stage.addChild(button);
-           // marker_container.addChild(button);
+           //  stage.addChild(button);
+            marker_container.addChild(button);
             
 
             // add button to array
@@ -1087,11 +1087,16 @@ export default {
 
         TweenMax.killAll();
 
+        marker_container.position.x = 1000;
+/*
         for (var i = 0; i < buttons.length; i++)
         {
-            buttons[i].alpha=0;
+            //buttons[i].alpha=0;
+
+            buttons[1].visible =false;
             console.log('buttons='+buttons[i].alpha)
         }
+    */
       },
       hideMarkers: function(){
 
@@ -1101,7 +1106,7 @@ export default {
         }
       },
       showMarkers: function(){
-
+         marker_container.position.x =0;
         for (var i = 0; i < buttons.length; i++)
         {
               TweenMax.to(buttons[i], 1, {alpha:1, ease:Power2.easeOut, delay: (i/30)});
@@ -1542,31 +1547,38 @@ export default {
           }
           return new Blob([ab], {type: 'image/png'});
       },
-      postToTwitter: function(){
-           $('#load-panel').addClass('active');
+      postToTwitter: function(blob){
+
+       /*   marker_container.position.x = 1000;
+          var scope = this;
+
+          setTimeout(function(){
+              $('#load-panel').addClass('active');
 
           var data = $('#mainStage')[0].toDataURL("image/png");
-          var blob = this.dataURItoBlob(data);
+          var blob = scope.dataURItoBlob(data);
+*/
+       //   var blob = scope.dataURItoBlob(img);
+
+        // alert(data);
 
           var formData = new FormData();
          // formData.append("file", blob);
           formData.append('image', blob, 'filename');
+          //formData.append('image', data, 'filename');
+         // formData.append('image', data);
+         // formData.append("canvasImage", blob);
 
           var xhr = new XMLHttpRequest();
           //request.onload = this.completeRequest;
-          var scope = this;
+     
 
           xhr.onload = function () {
           if (xhr.readyState === xhr.DONE) {
                   if (xhr.status === 200) {
-                    /*
-                    var gcloud = JSON.parse(xhr.response);
-                      console.log(gcloud.uploaded)
-                      console.log(xhr.response);
-                      //console.log(xhr.responseText);
-                      scope.postToFacebook('custom message here', gcloud.uploaded)
-                      */
-                      console.log('ALL GOOD')
+
+                     // console.log('ALL GOOD')
+                      $('#load-panel').removeClass('active');
                   }
               }
           };
@@ -1574,10 +1586,19 @@ export default {
 
           xhr.open("POST", "/upload/twitter_status");
           xhr.send(formData);
-      },
-      resizeOutput: function(evt){
 
-          this.hideMarkersNow();
+     //     }, 500);
+        
+           
+          
+          
+      },
+      resizeOutput: function(evt, targ){
+
+         //this.hideMarkersNow();
+         marker_container.position.x = 1000;
+         $('#load-panel').addClass('active');
+         
          var mainstage = $('#mainStage')[0];
           // create an off-screen canvas
           var elementID = 'canvas' + $('canvas').length; // Unique ID
@@ -1636,7 +1657,12 @@ export default {
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
           // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
           console.log(scope.browser)
-          if (scope.browser == "Safari"){
+
+          if (targ == 'twitter'){
+
+            scope.postToTwitter(blob);
+
+          }else if (scope.browser == "Safari"){
 
              // var dt = document.getElementById("canvas1").toDataURL('image/png');
               var dt = data;
@@ -1654,8 +1680,19 @@ export default {
              console.log('safari----------------')
              var url = (window.webkitURL || window.URL).createObjectURL(blob);
              console.log(url);
-           //  location.href = url;
+            // location.href = url;
              window.open(url, '_blank');
+
+            // TweenMax.delayedCall(.9, dlSafari, url);
+            // setTimeout(function(){ window.open(url, '_blank'); }, 1000);
+
+          }else if (scope.browser == "Mobile Safari"){
+             var url = (window.webkitURL || window.URL).createObjectURL(blob);
+             console.log('mobile- '+url);
+             location.href = url;
+
+            // TweenMax.delayedCall(.9, dlMobile, url);
+            // setTimeout(function(){ location.href = url;}, 1000);
        
           }else{
               canvas.toBlob(function(blob) {
@@ -1669,19 +1706,24 @@ export default {
           }
 
       },
-      dlMobile:function(){
-          var dt = document.getElementById("canvas1").toDataURL('image/png');
-          window.open(dt, '_blank');
+      dlMobile:function(url){
+
+          //var dt = document.getElementById("canvas1").toDataURL('image/png');
+          //window.open(dt, '_blank');
+          location.href = url;
       },
-      dlSafari:function(evt){
-         var dt = document.getElementById("canvas1").toDataURL('image/png');
+      dlSafari:function(url){
+
+        window.open(url, '_blank');
+
+        // var dt = document.getElementById("canvas1").toDataURL('image/png');
           //alert(dt);
 
           /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
-          dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+       //   dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
 
           /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-          dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+       //   dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
 
           
           evt.target.href = dt;
