@@ -18,9 +18,7 @@ var config = require('../g-config');
 var bodyParser = require('body-parser');
 var images = require('../lib/images');
 var Twit = require('twit');
-var Canvas = require('canvas');
-var Image = Canvas.Image;
-var fs = require('fs');
+
 
 var T = new Twit({
   consumer_key:         'sUXiHWb9dnJaCILp39ISFcRae',
