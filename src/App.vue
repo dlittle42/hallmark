@@ -560,8 +560,17 @@ export default {
      // stage
 
             // set the mouseover callback...
-       stage.on('mouseover', this.onStageOver)
-       stage.on('mouseout', this.onStageOut)
+    //  var touch_enabled = window.DocumentTouch && document instanceof DocumentTouch;
+     
+      if ($('.header').width() < 600){
+        stage.on('tap', this.onStageFlash)
+      
+      }else{
+        stage.on('mouseover', this.onStageOver)
+        stage.on('mouseout', this.onStageOut)
+      }
+       
+
 
         // create a new Sprite from an image path.
        wallpaper = PIXI.Sprite.fromImage('./static/images/wallpaper-01.png');
@@ -1193,6 +1202,14 @@ export default {
          this.hideMarkers();
 
       },
+      onStageFlash: function(evt){
+        for (var i = 0; i < buttons.length; i++)
+        {
+              TweenMax.to(buttons[i], 1, {alpha:1, ease:Power2.easeOut, delay: (i/30)});
+        }
+        TweenMax.delayedCall(6, this.hideMarkers);
+
+      },
       onDragStart: function(e)
       {
           // store a reference to the data
@@ -1488,6 +1505,7 @@ export default {
 
       },
       postToFacebook: function(msg, img){
+        $('#load-panel').addClass('active');
         // Create facebook post using image
         FB.api(
             "/me/feed",
@@ -1670,6 +1688,7 @@ export default {
       },
       resizedataURL: function()
       {
+          $('#load-panel').addClass('active');
 
          var mainstage = $('#mainStage')[0]
         // create an off-screen canvas
@@ -1699,13 +1718,14 @@ export default {
 
        var scope = this;
 
-       var image = new Image();
+     /*  var image = new Image();
         image.src = './static/images/message-0'+this.selectedMsg+'.png';
  
         image.onload = function () {
 
             ctx.drawImage(image, canvas.width / 2 - image.width / 2, 40 )
         }
+        */
 
         var base_image = new Image();
         base_image.src = './static/images/photoframe.png';
@@ -1769,6 +1789,7 @@ export default {
       },
       */
       uploadToAlbum: function(){
+        console.log('active?'+ $('#load-panel').hassClass('active'))
         $('#load-panel').addClass('active');
         var data = $('#mainStage')[0].toDataURL("image/png");
         var blob = this.dataURItoBlob(data);
@@ -1807,6 +1828,7 @@ export default {
                 },
                 error: function (shr, status, data) {
                     console.log("error " + data + " Status " + shr.status);
+                     $('#load-panel').removeClass('active');
                 },
                 complete: function (data) {
                     console.log('Post to facebook Complete');
@@ -1827,6 +1849,7 @@ export default {
             if (callback=='gallery') {
               this.FBlogin(this.getFacebookGallery);
             }else if (callback=='album') {
+              $('#load-panel').addClass('active');
               this.FBlogin(this.uploadToAlbum);
             }else{
              // this.FBlogin(this.uploadCanvasData);
@@ -1841,6 +1864,7 @@ export default {
              if (callback=='gallery') {
               this.getFacebookGallery();
             }else if (callback=='album') {
+              $('#load-panel').addClass('active');
               this.uploadToAlbum();
             }else{
             //  this.uploadCanvasData();
@@ -2884,6 +2908,14 @@ figure{
     bottom: 15px;
    }
 
+   #thanks h1{
+
+    font-size: 22px;
+    padding: 10px
+   }
+
+
+
 }
 
 
@@ -3085,9 +3117,19 @@ figure{
   }
 
   #thanks{
-    padding: 20px;
+    padding: 0px;
     color: #383838;
   }
+
+  #thanks h1{
+
+    font-size: 18px;
+    padding: 6px;
+   }
+
+   #thanks p{
+    width: 100%;
+   }
 
 
  
