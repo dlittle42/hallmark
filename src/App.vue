@@ -175,7 +175,7 @@ var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 var FileSaver =require('file-saver');
 var UAParser = require('ua-parser-js');
 
-//import SpriteUtilities  from './js/spriteUtilities';
+var OAuth = require('oauthio-web');
 //var gesture = require('pixi-simple-gesture')
 //var poly = require('jquery.pointer-events-polyfill');
 
@@ -202,8 +202,7 @@ export default {
       allPhotos: [],
       layout: "",
       selectedMsg: "",
-      browser:"",
-      base_image:""
+      browser:""
 
     }
    
@@ -245,15 +244,12 @@ export default {
     // var result = UAParser(uastring);
    // alert(result.browser.name)
     this.browser = result.browser.name;
-
-    this.base_image = new Image();
-    this.base_image.src = './static/images/photoframe.png';
    // alert(this.browser)
 
 // for ie pointer-events
      // window.pointerEventsPolyfill();
 
-
+     OAuth.initialize('TyDLZ8s-Ej0ceQq5M6O6jsPpA2o');
 
 
       
@@ -736,7 +732,6 @@ export default {
 
           // just for fun, let's rotate mr rabbit a little
          // bkgd.rotation += 0.1;
-
 
           // render the stage
           renderer.render(stage);
@@ -1659,26 +1654,21 @@ export default {
 
          //this.hideMarkersNow();
          marker_container.position.x = 1000;
-         // requestAnimationFrame(this.animate);
-        // alert(marker_container.position.x);
-         
+         $('#load-panel').addClass('active');
 
          var mainstage = $('#mainStage')[0];
-
-         var canvas = document.createElement('canvas');
           // create an off-screen canvas
-      /*    var elementID = 'canvas' + $('canvas').length; // Unique ID
+          var elementID = 'canvas' + $('canvas').length; // Unique ID
 
           $('<canvas>').attr({
               id: elementID
           }).css({
-              width: '800px',
-              height: '800px',
+              width: '1200px',
+              height: '1200px',
               display: 'none'
           }).appendTo('body');
 
         var canvas = document.getElementById(elementID);
-        */
         var ctx = canvas.getContext('2d');
 
         var width = 1200;
@@ -1688,24 +1678,11 @@ export default {
         canvas.width = width;
         canvas.height = height;
 
-        // delay to remove markers
-        setTimeout(this.drawPost, 100, ctx, canvas, mainstage, targ);
-
-        
-
-           
-
-            
-      //    }
-
-      },
-      drawPost: function (ctx, canvas, mainstage, targ){
-
-          // draw source image into the off-screen canvas:
+        // draw source image into the off-screen canvas:
         ctx.drawImage(mainstage, 95, 95, 1010, 1010);
        // alert(canvas.toDataURL())
 
-      // var scope = this;
+       var scope = this;
 /*
        var image = new Image();
       //  image.src = './static/images/message-0'+this.selectedMsg+'.png';
@@ -1719,18 +1696,20 @@ export default {
             
         }
 */
-    //    var base_image = new Image();
-    //    base_image.src = './static/images/photoframe.png';
+        var base_image = new Image();
+        base_image.src = './static/images/photoframe.png';
+
+        scope = this;
 
         //console.log('before load---'+ctx);
-    //    base_image.onload = function(){
+        base_image.onload = function(){
           //console.log('after load---'+ctx);
-          ctx.drawImage(this.base_image, 0, 0, 1200, 1200);
+          ctx.drawImage(base_image, 0, 0, 1200, 1200);
            // scope.hideMarkersNow();
 
             var data= canvas.toDataURL("image/png");
 
-            var blob = this.dataURItoBlob(data);
+            var blob = scope.dataURItoBlob(data);
 
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
           // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
@@ -1738,10 +1717,9 @@ export default {
 
           if (targ == 'twitter'){
 
-            $('#load-panel').addClass('active');
-            this.postToTwitter(blob);
+            scope.postToTwitter(blob);
 
-          }else if (this.browser == "Safari"){
+          }else if (scope.browser == "Safari"){
 
              // var dt = document.getElementById("canvas1").toDataURL('image/png');
               var dt = data;
@@ -1765,27 +1743,23 @@ export default {
             // TweenMax.delayedCall(.9, dlSafari, url);
             // setTimeout(function(){ window.open(url, '_blank'); }, 1000);
 
-          }else if (this.browser == "Mobile Safari"){
-            // var url = (window.webkitURL || window.URL).createObjectURL(blob);
+          }else if (scope.browser == "Mobile Safari"){
+             var url = (window.webkitURL || window.URL).createObjectURL(blob);
              //console.log('mobile- '+url);
-
-             /// Works in own window///
-            // location.href = url;
-
-           //  var dt = document.getElementById("mainStage").toDataURL('image/png');
-            window.open(data, '_blank');
-           // setTimeout(function(){ window.open(data, '_blank');}, 900);
+             location.href = url;
 
             // TweenMax.delayedCall(.9, dlMobile, url);
             // setTimeout(function(){ location.href = url;}, 1000);
        
           }else{
-
-              $('#load-panel').addClass('active');
-
               canvas.toBlob(function(blob) {
                 FileSaver.saveAs(blob, "Hallmark_mantlepiece.png");
             });
+          }
+
+           
+
+            
           }
 
       },
@@ -1978,9 +1952,6 @@ export default {
         getFBstatus: function(callback){
 
           marker_container.position.x = 1000;
-           requestAnimationFrame(this.animate);
-
-
 
          // this.FBlogin(this.statusChangeCallback);
 

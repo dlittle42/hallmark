@@ -28,5 +28,7 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
-  }
+  },
+  key: 'sUXiHWb9dnJaCILp39ISFcRae',
+  secret: 'yxFc0BIt25xxVeQHIwbZGI9X1vj8EQYIvVC2bTZ8J6KEMUzaFK'
 }
