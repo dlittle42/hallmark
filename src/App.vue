@@ -210,7 +210,8 @@ export default {
       allPhotos: [],
       layout: "",
       selectedMsg: "",
-      browser:""
+      browser:"",
+      os:""
 
     }
    
@@ -254,6 +255,7 @@ export default {
     // var result = UAParser(uastring);
    // alert(result.browser.name)
     this.browser = result.browser.name;
+    this.os = result.os.name;
    // alert(this.browser)
 
 // for ie pointer-events
@@ -673,28 +675,28 @@ export default {
         fireplace.anchor.set(0.5);
         stage.addChild(fireplace);
 
+        if (this.os !="Android"){
+                 var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
+                 var source = texture.baseTexture.source;
+                 source.loop = true;
+                 //console.dir(source);
+               //  source.pause();source.play();
 
-         var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
-         var source = texture.baseTexture.source;
-         source.loop = true;
-         //console.dir(source);
-       //  source.pause();source.play();
+                // create a new Sprite using the video texture (yes it's that easy)
+                var videoSprite = new PIXI.Sprite(texture);
 
-        // create a new Sprite using the video texture (yes it's that easy)
-        var videoSprite = new PIXI.Sprite(texture);
+                
+                videoSprite.width = 418*.6;//renderer.width;
+                videoSprite.height = 290*.6;//renderer.height;
+               // videoSprite.scale.x = videoSprite.scale.y = .6;
+                videoSprite.anchor.set(.5, 1);
+                videoSprite.position.x = 250;
+                videoSprite.position.y = 500;
 
-        
-        videoSprite.width = 418*.6;//renderer.width;
-        videoSprite.height = 290*.6;//renderer.height;
-       // videoSprite.scale.x = videoSprite.scale.y = .6;
-        videoSprite.anchor.set(.5, 1);
-        videoSprite.position.x = 250;
-        videoSprite.position.y = 500;
+                videoSprite.loop = true;
 
-        videoSprite.loop = true;
-
-        stage.addChild(videoSprite);
-
+                stage.addChild(videoSprite);
+        }
 
         gift = PIXI.Sprite.fromImage('./static/images/gift-01.png');
 
@@ -1766,19 +1768,42 @@ export default {
 
               /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
               dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+              console.dir(oauth)
 
+              oauth.post('https://upload.twitter.com/1.1/media/upload.json', { 
+                 data: {
+                     media_data: dt
+                 }
+              }).done(function(data) {
+                //todo with data
+                console.log('post complete')
+                 $('#load-panel').removeClass('active');
+                 scope.toggleIframe();
+                 $('#thanks').addClass('active');
+              }).fail(function(err) {
+                //todo with err
+                 console.log(err)
+                 $('#load-panel').removeClass('active');
+              });
+              /*
               oauth.post('/1.1/statuses/update.json', {
                   data: {
-                    status: "I just created my Most Wonderful Mantlepiece of Christmas! You can create one, too! http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece via @HallmarkMovie"
-                 //   media_data: dt
+                    status: "I just created my Most Wonderful Mantlepiece of "+ Math.random()*1000+"! You can create one, too! http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece via @HallmarkMovie" ,
+                   // media_data: ''
+                    media_id: 'https://hallmark-greeting.appspot.com/static/images/Hallmark.png'
                   }
               }).done(function(data) {
                 //todo with data
-                alert('post complete')
+                console.log('post complete')
+                 $('#load-panel').removeClass('active');
+                 scope.toggleIframe();
+                 $('#thanks').addClass('active');
               }).fail(function(err) {
                 //todo with err
-                alert(err)
+                 console.log(err)
+                 $('#load-panel').removeClass('active');
               });
+              */
 
 /*
               oauth.post('/1.1/statuses/update.json', {
