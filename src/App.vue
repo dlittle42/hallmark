@@ -266,6 +266,7 @@ export default {
   // See the result below
 
       OAuth.initialize('TyDLZ8s-Ej0ceQq5M6O6jsPpA2o');
+     // OAuth.setOAuthdURL("www.your_custom_oauthd_url.com");
      /*
      OAuth.popup('facebook')
 .done(function(result) {
@@ -1771,7 +1772,7 @@ export default {
               console.dir(oauth)
               alert('posting via oauth')
 
-              oauth.post('https://upload.twitter.com/1.1/media/upload.json', { 
+              oauth.post('/1.1/media/upload.json', { 
                  data: {
                      media_data: dt
                  }
