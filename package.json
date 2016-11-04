@@ -48,6 +48,7 @@
     "multer": "^1.2.0",
     "nconf": "^0.8.4",
     "node-sass": "^3.10.1",
+    "node-twitter-api": "^1.8.0",
     "oauthio": "^0.3.4",
     "opn": "^4.0.2",
     "ora": "^0.3.0",
@@ -64,9 +65,8 @@
     "vue-resource": "^1.0.3",
     "vue-router": "^2.0.0",
     "vue-style-loader": "^1.0.0"
-    
   },
-  "dev_dependencies":{
+  "dev_dependencies": {
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",

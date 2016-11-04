@@ -294,6 +294,7 @@ export default {
         var scope = this;
         
          OAuth.popup('twitter').done(function(result) {
+
               console.log(result)
               
 
@@ -302,7 +303,9 @@ export default {
 
             //  scope.resizeOutput(null, 'twitter', result.oauth_token, result.oauth_token_secret);
               // do some stuff with result
-          })
+          }).fail(function(e) {
+            console.log(e);
+        });
 
 
       },
@@ -1649,7 +1652,7 @@ export default {
           }
           return new Blob([ab], {type: 'image/png'});
       },
-      postToTwitter: function(blob, token1, token2){
+      postToTwitter: function(blob, token1, token2, oauth){
           var scope = this;
        /*   marker_container.position.x = 1000;
           var scope = this;
@@ -1679,7 +1682,36 @@ export default {
           xhr.onload = function () {
           if (xhr.readyState === xhr.DONE) {
                   if (xhr.status === 200) {
+                      console.log(xhr.response);
+                  //    var mediaId = JSON.parse(xhr.response);
+                     // alert(mediaId.uploaded)
 
+                    // scope.authPost(mediaId.uploaded);
+                    /* oauth.post('/1.1/statuses/update.json', {
+                        data: {
+                          status: "hello twitter world!",
+                          media_id: mediaId.uploaded
+                        }
+                      })*/
+                      /*
+                       oauth.post('/1.1/statuses/update.json', {
+                          data: {
+                            status: "I just created my Most Wonderful Mantlepiece of "+ Math.random()*1000+"!",
+                              media_id: mediaId.uploaded
+                          }
+                      }).done(function(data) {
+                        //todo with data
+                        console.log('post complete')
+                        // $('#load-panel').removeClass('active');
+                        // scope.toggleIframe();
+                       //  $('#thanks').addClass('active');
+                      }).fail(function(err) {
+                        //todo with err
+                         console.log(err)
+                         $('#load-panel').removeClass('active');
+                      });
+                */
+                     
                      // //console.log('ALL GOOD')
                       $('#load-panel').removeClass('active');
                       scope.toggleIframe();
@@ -1698,6 +1730,7 @@ export default {
           
           
       },
+
       resizeOutput: function(evt, targ, oauth, token1, token2){
 
          //this.hideMarkersNow();
@@ -1770,7 +1803,7 @@ export default {
               /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
               dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
               console.dir(oauth)
-              alert('posting via oauth')
+              //alert('posting via oauth')
 
               oauth.post('/1.1/media/upload.json', { 
                  data: {
@@ -1787,12 +1820,19 @@ export default {
                  console.log(err)
                  $('#load-panel').removeClass('active');
               });
+         
+
               /*
+              I just created my Most Wonderful Mantlepiece of "+ Math.random()*1000+"! You can create one, too! http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece via @HallmarkMovie" //,
+
+        
+              */
+         /*
               oauth.post('/1.1/statuses/update.json', {
                   data: {
-                    status: "I just created my Most Wonderful Mantlepiece of "+ Math.random()*1000+"! You can create one, too! http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece via @HallmarkMovie" ,
+                    status: "I just created my Most Wonderful Mantlepiece of "+ Math.random()*1000+"!" //,
                    // media_data: ''
-                    media_id: 'https://hallmark-greeting.appspot.com/static/images/Hallmark.png'
+                   // media_id: 'https://hallmark-greeting.appspot.com/static/images/Hallmark.png'
                   }
               }).done(function(data) {
                 //todo with data
@@ -1805,7 +1845,7 @@ export default {
                  console.log(err)
                  $('#load-panel').removeClass('active');
               });
-              */
+          
 
 /*
               oauth.post('/1.1/statuses/update.json', {
@@ -1815,7 +1855,7 @@ export default {
                   }
                 })
                 */
-            //scope.postToTwitter(blob, token1, token2);
+          //  scope.postToTwitter(blob, token1, token2, oauth);
 
           }else if (scope.browser == "Safari"){
 

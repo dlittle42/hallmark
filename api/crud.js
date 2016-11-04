@@ -21,7 +21,15 @@ var Twit = require('twit');
 
 //var https = require('https');
 
+/*
 
+var twitterAPI = require('node-twitter-api');
+var twitter = new twitterAPI({
+    consumerKey: 'sUXiHWb9dnJaCILp39ISFcRae',
+    consumerSecret: 'yxFc0BIt25xxVeQHIwbZGI9X1vj8EQYIvVC2bTZ8J6KEMUzaFK',
+    callback: 'http://yoururl.tld/something'
+});
+*/
 
 
 var T = new Twit({
@@ -88,16 +96,26 @@ router.post(
 
     console.log('tokens '+req.body.token1);
     console.log('tokens '+req.body.token2);
+/*
 
+    twitter.getAccessToken(requestToken, requestTokenSecret, oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
+        if (error) {
+            console.log(error);
+        } else {
+            //store accessToken and accessTokenSecret somewhere (associated to the user) 
+            //Step 4: Verify Credentials belongs here 
+        }
+    });
+*/
     console.dir(req.file)
 
     console.log('FILE!!! ==='+req.file)
 
 
-    T.config.consumer_secret = req.body.token1;
-    T.config.access_token_secret = req.body.token1;
+    //T.config.consumer_secret = req.body.token1;
+   // T.config.access_token_secret = req.body.token1;
 
-    console.log(T);
+   // console.log(T);
 
 
 
@@ -154,11 +172,21 @@ var dataUrl = canvas.pngStream().pipe(out);
       // now we can assign alt text to the media, for use by screen readers and
       // other text-based presentations and interpreters
       var mediaIdStr = data.media_id_string
+     // res.json({"uploaded": mediaIdStr});
+/*
+      if (!err) {
+          res.json({"uploaded": mediaIdStr});
+      }else{
+          console.log('err');
+            return res.end("Error uploading file.");
+        }
+*/
       var altText = "Small flowers in a planter on a sunny balcony, blossoming."
       var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
 
       T.post('media/metadata/create', meta_params, function (err, data, response) {
         if (!err) {
+           console.log('posted');
           // now we can reference the media and post a tweet (media will attach to the tweet)
           var params = { status: 'I just created my Most Wonderful Mantlepiece of Christmas! You can create one, too! http://www.hallmarkmoviesandmysteries.com/ via @HallmarkMovie', media_ids: [mediaIdStr] }
 
@@ -166,9 +194,13 @@ var dataUrl = canvas.pngStream().pipe(out);
             console.log(data)
             res.end("File is uploaded");
           })
+      
         }else{
+          console.log('err');
             return res.end("Error uploading file.");
         }
+
+      
       })
     })
 
@@ -207,9 +239,3 @@ router.use(function handleRpcError (err, req, res, next) {
 });
 
 module.exports = router;
-
-
-
-
-
-
