@@ -1583,7 +1583,7 @@ export default {
                 "picture": img, //'https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg',//response.images[0].source,
                 "link": window.location.href,
                 "name": 'Share Your Most Wonderful Mantlepiece of Christmas',
-                "description": 'I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out!',
+                "description": 'I just created my perfect Christmas Hearth full of decorations and family photos. You can create one, too!',
                 "privacy": {
                     value: 'SELF'
                 }
@@ -1661,7 +1661,7 @@ export default {
           
       },
       resizeWideFrame: function(evt, targ){
-
+          $('#load-panel').addClass('active');
          //this.hideMarkersNow();
          marker_container.position.x = 1000;
          // requestAnimationFrame(this.animate);
@@ -1697,7 +1697,7 @@ export default {
         setTimeout(this.drawPost, 100, width, height, ctx, canvas, mainstage, targ);
       },
       resizeOutput: function(evt, targ){
-
+          $('#load-panel').addClass('active');
          //this.hideMarkersNow();
          marker_container.position.x = 1000;
          // requestAnimationFrame(this.animate);
@@ -1750,8 +1750,9 @@ export default {
           }else{
             ctx.drawImage(this.wide_frame, 0, 0, w, h);
             ctx.drawImage(mainstage, 285, 0, 630, 630);
-           // ctx.strokeStyle = 
-            ctx.strokeRect(285, 0, 630, 630);
+            ctx.strokeStyle = "#b70000";
+            ctx.lineWidth = 10;
+            ctx.strokeRect(290, 5, 625, 620);
           }
        // alert(canvas.toDataURL())
 
@@ -1813,7 +1814,7 @@ export default {
 
           }else if (targ == 'twitter'){
 
-            $('#load-panel').addClass('active');
+           
             this.postToTwitter(blob);
 
           }else if (this.browser == "Safari"){
@@ -1827,7 +1828,9 @@ export default {
 
               /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
         //      dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
-
+              setTimeout(function(){ 
+                $('#load-panel').removeClass('active');
+              }, 1000);
               
              //x evt.target.href = dt;
              // window.open(data, '_blank');
@@ -1843,7 +1846,9 @@ export default {
           }else if (this.browser == "Mobile Safari"){
             // var url = (window.webkitURL || window.URL).createObjectURL(blob);
              //console.log('mobile- '+url);
-
+             setTimeout(function(){ 
+                $('#load-panel').removeClass('active');
+              }, 1000);
              /// Works in own window///
             // location.href = url;
 
@@ -1856,7 +1861,9 @@ export default {
        
           }else{
 
-              $('#load-panel').addClass('active');
+              setTimeout(function(){ 
+                $('#load-panel').removeClass('active');
+              }, 1000);
 
               canvas.toBlob(function(blob) {
                 FileSaver.saveAs(blob, "Hallmark_mantlepiece.png");
