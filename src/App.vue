@@ -138,23 +138,16 @@
                 <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
                 <!--               
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
-               
+                -->
                 <button id="twitter" class="social" v-on:click="resizeOutput(null,'twitter')">Share on Twitter</button>
-             -->
-                <button id="twitter" class="social" v-on:click="authTwitter('twitter')">Share on Twitter</button>
               <!--  <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a>  -->
                 <a id="dl" class="social" href="#">Download</a> 
-
-              <!--
+                <!--
                 <a id="mobileSave" class="social" href="#">Download Mobile</a> 
                 <a id="safariSave" class="social" download="Hallmark_mantlepiece.png" href="#">Download Safari</a> 
                 -->
               <!--  <a id="mobilesave" class="social"  href="#">Mobile Save</a> -->
              <!--  <a id="up" class="social" href="#">Upload</a> -->
-    
-
-
-
                </div>
         
           </div>
@@ -182,8 +175,7 @@ var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 var FileSaver =require('file-saver');
 var UAParser = require('ua-parser-js');
 
-//import OAuth from './js/oauth';
-require ('oauthio-web')
+//import SpriteUtilities  from './js/spriteUtilities';
 //var gesture = require('pixi-simple-gesture')
 //var poly = require('jquery.pointer-events-polyfill');
 
@@ -211,7 +203,9 @@ export default {
       layout: "",
       selectedMsg: "",
       browser:"",
-      os:""
+      base_image:"",
+      wide_frame:"",
+      square_frame:""
 
     }
    
@@ -236,8 +230,6 @@ export default {
      document.getElementById("help-layout-btn").addEventListener('click', this.showHelpLayouts, false);
   
      document.getElementById("dl").addEventListener('click', this.resizeOutput, false);
-
-
      //document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
    //  document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
 
@@ -255,29 +247,19 @@ export default {
     // var result = UAParser(uastring);
    // alert(result.browser.name)
     this.browser = result.browser.name;
-    this.os = result.os.name;
+
+    this.square_frame = new Image();
+    this.square_frame.src = './static/images/photoframe.png';
+
+    this.wide_frame = new Image();
+    this.wide_frame.src = './static/images/frameborder.png';
    // alert(this.browser)
 
 // for ie pointer-events
      // window.pointerEventsPolyfill();
-     var scope = this;
 
-     
-  // See the result below
 
-      OAuth.initialize('TyDLZ8s-Ej0ceQq5M6O6jsPpA2o');
-     // OAuth.setOAuthdURL("www.your_custom_oauthd_url.com");
-     /*
-     OAuth.popup('facebook')
-.done(function(result) {
-  //use result.access_token in your API request 
-  //or use result.get|post|put|del|patch|me methods (see below)
-})
-.fail(function (err) {
-  //handle error with err
-});
-*/
-      //$('#oauth-connect button').click(this.oauthButton);
+
 
       
       
@@ -288,29 +270,6 @@ export default {
   },
 
   methods: {
-
-
-      authTwitter: function(){
-        var scope = this;
-        
-         OAuth.popup('twitter').done(function(result) {
-
-              console.log(result)
-              
-
-              scope.resizeOutput(null, 'twitter', result, result.oauth_token, result.oauth_token_secret);
-
-
-            //  scope.resizeOutput(null, 'twitter', result.oauth_token, result.oauth_token_secret);
-              // do some stuff with result
-          }).fail(function(e) {
-            console.log(e);
-        });
-
-
-      },
-
-     
       getAlert() {
         alert('function call');
       },
@@ -501,7 +460,7 @@ export default {
 
        renderer = PIXI.autoDetectRenderer(width , height, { 
         view:canvas, 
-        transparent: true,
+       // transparent: true,
         preserveDrawingBuffer:true 
        });
        //console.dir(renderer);
@@ -679,28 +638,28 @@ export default {
         fireplace.anchor.set(0.5);
         stage.addChild(fireplace);
 
-        if (this.os !="Android"){
-                 var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
-                 var source = texture.baseTexture.source;
-                 source.loop = true;
-                 //console.dir(source);
-               //  source.pause();source.play();
 
-                // create a new Sprite using the video texture (yes it's that easy)
-                var videoSprite = new PIXI.Sprite(texture);
+         var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
+         var source = texture.baseTexture.source;
+         source.loop = true;
+         //console.dir(source);
+       //  source.pause();source.play();
 
-                
-                videoSprite.width = 418*.6;//renderer.width;
-                videoSprite.height = 290*.6;//renderer.height;
-               // videoSprite.scale.x = videoSprite.scale.y = .6;
-                videoSprite.anchor.set(.5, 1);
-                videoSprite.position.x = 250;
-                videoSprite.position.y = 500;
+        // create a new Sprite using the video texture (yes it's that easy)
+        var videoSprite = new PIXI.Sprite(texture);
 
-                videoSprite.loop = true;
+        
+        videoSprite.width = 418*.6;//renderer.width;
+        videoSprite.height = 290*.6;//renderer.height;
+       // videoSprite.scale.x = videoSprite.scale.y = .6;
+        videoSprite.anchor.set(.5, 1);
+        videoSprite.position.x = 250;
+        videoSprite.position.y = 500;
 
-                stage.addChild(videoSprite);
-        }
+        videoSprite.loop = true;
+
+        stage.addChild(videoSprite);
+
 
         gift = PIXI.Sprite.fromImage('./static/images/gift-01.png');
 
@@ -782,6 +741,7 @@ export default {
 
           // just for fun, let's rotate mr rabbit a little
          // bkgd.rotation += 0.1;
+
 
           // render the stage
           renderer.render(stage);
@@ -1623,7 +1583,7 @@ export default {
                 "picture": img, //'https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg',//response.images[0].source,
                 "link": window.location.href,
                 "name": 'Share Your Most Wonderful Mantlepiece of Christmas',
-                "description": '',//'I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out!',
+                "description": 'I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out!',
                 "privacy": {
                     value: 'SELF'
                 }
@@ -1652,7 +1612,7 @@ export default {
           }
           return new Blob([ab], {type: 'image/png'});
       },
-      postToTwitter: function(blob, token1, token2, oauth){
+      postToTwitter: function(blob){
           var scope = this;
        /*   marker_container.position.x = 1000;
           var scope = this;
@@ -1671,8 +1631,7 @@ export default {
          // formData.append("file", blob);
           formData.append('image', blob, 'filename');
           //formData.append('image', data, 'filename');
-          formData.append('token1', token1);
-          formData.append('token2', token2);
+         // formData.append('image', data);
          // formData.append("canvasImage", blob);
 
           var xhr = new XMLHttpRequest();
@@ -1682,36 +1641,7 @@ export default {
           xhr.onload = function () {
           if (xhr.readyState === xhr.DONE) {
                   if (xhr.status === 200) {
-                      console.log(xhr.response);
-                  //    var mediaId = JSON.parse(xhr.response);
-                     // alert(mediaId.uploaded)
 
-                    // scope.authPost(mediaId.uploaded);
-                    /* oauth.post('/1.1/statuses/update.json', {
-                        data: {
-                          status: "hello twitter world!",
-                          media_id: mediaId.uploaded
-                        }
-                      })*/
-                      /*
-                       oauth.post('/1.1/statuses/update.json', {
-                          data: {
-                            status: "I just created my Most Wonderful Mantlepiece of "+ Math.random()*1000+"!",
-                              media_id: mediaId.uploaded
-                          }
-                      }).done(function(data) {
-                        //todo with data
-                        console.log('post complete')
-                        // $('#load-panel').removeClass('active');
-                        // scope.toggleIframe();
-                       //  $('#thanks').addClass('active');
-                      }).fail(function(err) {
-                        //todo with err
-                         console.log(err)
-                         $('#load-panel').removeClass('active');
-                      });
-                */
-                     
                      // //console.log('ALL GOOD')
                       $('#load-panel').removeClass('active');
                       scope.toggleIframe();
@@ -1730,26 +1660,66 @@ export default {
           
           
       },
-
-      resizeOutput: function(evt, targ, oauth, token1, token2){
+      resizeWideFrame: function(evt, targ){
 
          //this.hideMarkersNow();
          marker_container.position.x = 1000;
-         $('#load-panel').addClass('active');
+         // requestAnimationFrame(this.animate);
+        // alert(marker_container.position.x);
+         
 
          var mainstage = $('#mainStage')[0];
+
+         var canvas = document.createElement('canvas');
           // create an off-screen canvas
-          var elementID = 'canvas' + $('canvas').length; // Unique ID
+      /*    var elementID = 'canvas' + $('canvas').length; // Unique ID
 
           $('<canvas>').attr({
               id: elementID
           }).css({
-              width: '1200px',
-              height: '1200px',
+              width: '800px',
+              height: '800px',
               display: 'none'
           }).appendTo('body');
 
         var canvas = document.getElementById(elementID);
+        */
+        var ctx = canvas.getContext('2d');
+
+        var width = 1200;
+        var height = 630;
+
+        // set its dimension to target size
+        canvas.width = width;
+        canvas.height = height;
+
+        // delay to remove markers
+        setTimeout(this.drawPost, 100, width, height, ctx, canvas, mainstage, targ);
+      },
+      resizeOutput: function(evt, targ){
+
+         //this.hideMarkersNow();
+         marker_container.position.x = 1000;
+         // requestAnimationFrame(this.animate);
+        // alert(marker_container.position.x);
+         
+
+         var mainstage = $('#mainStage')[0];
+
+         var canvas = document.createElement('canvas');
+          // create an off-screen canvas
+      /*    var elementID = 'canvas' + $('canvas').length; // Unique ID
+
+          $('<canvas>').attr({
+              id: elementID
+          }).css({
+              width: '800px',
+              height: '800px',
+              display: 'none'
+          }).appendTo('body');
+
+        var canvas = document.getElementById(elementID);
+        */
         var ctx = canvas.getContext('2d');
 
         var width = 1200;
@@ -1759,11 +1729,33 @@ export default {
         canvas.width = width;
         canvas.height = height;
 
-        // draw source image into the off-screen canvas:
-        ctx.drawImage(mainstage, 95, 95, 1010, 1010);
+        // delay to remove markers
+        setTimeout(this.drawPost, 100, width, height, ctx, canvas, mainstage, targ);
+
+        
+
+           
+
+            
+      //    }
+
+      },
+      drawPost: function (w, h, ctx, canvas, mainstage, targ){
+
+          // draw source image into the off-screen canvas:
+
+          if (h > 1000){
+            ctx.drawImage(mainstage, 95, 95, 1010, 1010);
+            ctx.drawImage(this.square_frame, 0, 0, 1200, 1200);
+          }else{
+            ctx.drawImage(this.wide_frame, 0, 0, w, h);
+            ctx.drawImage(mainstage, 285, 0, 630, 630);
+           // ctx.strokeStyle = 
+            ctx.strokeRect(285, 0, 630, 630);
+          }
        // alert(canvas.toDataURL())
 
-       var scope = this;
+      // var scope = this;
 /*
        var image = new Image();
       //  image.src = './static/images/message-0'+this.selectedMsg+'.png';
@@ -1777,87 +1769,54 @@ export default {
             
         }
 */
-        var base_image = new Image();
-        base_image.src = './static/images/photoframe.png';
-
-        scope = this;
+    //    var base_image = new Image();
+    //    base_image.src = './static/images/photoframe.png';
 
         //console.log('before load---'+ctx);
-        base_image.onload = function(){
+    //    base_image.onload = function(){
           //console.log('after load---'+ctx);
-          ctx.drawImage(base_image, 0, 0, 1200, 1200);
+          
            // scope.hideMarkersNow();
 
             var data= canvas.toDataURL("image/png");
 
-            var blob = scope.dataURItoBlob(data);
+            var blob = this.dataURItoBlob(data);
 
            // Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0
           // var canvas = document.getElementById("canvas1"), ctx = canvas.getContext("2d");
           //console.log(scope.browser)
+          if (targ == 'facebook'){
 
-          if (targ == 'twitter'){
-            var dt = data;
-             // alert('safari');
+              var formData = new FormData();
+             // formData.append("file", blob);
+              formData.append('image', blob, 'filename');
 
-              /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
-              dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
-              console.dir(oauth)
-              //alert('posting via oauth')
+              var xhr = new XMLHttpRequest();
+              //request.onload = this.completeRequest;
+              var scope = this;
 
-              oauth.post('/1.1/media/upload.json', { 
-                 data: {
-                     media_data: dt
-                 }
-              }).done(function(data) {
-                //todo with data
-                console.log('post complete')
-                 $('#load-panel').removeClass('active');
-                 scope.toggleIframe();
-                 $('#thanks').addClass('active');
-              }).fail(function(err) {
-                //todo with err
-                 console.log(err)
-                 $('#load-panel').removeClass('active');
-              });
-         
-
-              /*
-              I just created my Most Wonderful Mantlepiece of "+ Math.random()*1000+"! You can create one, too! http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece via @HallmarkMovie" //,
-
-        
-              */
-         /*
-              oauth.post('/1.1/statuses/update.json', {
-                  data: {
-                    status: "I just created my Most Wonderful Mantlepiece of "+ Math.random()*1000+"!" //,
-                   // media_data: ''
-                   // media_id: 'https://hallmark-greeting.appspot.com/static/images/Hallmark.png'
+              xhr.onload = function () {
+              if (xhr.readyState === xhr.DONE) {
+                      if (xhr.status === 200) {
+                        var gcloud = JSON.parse(xhr.response);
+                          //console.log(gcloud.uploaded)
+                          //console.log(xhr.response);
+                          ////console.log(xhr.responseText);
+                          scope.postToFacebook('custom message here', gcloud.uploaded)
+                      }
                   }
-              }).done(function(data) {
-                //todo with data
-                console.log('post complete')
-                 $('#load-panel').removeClass('active');
-                 scope.toggleIframe();
-                 $('#thanks').addClass('active');
-              }).fail(function(err) {
-                //todo with err
-                 console.log(err)
-                 $('#load-panel').removeClass('active');
-              });
-          
+              };
 
-/*
-              oauth.post('/1.1/statuses/update.json', {
-                  data: {
-                    status: "hello twitter world!",
-                  //  media_data: dt
-                  }
-                })
-                */
-          //  scope.postToTwitter(blob, token1, token2, oauth);
 
-          }else if (scope.browser == "Safari"){
+              xhr.open("POST", "/upload/add");
+              xhr.send(formData);
+
+          }else if (targ == 'twitter'){
+
+            $('#load-panel').addClass('active');
+            this.postToTwitter(blob);
+
+          }else if (this.browser == "Safari"){
 
              // var dt = document.getElementById("canvas1").toDataURL('image/png');
               var dt = data;
@@ -1881,23 +1840,27 @@ export default {
             // TweenMax.delayedCall(.9, dlSafari, url);
             // setTimeout(function(){ window.open(url, '_blank'); }, 1000);
 
-          }else if (scope.browser == "Mobile Safari"){
-             var url = (window.webkitURL || window.URL).createObjectURL(blob);
+          }else if (this.browser == "Mobile Safari"){
+            // var url = (window.webkitURL || window.URL).createObjectURL(blob);
              //console.log('mobile- '+url);
-             location.href = url;
+
+             /// Works in own window///
+            // location.href = url;
+
+           //  var dt = document.getElementById("mainStage").toDataURL('image/png');
+            window.open(data, '_blank');
+           // setTimeout(function(){ window.open(data, '_blank');}, 900);
 
             // TweenMax.delayedCall(.9, dlMobile, url);
             // setTimeout(function(){ location.href = url;}, 1000);
        
           }else{
+
+              $('#load-panel').addClass('active');
+
               canvas.toBlob(function(blob) {
                 FileSaver.saveAs(blob, "Hallmark_mantlepiece.png");
             });
-          }
-
-           
-
-            
           }
 
       },
@@ -1923,6 +1886,7 @@ export default {
           
           evt.target.href = dt;
       },
+ //// NOT USING THIS??
       resizedataURL: function()
       {
         marker_container.position.x = 1000;
@@ -2037,7 +2001,7 @@ export default {
             var fd = new FormData();
             fd.append("access_token", token);
             fd.append("source", imageData);
-            fd.append("message","");//I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece");
+            fd.append("message","I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://www.hallmarkmoviesandmysteries.com");
            // fd.append("no_story", true);
            var scope = this;
             // Upload image to facebook without story(post to feed)
@@ -2090,6 +2054,9 @@ export default {
         getFBstatus: function(callback){
 
           marker_container.position.x = 1000;
+           requestAnimationFrame(this.animate);
+
+
 
          // this.FBlogin(this.statusChangeCallback);
 
@@ -2102,9 +2069,10 @@ export default {
               $('#load-panel').addClass('active');
               this.FBlogin(this.uploadToAlbum);
             }else{
+              this.resizeWideFrame(null, 'facebook');
              // this.FBlogin(this.uploadCanvasData);
 
-              this.FBlogin(this.resizedataURL);
+             // this.FBlogin(this.resizedataURL);
 
 
             }
@@ -2117,8 +2085,10 @@ export default {
               $('#load-panel').addClass('active');
               this.uploadToAlbum();
             }else{
-            //  this.uploadCanvasData();
-              this.resizedataURL();
+
+              this.resizeWideFrame(null, 'facebook');
+             // this.uploadCanvasData();
+            //  this.resizedataURL();
 
             }
          }
