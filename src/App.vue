@@ -495,7 +495,7 @@ export default {
 
        renderer = PIXI.autoDetectRenderer(width , height, { 
         view:canvas, 
-       // transparent: true,
+        transparent: true,
         preserveDrawingBuffer:true 
        });
        //console.dir(renderer);
