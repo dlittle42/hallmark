@@ -138,16 +138,23 @@
                 <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
                 <!--               
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
-                -->
+               
                 <button id="twitter" class="social" v-on:click="resizeOutput(null,'twitter')">Share on Twitter</button>
+             -->
+                <button id="twitter" class="social" v-on:click="authTwitter('twitter')">Share on Twitter</button>
               <!--  <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a>  -->
                 <a id="dl" class="social" href="#">Download</a> 
-                <!--
+
+              <!--
                 <a id="mobileSave" class="social" href="#">Download Mobile</a> 
                 <a id="safariSave" class="social" download="Hallmark_mantlepiece.png" href="#">Download Safari</a> 
                 -->
               <!--  <a id="mobilesave" class="social"  href="#">Mobile Save</a> -->
              <!--  <a id="up" class="social" href="#">Upload</a> -->
+    
+
+
+
                </div>
         
           </div>
@@ -175,7 +182,8 @@ var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 var FileSaver =require('file-saver');
 var UAParser = require('ua-parser-js');
 
-var OAuth = require('oauthio-web');
+//import OAuth from './js/oauth';
+require ('oauthio-web')
 //var gesture = require('pixi-simple-gesture')
 //var poly = require('jquery.pointer-events-polyfill');
 
@@ -227,6 +235,8 @@ export default {
      document.getElementById("help-layout-btn").addEventListener('click', this.showHelpLayouts, false);
   
      document.getElementById("dl").addEventListener('click', this.resizeOutput, false);
+
+
      //document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
    //  document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
 
@@ -248,9 +258,23 @@ export default {
 
 // for ie pointer-events
      // window.pointerEventsPolyfill();
+     var scope = this;
 
-     OAuth.initialize('TyDLZ8s-Ej0ceQq5M6O6jsPpA2o');
+     
+  // See the result below
 
+      OAuth.initialize('TyDLZ8s-Ej0ceQq5M6O6jsPpA2o');
+     /*
+     OAuth.popup('facebook')
+.done(function(result) {
+  //use result.access_token in your API request 
+  //or use result.get|post|put|del|patch|me methods (see below)
+})
+.fail(function (err) {
+  //handle error with err
+});
+*/
+      //$('#oauth-connect button').click(this.oauthButton);
 
       
       
@@ -261,6 +285,26 @@ export default {
   },
 
   methods: {
+
+
+      authTwitter: function(){
+        var scope = this;
+        
+         OAuth.popup('twitter').done(function(result) {
+              console.log(result)
+              
+
+              scope.resizeOutput(null, 'twitter', result, result.oauth_token, result.oauth_token_secret);
+
+
+            //  scope.resizeOutput(null, 'twitter', result.oauth_token, result.oauth_token_secret);
+              // do some stuff with result
+          })
+
+
+      },
+
+     
       getAlert() {
         alert('function call');
       },
@@ -1573,7 +1617,7 @@ export default {
                 "picture": img, //'https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg',//response.images[0].source,
                 "link": window.location.href,
                 "name": 'Share Your Most Wonderful Mantlepiece of Christmas',
-                "description": 'I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out!',
+                "description": '',//'I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out!',
                 "privacy": {
                     value: 'SELF'
                 }
@@ -1602,7 +1646,7 @@ export default {
           }
           return new Blob([ab], {type: 'image/png'});
       },
-      postToTwitter: function(blob){
+      postToTwitter: function(blob, token1, token2){
           var scope = this;
        /*   marker_container.position.x = 1000;
           var scope = this;
@@ -1621,7 +1665,8 @@ export default {
          // formData.append("file", blob);
           formData.append('image', blob, 'filename');
           //formData.append('image', data, 'filename');
-         // formData.append('image', data);
+          formData.append('token1', token1);
+          formData.append('token2', token2);
          // formData.append("canvasImage", blob);
 
           var xhr = new XMLHttpRequest();
@@ -1650,7 +1695,7 @@ export default {
           
           
       },
-      resizeOutput: function(evt, targ){
+      resizeOutput: function(evt, targ, oauth, token1, token2){
 
          //this.hideMarkersNow();
          marker_container.position.x = 1000;
@@ -1716,8 +1761,34 @@ export default {
           //console.log(scope.browser)
 
           if (targ == 'twitter'){
+            var dt = data;
+             // alert('safari');
 
-            scope.postToTwitter(blob);
+              /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
+              dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+
+              oauth.post('/1.1/statuses/update.json', {
+                  data: {
+                    status: "I just created my Most Wonderful Mantlepiece of Christmas! You can create one, too! http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece via @HallmarkMovie"
+                 //   media_data: dt
+                  }
+              }).done(function(data) {
+                //todo with data
+                alert('post complete')
+              }).fail(function(err) {
+                //todo with err
+                alert(err)
+              });
+
+/*
+              oauth.post('/1.1/statuses/update.json', {
+                  data: {
+                    status: "hello twitter world!",
+                  //  media_data: dt
+                  }
+                })
+                */
+            //scope.postToTwitter(blob, token1, token2);
 
           }else if (scope.browser == "Safari"){
 
@@ -1899,7 +1970,7 @@ export default {
             var fd = new FormData();
             fd.append("access_token", token);
             fd.append("source", imageData);
-            fd.append("message","I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://www.hallmarkmoviesandmysteries.com");
+            fd.append("message","");//I just created my perfect Christmas Hearth full of decorations and family photos. Please check it out! http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece");
            // fd.append("no_story", true);
            var scope = this;
             // Upload image to facebook without story(post to feed)
@@ -1964,9 +2035,9 @@ export default {
               $('#load-panel').addClass('active');
               this.FBlogin(this.uploadToAlbum);
             }else{
-              this.FBlogin(this.uploadCanvasData);
+             // this.FBlogin(this.uploadCanvasData);
 
-             // this.FBlogin(this.resizedataURL);
+              this.FBlogin(this.resizedataURL);
 
 
             }
@@ -1979,8 +2050,8 @@ export default {
               $('#load-panel').addClass('active');
               this.uploadToAlbum();
             }else{
-              this.uploadCanvasData();
-            //  this.resizedataURL();
+            //  this.uploadCanvasData();
+              this.resizedataURL();
 
             }
          }

@@ -86,9 +86,18 @@ router.post(
 
     var data = req.body;
 
+    console.log('tokens '+req.body.token1);
+    console.log('tokens '+req.body.token2);
+
     console.dir(req.file)
 
     console.log('FILE!!! ==='+req.file)
+
+
+    T.config.consumer_secret = req.body.token1;
+    T.config.access_token_secret = req.body.token1;
+
+    console.log(T);
 
 
 
