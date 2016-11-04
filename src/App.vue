@@ -1769,6 +1769,7 @@ export default {
               /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
               dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
               console.dir(oauth)
+              alert('posting via oauth')
 
               oauth.post('https://upload.twitter.com/1.1/media/upload.json', { 
                  data: {
