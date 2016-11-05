@@ -77,7 +77,7 @@ app.use('/upload', require('../api/crud'));
 //app.use('/api', require('../lib/imageUpload'));
 //app.use('/api/books', require('../../books/api'));
 app.use('/', router)
-app.use()
+
 
 
 // serve pure static assets

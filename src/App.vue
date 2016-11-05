@@ -229,6 +229,9 @@ export default {
       /*
       FastClick.attach(document.body);
       */
+      if( top === self ) { // not in a frame
+          window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
+     }
       /*
 if (document.referrer){
   if (document.referrer.indexOf('facebook.com') == -1 || document.referrer.indexOf('twitter.com') == -1) {
