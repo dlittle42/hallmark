@@ -232,7 +232,8 @@ export default {
 
 
 if (document.referrer.indexOf('facebook.com') == -1 || document.referrer.indexOf('twitter.com') == -1) {
-window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
+  console.log('referred='+document.referrer);
+//window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
 }
    //   if (document.referrer && document.referrer != "")
      // document.write('Thanks for visiting this site from ' + document.referrer);
