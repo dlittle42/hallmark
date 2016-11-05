@@ -59,7 +59,9 @@ Object.keys(proxyTable).forEach(function (context) {
   app.use(proxyMiddleware(context, options))
 })
 
-
+app.get('/ref', function (req,res) {
+   res.send('Hello');
+});
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
@@ -75,6 +77,7 @@ app.use('/upload', require('../api/crud'));
 //app.use('/api', require('../lib/imageUpload'));
 //app.use('/api/books', require('../../books/api'));
 app.use('/', router)
+app.use()
 
 
 // serve pure static assets
