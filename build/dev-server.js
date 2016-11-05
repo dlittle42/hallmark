@@ -33,6 +33,12 @@ app.all('*', function(req, res, next) {
     }
 });
 
+app.get('/ref', function (req,res) {
+   res.send('Hello');
+});
+
+app.use('/upload', require('../api/crud'));
+
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   stats: {
@@ -59,9 +65,7 @@ Object.keys(proxyTable).forEach(function (context) {
   app.use(proxyMiddleware(context, options))
 })
 
-app.get('/ref', function (req,res) {
-   res.send('Hello');
-});
+
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
@@ -73,7 +77,7 @@ app.use(devMiddleware)
 // compilation error display
 app.use(hotMiddleware)
 
-app.use('/upload', require('../api/crud'));
+
 //app.use('/api', require('../lib/imageUpload'));
 //app.use('/api/books', require('../../books/api'));
 app.use('/', router)

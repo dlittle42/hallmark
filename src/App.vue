@@ -140,9 +140,9 @@
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 -->
 
-                <!-- Hide Twitter
+               
                 <button id="twitter" class="social" v-on:click="resizeOutput(null,'twitter')">Share on Twitter</button>
-                -->
+             
               <!--  <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a>  -->
                 <a id="dl" class="social" href="#">Download</a> 
                 <!--
@@ -224,7 +224,7 @@ export default {
       FastClick.attach(document.body);
       */
       if( top === self ) { // not in a frame
-          window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
+        //  window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
      }
 
 
