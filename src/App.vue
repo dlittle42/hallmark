@@ -1610,11 +1610,11 @@ console.log(this.os);
                 }
             },
             function (response) {
-              //console.log('feedback: '+response)
+              console.log('feedback: '+response)
               //console.dir(response);
                 if (response && !response.error) {
                     /* handle the result */
-                    //console.log("Posted story to facebook");
+                    console.log("Posted story to facebook");
                     //console.log(response);
                     $('#load-panel').removeClass('active');
                     scope.toggleIframe();
