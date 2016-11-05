@@ -214,13 +214,7 @@ export default {
     }
    
   },
-  /*
-  created () {
-    this.animate = this.animate.bind(this)
-    this.clock = new THREE.Clock()
-    this.mesh = this.createOcean()
-  },
-  */
+
   mounted: function () {
     this.$nextTick(function () {
       // code that assumes this.$el is in-document
@@ -232,17 +226,7 @@ export default {
       if( top === self ) { // not in a frame
           window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
      }
-      /*
-if (document.referrer){
-  if (document.referrer.indexOf('facebook.com') == -1 || document.referrer.indexOf('twitter.com') == -1) {
-    window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
-  }
-}
-*/
-   //   if (document.referrer && document.referrer != "")
-     // document.write('Thanks for visiting this site from ' + document.referrer);
-    //window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece';
- // '
+
 
       this.setupPixi();
      // $('#mainStage').height($('#main_block').width() / 1);
@@ -1608,10 +1592,10 @@ console.log(this.os);
                 "picture": img, //'https://www.smashingmagazine.com/wp-content/uploads/2015/06/10-dithering-opt.jpg',//response.images[0].source,
                 "link": window.location.href,
                 "name": 'Share Your Most Wonderful Mantlepiece of Christmas',
-                "description": 'I just created my perfect Christmas Hearth full of decorations and family photos. You can create one, too!',
-                "privacy": {
-                    value: 'SELF'
-                }
+                "description": 'I just created my perfect Christmas Hearth full of decorations and family photos. You can create one, too!'//,
+                //"privacy": {
+                  //  value: 'SELF'
+                //}
             },
             function (response) {
               console.log('feedback: '+response)
@@ -1688,6 +1672,7 @@ console.log(this.os);
       resizeWideFrame: function(evt, targ){
           $('#load-panel').addClass('active');
          //this.hideMarkersNow();
+         var targ = 'facebook';
          marker_container.position.x = 1000;
          // requestAnimationFrame(this.animate);
         // alert(marker_container.position.x);
@@ -2101,7 +2086,8 @@ console.log(this.os);
               $('#load-panel').addClass('active');
               this.FBlogin(this.uploadToAlbum);
             }else{
-              this.resizeWideFrame(null, 'facebook');
+              this.FBlogin(this.resizeWideFrame);
+              //this.resizeWideFrame(null, 'facebook');
              // this.FBlogin(this.uploadCanvasData);
 
              // this.FBlogin(this.resizedataURL);
