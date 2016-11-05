@@ -17,7 +17,7 @@ var express = require('express');
 var config = require('../g-config');
 var bodyParser = require('body-parser');
 var images = require('../lib/images');
-var Twit = require('twit');
+//var Twit = require('twit');
 
 //var logger = require('express-logger');
 var cookieParser = require('cookie-parser');
@@ -28,25 +28,6 @@ var oauth = require('oauth');
 
 
 //var https = require('https');
-
-/*
-
-var twitterAPI = require('node-twitter-api');
-var twitter = new twitterAPI({
-    consumerKey: 'sUXiHWb9dnJaCILp39ISFcRae',
-    consumerSecret: 'yxFc0BIt25xxVeQHIwbZGI9X1vj8EQYIvVC2bTZ8J6KEMUzaFK',
-    callback: 'http://yoururl.tld/something'
-});
-*/
-
-
-var T = new Twit({
-  consumer_key:         'sUXiHWb9dnJaCILp39ISFcRae',
-  consumer_secret:      'yxFc0BIt25xxVeQHIwbZGI9X1vj8EQYIvVC2bTZ8J6KEMUzaFK',
-  access_token:         '7269812-Yrn5e2otmkt8Ap9fKAwL2evXwSAOXHI0V3RPcgZ0Ko',
-  access_token_secret:  'rkwxcjze97nW63yFgzpI89hswS9emDJNg7zj8y71w7BAm',
-  timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-})
 
 
 
