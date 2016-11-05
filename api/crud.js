@@ -26,6 +26,7 @@ var session = require('cookie-session')
 var inspect = require('util-inspect');
 var oauth = require('oauth');
 
+
 //var https = require('https');
 
 /*
@@ -52,10 +53,11 @@ var T = new Twit({
 var _twitterConsumerKey = "sUXiHWb9dnJaCILp39ISFcRae";
 var _twitterConsumerSecret = "yxFc0BIt25xxVeQHIwbZGI9X1vj8EQYIvVC2bTZ8J6KEMUzaFK";
 
-var callbackDomain = "http://127.0.0.1:8080";
+//var callbackDomain = "http://127.0.0.1:8080";
 var callbackDomain = "http://hallmark-dev.herokuapp.com";
-var callbackDomain = "http://hallmark-";
-var callbackDomain = "http://127.0.0.1:8080";
+//var callbackDomain = "http://hallmark-greetings.herokuapp.com";
+//var callbackDomain = "http://127.0.0.1:8080";
+
 
 var consumer = new oauth.OAuth(
     "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", 
