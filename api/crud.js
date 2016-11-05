@@ -101,7 +101,7 @@ router.get('/test', function(req, res){
 /// twitter endpoints
 router.get('/sessions/connect', function(req, res){
 
-   if (!req.session.oauthRequestToken){
+  // if (!req.session.oauthRequestToken){
 
       consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
         if (error) {
@@ -118,9 +118,9 @@ router.get('/sessions/connect', function(req, res){
         }
       });
 
-  }else{
-      res.send('<script>window.close();</script>');
-  }
+ // }else{
+    //  res.send('<script>window.close();</script>');
+ // }
 });
 
 

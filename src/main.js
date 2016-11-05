@@ -60,9 +60,9 @@
       console.log('created main');
       window.fbAsyncInit = function() {
         FB.init({
-          //appId      : '704556386364970', // hall­m­a­r­k­-dev for Google Cloud
-            appId      : '719330484887560', // not for heroku, for localhost
-         // appId      : '704923129661629', // ???? not working on heroku??  //hall­m­a­r­k­-dev - Test1 for localhost
+          //appId      : '704556386364970', // hall­m­a­r­k­-greeting for Google Cloud: LIVE
+            appId      : '719330484887560', // hallmark-dev: DEV
+         // appId      : '704923129661629', // localhost  
         //  channelUrl : '//conor.lavos.local/channel.html',
           status     : true,
           cookie     : true,
