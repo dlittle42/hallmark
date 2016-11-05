@@ -206,6 +206,7 @@ export default {
       layout: "",
       selectedMsg: "",
       browser:"",
+      os:"",
       base_image:"",
       wide_frame:"",
       square_frame:""
@@ -250,6 +251,7 @@ export default {
     // var result = UAParser(uastring);
    // alert(result.browser.name)
     this.browser = result.browser.name;
+    this.os = result.os.name;
 
     this.square_frame = new Image();
     this.square_frame.src = './static/images/photoframe.png';
@@ -641,7 +643,7 @@ export default {
         fireplace.anchor.set(0.5);
         stage.addChild(fireplace);
 
-
+if (this.os != "Android"){
          var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
          var source = texture.baseTexture.source;
          source.loop = true;
@@ -662,7 +664,9 @@ export default {
         videoSprite.loop = true;
 
         stage.addChild(videoSprite);
-
+}else{
+  console.log('android');
+}
 
         gift = PIXI.Sprite.fromImage('./static/images/gift-01.png');
 
