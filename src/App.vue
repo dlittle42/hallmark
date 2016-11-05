@@ -229,6 +229,16 @@ export default {
       /*
       FastClick.attach(document.body);
       */
+
+
+if (document.referrer.indexOf('facebook.com') == -1 || document.referrer.indexOf('twitter.com') == -1) {
+window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
+}
+   //   if (document.referrer && document.referrer != "")
+     // document.write('Thanks for visiting this site from ' + document.referrer);
+    //window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece';
+ // '
+
       this.setupPixi();
      // $('#mainStage').height($('#main_block').width() / 1);
      document.getElementById("help-layout-btn").addEventListener('click', this.showHelpLayouts, false);
@@ -643,7 +653,10 @@ export default {
         fireplace.anchor.set(0.5);
         stage.addChild(fireplace);
 console.log(this.os);
-if (this.os != "Android"){
+//if (this.os != "Android"){
+
+  var isAndroid = /(android)/i.test(navigator.userAgent);
+      if (!isAndroid){
          var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
          var source = texture.baseTexture.source;
          source.loop = true;
