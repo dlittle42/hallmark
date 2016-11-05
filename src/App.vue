@@ -642,7 +642,7 @@ export default {
         fireplace.val = 'fireplace';
         fireplace.anchor.set(0.5);
         stage.addChild(fireplace);
-
+console.log(this.os);
 if (this.os != "Android"){
          var texture = PIXI.Texture.fromVideo('./static/images/Fire/fire.mp4');
          var source = texture.baseTexture.source;
