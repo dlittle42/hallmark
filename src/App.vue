@@ -210,7 +210,8 @@ export default {
       base_image:"",
       wide_frame:"",
       square_frame:"",
-      
+      authorized:""
+
 
     }
    
@@ -265,16 +266,22 @@ export default {
      var scope = this;
 
      $('#twitter').click(function(){
-      $.oauthpopup({
-          path: '/upload/sessions/connect',
-          callback: function(){
-           // $.get('/user_info', function(data){
-             // $('#user_info').html(JSON.stringify(data));
-             // console.log('we got callback');
-              scope.resizeOutput(null,'twitter');
-            //});
+        if (scope.authorized!=true){
+            $.oauthpopup({
+                path: '/upload/sessions/connect',
+                windowOptions: scope.centerPopUp(),
+                callback: function(){
+                 // $.get('/user_info', function(data){
+                   // $('#user_info').html(JSON.stringify(data));
+                   // console.log('we got callback');
+                    scope.authorized = true;
+                    scope.resizeOutput(null,'twitter');
+                  //});
+                }
+              });
+          }else{
+            scope.resizeOutput(null,'twitter');
           }
-        });
       });
 
 
@@ -289,6 +296,22 @@ export default {
   methods: {
       getAlert() {
         alert('function call');
+      },
+       centerPopUp: function(){
+          var w=800;
+          var h=600;
+          var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+          var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+          var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+          var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+          var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+          var top = ((height / 2) - (h / 2)) + dualScreenTop;
+
+          var newWindow = 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left;
+
+          return newWindow;
       },
       checkToBlob: function(){
         if (!HTMLCanvasElement.prototype.toBlob) {
@@ -3032,6 +3055,10 @@ figure{
 @media only screen and (min-width:801px) and (max-width: 1024px){
   .transparent{
 
+  }
+
+  #thanks h1 {
+      font-size: 26px;
   }
 }
 

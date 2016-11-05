@@ -33,9 +33,7 @@ app.all('*', function(req, res, next) {
     }
 });
 
-app.get('/ref', function (req,res) {
-   res.send('Hello');
-});
+
 
 app.use('/upload', require('../api/crud'));
 

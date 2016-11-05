@@ -19,9 +19,10 @@ var bodyParser = require('body-parser');
 var images = require('../lib/images');
 var Twit = require('twit');
 
-var logger = require('express-logger');
+//var logger = require('express-logger');
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
+var session = require('cookie-session')
+//var session = require('express-session');
 var inspect = require('util-inspect');
 var oauth = require('oauth');
 
@@ -51,10 +52,14 @@ var T = new Twit({
 var _twitterConsumerKey = "sUXiHWb9dnJaCILp39ISFcRae";
 var _twitterConsumerSecret = "yxFc0BIt25xxVeQHIwbZGI9X1vj8EQYIvVC2bTZ8J6KEMUzaFK";
 
+var callbackDomain = "http://127.0.0.1:8080";
+var callbackDomain = "http://hallmark-dev.herokuapp.com";
+var callbackDomain = "http://hallmark-";
+var callbackDomain = "http://127.0.0.1:8080";
 
 var consumer = new oauth.OAuth(
     "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", 
-    _twitterConsumerKey, _twitterConsumerSecret, "1.0A", "http://127.0.0.1:8080/upload/sessions/callback", "HMAC-SHA1");
+    _twitterConsumerKey, _twitterConsumerSecret, "1.0A", callbackDomain+"/upload/sessions/callback", "HMAC-SHA1");
 
 
 
@@ -69,7 +74,7 @@ router.use(function (req, res, next) {
 */
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
-router.use(logger({ path: "log/express.log"}));
+//router.use(logger({ path: "log/express.log"}));
 router.use(cookieParser());
 router.use(session({ secret: "very secret", resave: false, saveUninitialized: true}));
 
@@ -112,19 +117,27 @@ router.get('/test', function(req, res){
 
 /// twitter endpoints
 router.get('/sessions/connect', function(req, res){
-  consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
-    if (error) {
-      res.send("Error getting OAuth request token : " + inspect(error), 500);
-    } else {  
-      req.session.oauthRequestToken = oauthToken;
-      req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      console.log("Double check on 2nd step");
-      console.log("------------------------");
-      console.log("<<"+req.session.oauthRequestToken);
-      console.log("<<"+req.session.oauthRequestTokenSecret);
-      res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
-    }
-  });
+
+   if (!req.session.oauthRequestToken){
+
+      consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
+        if (error) {
+          res.send("Error getting OAuth request token : " + inspect(error), 500);
+        } else {  
+
+          req.session.oauthRequestToken = oauthToken;
+          req.session.oauthRequestTokenSecret = oauthTokenSecret;
+          console.log("Double check on 2nd step");
+          console.log("------------------------");
+          console.log("<<"+req.session.oauthRequestToken);
+          console.log("<<"+req.session.oauthRequestTokenSecret);
+          res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
+        }
+      });
+
+  }else{
+      res.send('<script>window.close();</script>');
+  }
 });
 
 
