@@ -136,13 +136,11 @@
               <div id="social_action">
                 <h1>Share Your Greeting</h1>
                 <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
-                <!--               
-                <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
-                -->
-
-               
+                          
+                <button id="twitter" class="social">Share on Twitter</button>
+               <!--
                 <button id="twitter" class="social" v-on:click="resizeOutput(null,'twitter')">Share on Twitter</button>
-             
+             -->
               <!--  <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a>  -->
                 <a id="dl" class="social" href="#">Download</a> 
                 <!--
@@ -167,7 +165,8 @@
 </template>
 
 <script>
-var $ = require('jquery');
+//var {$, jQuery} = require('jquery');
+window.jQuery = window.$ = require("jquery");
 import router from 'vue-router';
 var PIXI = require('pixi.js');
 var FastClick = require('fastclick');
@@ -177,6 +176,7 @@ var colorProps = require('gsap/src/uncompressed/plugins/ColorPropsPlugin')
 
 var FileSaver =require('file-saver');
 var UAParser = require('ua-parser-js');
+require('./js/jquery.oauthpopup');
 
 //import SpriteUtilities  from './js/spriteUtilities';
 //var gesture = require('pixi-simple-gesture')
@@ -209,7 +209,8 @@ export default {
       os:"",
       base_image:"",
       wide_frame:"",
-      square_frame:""
+      square_frame:"",
+      
 
     }
    
@@ -261,8 +262,20 @@ export default {
 
 // for ie pointer-events
      // window.pointerEventsPolyfill();
+     var scope = this;
 
-
+     $('#twitter').click(function(){
+      $.oauthpopup({
+          path: '/upload/sessions/connect',
+          callback: function(){
+           // $.get('/user_info', function(data){
+             // $('#user_info').html(JSON.stringify(data));
+             // console.log('we got callback');
+              scope.resizeOutput(null,'twitter');
+            //});
+          }
+        });
+      });
 
 
       
