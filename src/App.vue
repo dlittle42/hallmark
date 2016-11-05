@@ -139,7 +139,10 @@
                 <!--               
                 <button id="twitter" class="social" v-on:click="getFBstatus('album')">Share on Twitter</button>
                 -->
+
+                <!-- Hide Twitter
                 <button id="twitter" class="social" v-on:click="resizeOutput(null,'twitter')">Share on Twitter</button>
+                -->
               <!--  <a id="dl" class="social" download="Hallmark_mantlepiece.png" href="#">Download</a>  -->
                 <a id="dl" class="social" href="#">Download</a> 
                 <!--
@@ -3371,9 +3374,16 @@ figure{
  
 }
 
+@media (max-width:340px) {
 
+.social{
 
+      font-size: 11px;
+      line-height: 12px;
+      padding-left: 35px;
+    }
 
+}
 
 
 </style>
