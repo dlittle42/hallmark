@@ -234,7 +234,7 @@ export default {
      // $('#mainStage').height($('#main_block').width() / 1);
      document.getElementById("help-layout-btn").addEventListener('click', this.showHelpLayouts, false);
   
-     document.getElementById("dl").addEventListener('click', this.resizeOutput, false);
+     document.getElementById("dl").addEventListener('click', this.downloadClick, false);
      //document.getElementById("mobileSave").addEventListener('click', this.dlMobile, false);
    //  document.getElementById("safariSave").addEventListener('click', this.dlSafari, false);
 
@@ -266,6 +266,9 @@ export default {
      var scope = this;
 
      $('#twitter').click(function(){
+
+        //this.gaEvent('Twitter Share');
+
         if (scope.authorized!=true){
             $.oauthpopup({
                 path: '/upload/sessions/connect',
@@ -2104,8 +2107,24 @@ console.log(this.os);
           //  }
 
          },
+         gaEvent: function(action){
+      
+              ga('send', {
+                hitType: 'event',
+                eventCategory: 'Social',
+                eventAction: action,
+                eventLabel: 'Hallmark Mantlepiece of Christmas'
+              });
+           
+         },
+         downloadClick: function(){
+              this.resizeOutput();
+             // this.gaEvent('Download Image');
+         },
+
         getFBstatus: function(callback){
 
+         // this.gaEvent('Facebook Share');
           marker_container.position.x = 1000;
            requestAnimationFrame(this.animate);
 
