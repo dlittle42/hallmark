@@ -226,7 +226,7 @@ export default {
       FastClick.attach(document.body);
       */
       if( top === self ) { // not in a frame
-        //  window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
+          window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
      }
 
 

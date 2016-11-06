@@ -35,8 +35,8 @@ var _twitterConsumerKey = "sUXiHWb9dnJaCILp39ISFcRae";
 var _twitterConsumerSecret = "yxFc0BIt25xxVeQHIwbZGI9X1vj8EQYIvVC2bTZ8J6KEMUzaFK";
 
 //var callbackDomain = "http://127.0.0.1:8080";
-var callbackDomain = "http://hallmark-dev.herokuapp.com";
-//var callbackDomain = "http://hallmark-greetings.herokuapp.com";
+//var callbackDomain = "http://hallmark-dev.herokuapp.com";
+var callbackDomain = "http://hallmark-greetings.herokuapp.com";
 //var callbackDomain = "http://127.0.0.1:8080";
 
 
