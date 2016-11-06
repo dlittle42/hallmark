@@ -267,7 +267,7 @@ export default {
 
      $('#twitter').click(function(){
 
-        //this.gaEvent('Twitter Share');
+        this.gaEvent('Twitter Share');
 
         if (scope.authorized!=true){
             $.oauthpopup({
@@ -2119,12 +2119,12 @@ console.log(this.os);
          },
          downloadClick: function(){
               this.resizeOutput();
-             // this.gaEvent('Download Image');
+              this.gaEvent('Download Image');
          },
 
         getFBstatus: function(callback){
 
-         // this.gaEvent('Facebook Share');
+          this.gaEvent('Facebook Share');
           marker_container.position.x = 1000;
            requestAnimationFrame(this.animate);
 
@@ -3226,7 +3226,14 @@ figure{
 
 
 
+@media (min-width:341px) and (max-width:599px) {
 
+  .social{
+      font-size: 12px;
+      line-height: 14px;
+    }
+
+}
 
 
 @media (max-width:599px) {
@@ -3396,8 +3403,8 @@ figure{
       height: 33px;
       margin: 8px 4px;
       display: inline-block;
-      font-size: 12px;
-      line-height: 14px;
+      //font-size: 12px;
+      //line-height: 14px;
     }
   }
 
@@ -3447,6 +3454,17 @@ figure{
 
       font-size: 11px;
       line-height: 12px;
+      padding-left: 35px;
+    }
+
+}
+
+@media (max-width:299px) {
+
+.social{
+
+      font-size: 10px;
+      line-height: 11px;
       padding-left: 35px;
     }
 
