@@ -135,9 +135,9 @@
 
               <div id="social_action">
                 <h1>Share Your Greeting</h1>
-                <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
+                <button id="facebook" class="social" v-on:click="getFBstatus"><span class="longbtn">Share on Facebook</span><span class="shortbtn">Share</span></button>
                           
-                <button id="twitter" class="social">Share on Twitter</button>
+                <button id="twitter" class="social"><span class="longbtn">Share on Twitter</span><span class="shortbtn">Share</span></button>
                <!--
                 <button id="twitter" class="social" v-on:click="resizeOutput(null,'twitter')">Share on Twitter</button>
              -->
@@ -2809,6 +2809,14 @@ h1{
     
 }
 
+.shortbtn{
+  display: none;
+}
+
+.longbtn{
+  display: block;
+}
+
 
 
 button#layout_btn {
@@ -3501,6 +3509,8 @@ figure{
 
 }
 
+
+
 @media (max-width:299px) {
 
 .social{
@@ -3509,6 +3519,12 @@ figure{
       line-height: 11px;
       padding-left: 35px;
     }
+    .shortbtn{
+  display: block;
+}
+.longbtn{
+  display: none;
+}
 
 }
 
