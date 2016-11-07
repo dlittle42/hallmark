@@ -57,7 +57,12 @@
       }
     },
     created: function() {
-      console.log('created main');
+     // console.log('created main');
+
+    //  if( window.top === self ) { // not in a frame
+        //  window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
+    //  }
+
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '704556386364970', // hall­m­a­r­k­-greeting for Google Cloud: LIVE

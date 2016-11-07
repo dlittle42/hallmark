@@ -253,6 +253,7 @@ export default {
    // alert(result.browser.name)
     this.browser = result.browser.name;
     this.os = result.os.name;
+    //alert(this.os);
 
     this.square_frame = new Image();
     this.square_frame.src = './static/images/photoframe.png';
@@ -267,7 +268,7 @@ export default {
 
      $('#twitter').click(function(){
 
-        this.gaEvent('Twitter Share');
+        scope.gaEvent('Twitter Share');
 
         if (scope.authorized!=true){
             $.oauthpopup({
@@ -680,7 +681,7 @@ export default {
         fireplace.val = 'fireplace';
         fireplace.anchor.set(0.5);
         stage.addChild(fireplace);
-console.log(this.os);
+//console.log(this.os);
 //if (this.os != "Android"){
 
   var isAndroid = /(android)/i.test(navigator.userAgent);
@@ -706,7 +707,7 @@ console.log(this.os);
 
         stage.addChild(videoSprite);
 }else{
-  console.log('android');
+ // console.log('android');
 }
 
         gift = PIXI.Sprite.fromImage('./static/images/gift-01.png');
@@ -817,34 +818,74 @@ console.log(this.os);
 
 */
 
+  var isAndroid = /(android)/i.test(navigator.userAgent);
+
+        if (this.os == "iOS" || isAndroid==true){
+          //alert('mobile');
+     
+          portrait.on('touchstart', this.onDragStart)
+          portrait.on('touchend', this.onDragEnd)
+          portrait.on('touchendoutside', this.onDragEnd)
+          portrait.on('touchmove', this.onDragMove);
+         // portrait.on('click', this.rotateImg)
+          portrait.on('tap', this.rotateImg)
+    
+
+        }else{
+       //   alert('not mobile');
+          portrait.on('pointerdown', this.onDragStart)
+          portrait.on('touchstart', this.onDragStart)
+
+          portrait.on('pointerup', this.onDragEnd)
+          portrait.on('pointerupoutside', this.onDragEnd)
+          portrait.on('touchend', this.onDragEnd)
+          portrait.on('touchendoutside', this.onDragEnd)
+          portrait.on('pointermove', this.onDragMove)
+          portrait.on('touchmove', this.onDragMove);
+          portrait.on('click', this.rotateImg)
+          portrait.on('tap', this.rotateImg)
+          portrait.on('pointertap', this.rotateImg)
+        }
+
+
+        portrait.on('mousedown', this.onDragStart)
+        portrait.on('mouseup', this.onDragEnd)
+        portrait.on('mouseupoutside', this.onDragEnd)
+        portrait.on('mousemove', this.onDragMove)
+        portrait.on('click', this.rotateImg)
+       // portrait.on('tap', this.rotateImg)
+/*
         //      portrait
         // events for drag start
         portrait.on('mousedown', this.onDragStart)
-        portrait.on('pointerdown', this.onDragStart)
+     //   portrait.on('pointerdown', this.onDragStart)
         portrait.on('touchstart', this.onDragStart)
         // events for drag end
         portrait.on('mouseup', this.onDragEnd)
         portrait.on('mouseupoutside', this.onDragEnd)
-        portrait.on('pointerup', this.onDragEnd)
-        portrait.on('pointerupoutside', this.onDragEnd)
+     //   portrait.on('pointerup', this.onDragEnd)
+     //   portrait.on('pointerupoutside', this.onDragEnd)
         portrait.on('touchend', this.onDragEnd)
         portrait.on('touchendoutside', this.onDragEnd)
         // events for drag move
         portrait.on('mousemove', this.onDragMove)
-        portrait.on('pointermove', this.onDragMove)
+    //    portrait.on('pointermove', this.onDragMove)
         portrait.on('touchmove', this.onDragMove);
 
         portrait.on('click', this.rotateImg)
         portrait.on('tap', this.rotateImg)
 
-        portrait.on('pointertap', this.rotateImg)
-  
 
+
+    //    portrait.on('pointertap', this.rotateImg)
+  
+*/
 
       },
       rotateImg: function(e){
+
         if (portrait.counter <10){
-          //console.log('rotate' + e.target);
+         // console.log('rotate' + e.target);
           e.target.rotation+=1.5708; //radians
           if(e.target.scale.x == e.target.ratio){
             e.target.scale.x = e.target.scale.y = e.target.alt_ratio;
@@ -1317,6 +1358,7 @@ console.log(this.os);
 
       },
       onStageFlash: function(evt){
+
         for (var i = 0; i < buttons.length; i++)
         {
               TweenMax.to(buttons[i], 1, {alpha:1, ease:Power2.easeOut, delay: (i/30)});
@@ -1637,11 +1679,11 @@ console.log(this.os);
                 //}
             },
             function (response) {
-              console.log('feedback: '+response)
+             // console.log('feedback: '+response)
               //console.dir(response);
                 if (response && !response.error) {
                     /* handle the result */
-                    console.log("Posted story to facebook");
+                    //console.log("Posted story to facebook");
                     //console.log(response);
                     $('#load-panel').removeClass('active');
                     scope.toggleIframe();
