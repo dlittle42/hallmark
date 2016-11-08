@@ -178,6 +178,7 @@ var FileSaver =require('file-saver');
 var UAParser = require('ua-parser-js');
 require('./js/jquery.oauthpopup');
 
+
 //import SpriteUtilities  from './js/spriteUtilities';
 //var gesture = require('pixi-simple-gesture')
 //var poly = require('jquery.pointer-events-polyfill');
@@ -226,7 +227,7 @@ export default {
       FastClick.attach(document.body);
       */
       if( top === self ) { // not in a frame
-          window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
+        //  window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
      }
 
 
@@ -362,7 +363,7 @@ export default {
           //prepopulated images from gallery
           fullimg = "./static/images/"+img+ ".png";
        }
-       console.log("FULLIMAGE="+fullimg)
+      // console.log("FULLIMAGE="+fullimg)
 
        //fullimg = "https://scontent.xx.fbcdn.net/v/t1.0-9/301406_10150280973301594_716561513_n.jpg?oh=31f090bc7c4acefaa14603eeff3156b5&oe=588E9495"
 
@@ -399,13 +400,21 @@ export default {
          //reset img position
          var scope = this;
 
+
           image = new Image();
           image.src = path;
           image.onload = function() {
 
               var obj = eval(target);
+          /*
+              EXIF.getData(image, function() {
+                var make = EXIF.getTag(this, "Orientation");
+                var model = EXIF.getTag(this, "Model");
+                alert(make + '   &&&   '+model)
+                
+            });
 
-
+           */
 
               obj.dimension = {
                   width: image.naturalWidth,

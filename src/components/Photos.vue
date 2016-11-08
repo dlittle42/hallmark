@@ -51,6 +51,8 @@ import Vue from 'vue';
 //import router from 'vue-router';
 var router = require('vue-router');
 var Dropzone = require("dropzone");
+var EXIF  = require('exif-js');
+var BinaryFile = require('../js/binaryajax.js');
 
 
 // ...
@@ -123,10 +125,82 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
         myDropzone.on("addedfile", function(file) {
           /* Maybe display some more file information on your page */
-         // alert("Added file." + file); 
+         alert("Added file." + file); 
           //$('body').prepend(file.previewElement)
           //alert($('.dz-image img')[0].src);
-          ////console.dir(file);
+          console.dir(file);
+          $('#load-panel').addClass('active');
+         /*  var width;
+            var height;
+            var binaryReader = new FileReader();
+            binaryReader.onloadend=function(d) {
+              var exif, transform = "none";
+              exif=EXIF.readFromBinaryFile(new BinaryFile(d.target.result));
+              alert(exif.Orientation);
+              if (exif.Orientation === 8) {
+                  width = img.height;
+                  height = img.width;
+                  transform = "left";
+              } else if (exif.Orientation === 6) {
+                  width = img.height;
+                  height = img.width;
+                  transform = "right";
+              }
+            };
+            binaryReader.readAsBinaryString(file);
+           // binaryReader.readAsArrayBuffer(file);
+           */
+           /* var fr   = new FileReader;
+           fr.onloadend = function() {
+                var base64 = this.result;
+                base64 = base64.replace(/^data\:([^\;]+)\;base64,/gmi, '');
+            var binaryString = atob(base64);
+            var len = binaryString.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            var img =  bytes.buffer;
+
+                var exif = EXIF.readFromBinaryFile(img);
+                alert(exif.Make);
+            };
+            
+            fr.readAsBinaryString(file);
+            */
+            var reader = new FileReader();
+          reader.onload = function(e) {
+            var sum;
+            var view = new DataView(e.target.result);
+            if (view.getUint16(0, false) != 0xFFD8) sum =-2;
+            var length = view.byteLength, offset = 2;
+            while (offset < length) {
+              var marker = view.getUint16(offset, false);
+              offset += 2;
+              if (marker == 0xFFE1) {
+                if (view.getUint32(offset += 2, false) != 0x45786966){
+                  sum = -1;
+                } 
+                var little = view.getUint16(offset += 6, false) == 0x4949;
+                offset += view.getUint32(offset + 4, little);
+                var tags = view.getUint16(offset, little);
+                offset += 2;
+                for (var i = 0; i < tags; i++)
+                  if (view.getUint16(offset + (i * 12), little) == 0x0112)
+                    sum = view.getUint16(offset + (i * 12) + 8, little);
+              }
+              else if ((marker & 0xFF00) != 0xFF00) break;
+              else offset += view.getUint16(offset, false);
+            }
+            alert(sum)
+            sum =-1;
+          };
+          reader.readAsArrayBuffer(file.slice(0, 64 * 1024));
+           
+          //  this.getOrientation(file, function(orientation) {
+          //        alert('orientation: ' + orientation);
+            //    });
+           
         });
 
         myDropzone.on('thumbnail', function(file, dataUri) {
@@ -191,6 +265,44 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
         /**
      * This is the getPhoto library
      */
+
+        getOrientation: function(file, callback) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+
+            var view = new DataView(e.target.result);
+            if (view.getUint16(0, false) != 0xFFD8) return callback(-2);
+            var length = view.byteLength, offset = 2;
+            while (offset < length) {
+              var marker = view.getUint16(offset, false);
+              offset += 2;
+              if (marker == 0xFFE1) {
+                if (view.getUint32(offset += 2, false) != 0x45786966) return callback(-1);
+                var little = view.getUint16(offset += 6, false) == 0x4949;
+                offset += view.getUint32(offset + 4, little);
+                var tags = view.getUint16(offset, little);
+                offset += 2;
+                for (var i = 0; i < tags; i++)
+                  if (view.getUint16(offset + (i * 12), little) == 0x0112)
+                    return callback(view.getUint16(offset + (i * 12) + 8, little));
+              }
+              else if ((marker & 0xFF00) != 0xFF00) break;
+              else offset += view.getUint16(offset, false);
+            }
+            return callback(-1);
+          };
+          reader.readAsArrayBuffer(file.slice(0, 64 * 1024));
+        },
+        base64ToArrayBuffer: function  (base64) {
+            base64 = base64.replace(/^data\:([^\;]+)\;base64,/gmi, '');
+            var binaryString = atob(base64);
+            var len = binaryString.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        },
         getSrc: function(img, event){
               //this.$emit('imgSelect', event.target.src)
               //console.dir(event.target)
