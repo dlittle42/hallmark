@@ -135,9 +135,9 @@
 
               <div id="social_action">
                 <h1>Share Your Greeting</h1>
-                <button id="facebook" class="social" v-on:click="getFBstatus">Share on Facebook</button>
+                <button id="facebook" class="social" v-on:click="getFBstatus"><span class="longbtn">Share on Facebook</span><span class="shortbtn">Share</span></button>
                           
-                <button id="twitter" class="social">Share on Twitter</button>
+                <button id="twitter" class="social"><span class="longbtn">Share on Twitter</span><span class="shortbtn">Share</span></button>
                <!--
                 <button id="twitter" class="social" v-on:click="resizeOutput(null,'twitter')">Share on Twitter</button>
              -->
@@ -2150,7 +2150,18 @@ export default {
                 $('#playlist').html('');
             }else{
               */
-                 $('#playlist').append('<iframe width="400" height="315" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>');
+                var w, h;
+
+                if ($('.header').width() < 600){
+                    w = 300;
+                    h = 236;
+                }else{
+                    w = 400;
+                    h = 315;
+                }
+
+
+                 $('#playlist').append('<iframe width="'+w+'" height="'+h+'" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>');
         
           //  }
 
@@ -2474,6 +2485,14 @@ a.help{
 
 }
 
+.longbtn{
+  display: block;
+}
+
+.shortbtn{
+  display: none;
+}
+
 #app a {
  // color: #42b983;
   text-decoration: none;
@@ -2735,6 +2754,7 @@ h1{
   position: absolute;
   top: 20px;
   right: 10px;
+      z-index: 4;
   
 }
 
@@ -3274,11 +3294,18 @@ figure{
 
 
 
-@media (min-width:341px) and (max-width:599px) {
+@media (min-width:371px) and (max-width:599px) {
 
   .social{
       font-size: 12px;
       line-height: 14px;
+    }
+
+    a#dl{
+      //WHY??
+      transform: translateY(6px);
+     // background-position-x: 7px;
+     // padding: 8px 6px 8px 35px;
     }
 
 }
@@ -3441,7 +3468,7 @@ figure{
 
     a#dl{
       //WHY??
-      transform: translateY(6px);
+    //  transform: translateY(6px);
       background-position-x: 7px;
       padding: 8px 6px 8px 35px;
     }
@@ -3496,7 +3523,13 @@ figure{
  
 }
 
-@media (max-width:340px) {
+@media (max-width:370px) {
+
+  a#dl{
+      //WHY??
+      transform: translateY(0px);
+
+    }
 
 .social{
 
@@ -3504,6 +3537,15 @@ figure{
       line-height: 12px;
       padding-left: 35px;
     }
+
+    .longbtn{
+  display: none;
+}
+
+.shortbtn{
+  display: block;
+}
+
 
 }
 
