@@ -461,10 +461,9 @@ button#choose_btn {
   }
 
   h1.or{
-      margin: 5px auto;
-    }
-
+    margin: 5px auto;
   }
+}
 
 
 @media (max-width:599px) {
