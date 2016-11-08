@@ -376,11 +376,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
   <style lang="scss" scoped>
 
-h1.or {
-  //color: #42b983;
-  margin: 5px auto;
-  //padding: 0;
-}
+
 
 #swiper{
   //position: absolute;
@@ -427,7 +423,7 @@ button#choose_btn {
     color: #aba890;
     border-radius: 5px;
     max-height: 130px;
-    height: 130px;
+   // height: 130px;
     padding: 32px;
     margin: 10px auto;
     width: 55%;
@@ -458,4 +454,27 @@ button#choose_btn {
 .dropzone.dz-clickable {
     cursor: pointer;
 }
+
+@media (min-width:600px) {
+  .dropzone{
+    height: 130px;
+  }
+
+  h1.or{
+      margin: 5px auto;
+    }
+
+  }
+
+
+@media (max-width:599px) {
+  .dropzone{
+    height: 120px;
+  }
+
+  h1.or{
+      margin: 0 auto;
+      padding: 3px;
+    }
+  }
 </style>
