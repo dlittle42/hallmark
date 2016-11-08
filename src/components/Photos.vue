@@ -35,7 +35,11 @@
   <form action="/file-upload"
       class="dropzone"
       id="my-awesome-dropzone">
-        <button id="choose_btn" class="social" >Choose File</button>
+        <button id="choose_btn" class="social" ><span class="btnlabel">Choose File</span><span class="load"><div class="spinner">
+                  <div class="bounce1"></div>
+                  <div class="bounce2"></div>
+                  <div class="bounce3"></div>
+                </div></span></button>
       </form>
       
         
@@ -51,8 +55,8 @@ import Vue from 'vue';
 //import router from 'vue-router';
 var router = require('vue-router');
 var Dropzone = require("dropzone");
-var EXIF  = require('exif-js');
-var BinaryFile = require('../js/binaryajax.js');
+//var EXIF  = require('exif-js');
+//var BinaryFile = require('../js/binaryajax.js');
 
 
 // ...
@@ -71,6 +75,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
       return {
         //msg: 'CHOOSE A PHOTO',
         router: '',
+        rotation:'',
        // accessToken:'',
         allPhotos: [],
         swiperOption: {
@@ -107,9 +112,26 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
           thumbnailWidth: null,
           thumbnailHeight: null,
           init: function() {
+
+              myDropzone = this;
+
+              $("#my-awesome-dropzone").bind("click",function () {
+               // alert('choose');
+                $('.btnlabel').hide();
+                $('.load').show();
+
+                //$('#load-panel').addClass('active');
+                  }
+              );
+              this.on("canceled", function(file, dataUrl) {
+                $('.btnlabel').show();
+                $('.load').hide();
+              }),
+  
               this.on("thumbnail", function(file, dataUrl) {
                   $('.dz-image').last().find('img').attr({width: '100%', height: '100%'});
               }),
+           
               this.on("success", function(file) {
                   $('.dz-image').css({"width":"100%", "height":"auto"});
               })
@@ -118,18 +140,26 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
           //createImageThumbnails: false
         });
 
+      
+
 
        // //console.dir(myDropzone)
 
         var scope =this;
 
+
+
+       
+
         myDropzone.on("addedfile", function(file) {
+         // alert('addedfile');
+          $('#load-panel').addClass('active');
           /* Maybe display some more file information on your page */
-         alert("Added file." + file); 
+         //alert("Added file." + file); 
           //$('body').prepend(file.previewElement)
           //alert($('.dz-image img')[0].src);
-          console.dir(file);
-          $('#load-panel').addClass('active');
+       //   console.dir(file);
+          //$('#load-panel').addClass('active');
          /*  var width;
             var height;
             var binaryReader = new FileReader();
@@ -192,7 +222,8 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
               else if ((marker & 0xFF00) != 0xFF00) break;
               else offset += view.getUint16(offset, false);
             }
-            alert(sum)
+           // alert(sum)
+            scope.rotation = sum;
             sum =-1;
           };
           reader.readAsArrayBuffer(file.slice(0, 64 * 1024));
@@ -241,7 +272,11 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
 
         // draw source image into the off-screen canvas:
     //    ctx.drawImage(dataUri, 95, 95, 1010, 1010);
-            scope.$emit('imgSelect', dataUri, 'portrait', file.width, file.height);
+   // alert(scope.rotation)
+
+            $('.btnlabel').show();
+            $('.load').hide();
+            scope.$emit('imgSelect', dataUri, 'portrait', file.width, file.height, scope.rotation);
         });
     /*
         myDropzone.options = {
@@ -266,43 +301,7 @@ import { swiper, swiperSlide, swiperPlugins } from 'vue-awesome-swiper'
      * This is the getPhoto library
      */
 
-        getOrientation: function(file, callback) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-
-            var view = new DataView(e.target.result);
-            if (view.getUint16(0, false) != 0xFFD8) return callback(-2);
-            var length = view.byteLength, offset = 2;
-            while (offset < length) {
-              var marker = view.getUint16(offset, false);
-              offset += 2;
-              if (marker == 0xFFE1) {
-                if (view.getUint32(offset += 2, false) != 0x45786966) return callback(-1);
-                var little = view.getUint16(offset += 6, false) == 0x4949;
-                offset += view.getUint32(offset + 4, little);
-                var tags = view.getUint16(offset, little);
-                offset += 2;
-                for (var i = 0; i < tags; i++)
-                  if (view.getUint16(offset + (i * 12), little) == 0x0112)
-                    return callback(view.getUint16(offset + (i * 12) + 8, little));
-              }
-              else if ((marker & 0xFF00) != 0xFF00) break;
-              else offset += view.getUint16(offset, false);
-            }
-            return callback(-1);
-          };
-          reader.readAsArrayBuffer(file.slice(0, 64 * 1024));
-        },
-        base64ToArrayBuffer: function  (base64) {
-            base64 = base64.replace(/^data\:([^\;]+)\;base64,/gmi, '');
-            var binaryString = atob(base64);
-            var len = binaryString.length;
-            var bytes = new Uint8Array(len);
-            for (var i = 0; i < len; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            return bytes.buffer;
-        },
+        
         getSrc: function(img, event){
               //this.$emit('imgSelect', event.target.src)
               //console.dir(event.target)
@@ -463,6 +462,10 @@ button#choose_btn {
   h1.or{
     margin: 5px auto;
   }
+}
+
+.load{
+  display: none;
 }
 
 

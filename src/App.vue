@@ -227,7 +227,7 @@ export default {
       FastClick.attach(document.body);
       */
       if( top === self ) { // not in a frame
-        //  window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
+          window.location.href='http://www.hallmarkmoviesandmysteries.com/the-most-wonderful-movies-of-christmas/mantlepiece'
      }
 
 
@@ -340,7 +340,7 @@ export default {
       updateMessage: function(idx){
         this.selectedMsg = idx+1;
       },
-      updateImage: function(img, target, w, h){
+      updateImage: function(img, target, w, h, rot){
         $('#load-panel').addClass('active');
         $('.m-active').removeClass('m-active');
        // alert('update image '+img);
@@ -370,7 +370,7 @@ export default {
      //  fullimg="https://graph.facebook.com/10153785297671594/picture?access_token=EAAKAylEi…eOGet9RgnZAJubjuwUPqo7fWUZBpvwCON03xLMjpPLdZA2kx364TmzJ5uWA4eLB86GSBXgZDZD"
         //create image to preload:
 
-        this.imageToCanvas(fullimg, target, w, h);
+        this.imageToCanvas(fullimg, target, w, h, rot);
       },
       getSrc: function(img){
             this.layout = img.srcElement.src;
@@ -378,10 +378,12 @@ export default {
             $('#load-panel').addClass('active');
       },
       
-      imageToCanvas: function(path, target, w, h){
+      imageToCanvas: function(path, target, w, h, rot){
 
          //console.warn(target);
           this.$router.push({ name: 'home'});
+
+          console.log('target='+target)
          // //console.log('---' + path)
         //  //console.log('---' + path.toString())
           //$('body').prepend($('<img>',{id:'theImg',src:path}))
@@ -424,22 +426,51 @@ export default {
             //  //console.log(this.src)
 
               
-
+            
 
               var texture01 = PIXI.Texture.from(path)
               obj.setTexture(texture01);
               if (target == 'portrait'){
+                //alert(portrait);
                 portrait.position.x = 250;
                 portrait.position.y = 150;
+
+
+
+
                 //console.warn('portrait.width='+portrait.width+',height='+portrait.height)
                 //console.warn('img.width='+w+',height='+h);
                  //console.warn('dimension.width='+obj.dimension.width+',height='+obj.dimension.height);
-                portrait.rotation = 0;
+                
+               
                 obj.ratio = Math.max(frame.width/obj.dimension.width,frame.height/obj.dimension.height);
                 obj.alt_ratio = Math.max(frame.width/obj.dimension.height,frame.height/obj.dimension.width);
                 //console.log('my ratio is '+obj.ratio);
-                obj.scale.x = obj.scale.y = obj.ratio;
+          
+
+                if (rot ==6 ){
+                  //alert(rot +' -turn right: rotate 70');
+                 
+                   setTimeout(function(){ 
+                      portrait.rotation = Math.PI/2;
+                      portrait.scale.x = portrait.scale.y = portrait.alt_ratio;
+                    }, 1000); 
+                  
+                  //alert(portrait.rotation);
+                
+                }else{
+                  portrait.rotation = 0;
+                  obj.scale.x = obj.scale.y = obj.ratio;
+              
+                }
+
+               // obj.scale.x = obj.scale.y = obj.ratio;
+
               }
+
+
+
+
               //$('#load-panel').delay(1000).removeClass('active');
               $('#load-panel').delay(500).queue(function(next){
                  // console.log('reveal img');
@@ -2452,22 +2483,22 @@ button:focus {outline:0;}
 
 a.help{
       background: #666;
-    border-radius: 12px;
+    border-radius: 16px;
     color: #ffffff;
     display: inline-block;
     /* font-weight: bold; */
-    line-height: 12px;
+    line-height: 16px;
     -ms-flex-pack: center;
     justify-content: center;
     margin-left: 3px;
     text-align: center;
-    width: 12px;
-    font-size: 12px;
+    width: 16px;
+    font-size: 16px;
     transition: all .3s ease-out;
     position: absolute;
-    top: 40%;
+    top: 35%;
     /* right: 0; */
-    font-size: 0.5em;
+    //font-size: 0.5em;
 
     &:hover{
          background: #cf151b;
@@ -3096,7 +3127,7 @@ figure{
  .panel{
     align-self: center;
     width: 100%;
-    height: 75%;
+    height: 70%;
     margin: 0px 10px 40px;
    // margin: 0 auto;
     background: #f1dea1;
