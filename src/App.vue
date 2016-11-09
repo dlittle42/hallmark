@@ -1467,6 +1467,7 @@ export default {
           e.preventDefault();
           $('.active').removeClass('active');
           $('#playlist').html('');
+          this.showMarkers();
 
       },
 
@@ -2200,8 +2201,18 @@ export default {
                     h = 315;
                 }
 
+                var isAndroid = /(android)/i.test(navigator.userAgent);
+
+                if (this.os == "iOS" || isAndroid==true){
+
+                  $('#playlist').append('<a href="https://www.youtube.com/watch?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65&v=EA62LqJoZEo" target="_blank"><img src="./static/images/playlist.png"></a>');
+             
+
+                }else{
+
 
                  $('#playlist').append('<iframe width="'+w+'" height="'+h+'" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>');
+                }
         
           //  }
 
@@ -3361,6 +3372,9 @@ figure{
 
 @media (max-width:599px) {
 
+  #load-panel{
+    height: 100vw;
+  }
 
   .wrapper, .header {
 
@@ -3417,7 +3431,7 @@ figure{
 
     .social{
 
-        width: 40%;
+        width: 45%;
     margin: 8px 4px;
     display: inline-block;
     }
@@ -3559,12 +3573,13 @@ figure{
 
   #thanks h1{
 
-    font-size: 18px;
+    font-size: 17px;
     padding: 6px;
    }
 
    #thanks p{
-    width: 100%;
+   // width: 100%;
+   font-size: 13px;
    }
 
 
@@ -3613,6 +3628,12 @@ figure{
 .longbtn{
   display: none;
 }
+
+#thanks h1{
+
+    font-size: 15px;
+    padding: 6px;
+   }
 
 }
 
