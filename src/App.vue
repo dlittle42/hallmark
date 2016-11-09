@@ -178,6 +178,7 @@ var FileSaver =require('file-saver');
 var UAParser = require('ua-parser-js');
 require('./js/jquery.oauthpopup');
 
+
 //import SpriteUtilities  from './js/spriteUtilities';
 //var gesture = require('pixi-simple-gesture')
 //var poly = require('jquery.pointer-events-polyfill');
@@ -339,7 +340,7 @@ export default {
       updateMessage: function(idx){
         this.selectedMsg = idx+1;
       },
-      updateImage: function(img, target, w, h){
+      updateImage: function(img, target, w, h, rot){
         $('#load-panel').addClass('active');
         $('.m-active').removeClass('m-active');
        // alert('update image '+img);
@@ -362,14 +363,14 @@ export default {
           //prepopulated images from gallery
           fullimg = "./static/images/"+img+ ".png";
        }
-       console.log("FULLIMAGE="+fullimg)
+      // console.log("FULLIMAGE="+fullimg)
 
        //fullimg = "https://scontent.xx.fbcdn.net/v/t1.0-9/301406_10150280973301594_716561513_n.jpg?oh=31f090bc7c4acefaa14603eeff3156b5&oe=588E9495"
 
      //  fullimg="https://graph.facebook.com/10153785297671594/picture?access_token=EAAKAylEi…eOGet9RgnZAJubjuwUPqo7fWUZBpvwCON03xLMjpPLdZA2kx364TmzJ5uWA4eLB86GSBXgZDZD"
         //create image to preload:
 
-        this.imageToCanvas(fullimg, target, w, h);
+        this.imageToCanvas(fullimg, target, w, h, rot);
       },
       getSrc: function(img){
             this.layout = img.srcElement.src;
@@ -377,10 +378,12 @@ export default {
             $('#load-panel').addClass('active');
       },
       
-      imageToCanvas: function(path, target, w, h){
+      imageToCanvas: function(path, target, w, h, rot){
 
          //console.warn(target);
           this.$router.push({ name: 'home'});
+
+          console.log('target='+target)
          // //console.log('---' + path)
         //  //console.log('---' + path.toString())
           //$('body').prepend($('<img>',{id:'theImg',src:path}))
@@ -399,13 +402,21 @@ export default {
          //reset img position
          var scope = this;
 
+
           image = new Image();
           image.src = path;
           image.onload = function() {
 
               var obj = eval(target);
+          /*
+              EXIF.getData(image, function() {
+                var make = EXIF.getTag(this, "Orientation");
+                var model = EXIF.getTag(this, "Model");
+                alert(make + '   &&&   '+model)
+                
+            });
 
-
+           */
 
               obj.dimension = {
                   width: image.naturalWidth,
@@ -415,22 +426,51 @@ export default {
             //  //console.log(this.src)
 
               
-
+            
 
               var texture01 = PIXI.Texture.from(path)
               obj.setTexture(texture01);
               if (target == 'portrait'){
+                //alert(portrait);
                 portrait.position.x = 250;
                 portrait.position.y = 150;
+
+
+
+
                 //console.warn('portrait.width='+portrait.width+',height='+portrait.height)
                 //console.warn('img.width='+w+',height='+h);
                  //console.warn('dimension.width='+obj.dimension.width+',height='+obj.dimension.height);
-                portrait.rotation = 0;
+                
+               
                 obj.ratio = Math.max(frame.width/obj.dimension.width,frame.height/obj.dimension.height);
                 obj.alt_ratio = Math.max(frame.width/obj.dimension.height,frame.height/obj.dimension.width);
                 //console.log('my ratio is '+obj.ratio);
-                obj.scale.x = obj.scale.y = obj.ratio;
+          
+
+                if (rot ==6 ){
+                  //alert(rot +' -turn right: rotate 70');
+                 
+                   setTimeout(function(){ 
+                      portrait.rotation = Math.PI/2;
+                      portrait.scale.x = portrait.scale.y = portrait.alt_ratio;
+                    }, 1000); 
+                  
+                  //alert(portrait.rotation);
+                
+                }else{
+                  portrait.rotation = 0;
+                  obj.scale.x = obj.scale.y = obj.ratio;
+              
+                }
+
+               // obj.scale.x = obj.scale.y = obj.ratio;
+
               }
+
+
+
+
               //$('#load-panel').delay(1000).removeClass('active');
               $('#load-panel').delay(500).queue(function(next){
                  // console.log('reveal img');
@@ -2150,7 +2190,18 @@ export default {
                 $('#playlist').html('');
             }else{
               */
-                 $('#playlist').append('<iframe width="400" height="315" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>');
+                var w, h;
+
+                if ($('.header').width() < 600){
+                    w = 300;
+                    h = 236;
+                }else{
+                    w = 400;
+                    h = 315;
+                }
+
+
+                 $('#playlist').append('<iframe width="'+w+'" height="'+h+'" src="https://www.youtube.com/embed/videoseries?list=PLIOAH7QdikJwFwgGeZ_Do8Ztaa4IDLT65" frameborder="0" allowfullscreen></iframe>');
         
           //  }
 
@@ -2432,22 +2483,22 @@ button:focus {outline:0;}
 
 a.help{
       background: #666;
-    border-radius: 12px;
+    border-radius: 16px;
     color: #ffffff;
     display: inline-block;
     /* font-weight: bold; */
-    line-height: 12px;
+    line-height: 16px;
     -ms-flex-pack: center;
     justify-content: center;
     margin-left: 3px;
     text-align: center;
-    width: 12px;
-    font-size: 12px;
+    width: 16px;
+    font-size: 16px;
     transition: all .3s ease-out;
     position: absolute;
-    top: 40%;
+    top: 35%;
     /* right: 0; */
-    font-size: 0.5em;
+    //font-size: 0.5em;
 
     &:hover{
          background: #cf151b;
@@ -2472,6 +2523,14 @@ a.help{
  // display: flex;
  // flex-direction: column;
 
+}
+
+.longbtn{
+  display: block;
+}
+
+.shortbtn{
+  display: none;
 }
 
 #app a {
@@ -2735,6 +2794,7 @@ h1{
   position: absolute;
   top: 20px;
   right: 10px;
+      z-index: 4;
   
 }
 
@@ -3075,7 +3135,7 @@ figure{
  .panel{
     align-self: center;
     width: 100%;
-    height: 75%;
+    height: 70%;
     margin: 0px 10px 40px;
    // margin: 0 auto;
     background: #f1dea1;
@@ -3282,11 +3342,18 @@ figure{
 
 
 
-@media (min-width:341px) and (max-width:599px) {
+@media (min-width:371px) and (max-width:599px) {
 
   .social{
       font-size: 12px;
       line-height: 14px;
+    }
+
+    a#dl{
+      //WHY??
+      transform: translateY(6px);
+     // background-position-x: 7px;
+     // padding: 8px 6px 8px 35px;
     }
 
 }
@@ -3449,7 +3516,7 @@ figure{
 
     a#dl{
       //WHY??
-      transform: translateY(6px);
+    //  transform: translateY(6px);
       background-position-x: 7px;
       padding: 8px 6px 8px 35px;
     }
@@ -3504,7 +3571,13 @@ figure{
  
 }
 
-@media (max-width:340px) {
+@media (max-width:370px) {
+
+  a#dl{
+      //WHY??
+      transform: translateY(0px);
+
+    }
 
 .social{
 
@@ -3512,6 +3585,15 @@ figure{
       line-height: 12px;
       padding-left: 35px;
     }
+
+    .longbtn{
+  display: none;
+}
+
+.shortbtn{
+  display: block;
+}
+
 
 }
 
