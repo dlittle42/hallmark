@@ -353,6 +353,7 @@ export default {
       if (img.indexOf('access_token') >= 0){
         //image from facebook
           fullimg = img + '&.png';
+        //  fullimg = 'http://scontent.xx.fbcdn.net/v/t1.0-9/1930037_17350251593_3889_n.jpg?oh=4db67fbc44c24de4f00318e07f758b6c&oe=58CCB2B2'
       // }else if (img.includes('.png') || img.includes('data:image')){
        }else if (img.indexOf('.png') >= 0 || img.indexOf('data:image') >= 0){
         //files from the carousel or dropzone
@@ -361,7 +362,7 @@ export default {
           //prepopulated images from gallery
           fullimg = "./static/images/"+img+ ".png";
        }
-       ////console.log("FULLIMAGE="+fullimg)
+       console.log("FULLIMAGE="+fullimg)
 
        //fullimg = "https://scontent.xx.fbcdn.net/v/t1.0-9/301406_10150280973301594_716561513_n.jpg?oh=31f090bc7c4acefaa14603eeff3156b5&oe=588E9495"
 
@@ -389,14 +390,14 @@ export default {
         //  var texture01 = PIXI.Texture.from(path+'&.png')
 
         //  eval(target).setTexture(texture01);
-        // //console.log(path);
-        // //console.log(texture01)
+     //  console.log(path);
+     //  console.log(texture01)
          
 
          var dimension, image;
 
          //reset img position
-         
+         var scope = this;
 
           image = new Image();
           image.src = path;
@@ -432,6 +433,8 @@ export default {
               }
               //$('#load-panel').delay(1000).removeClass('active');
               $('#load-panel').delay(500).queue(function(next){
+                 // console.log('reveal img');
+                  scope.showMarkers();
                   $(this).removeClass("active");
                   next();
               });
@@ -639,7 +642,7 @@ export default {
 
             // set the mouseover callback...
     //  var touch_enabled = window.DocumentTouch && document instanceof DocumentTouch;
-     
+   
       if ($('.header').width() < 600){
         stage.on('tap', this.onStageFlash)
       
@@ -652,7 +655,7 @@ export default {
 
 
       }
-       
+      
 
 
         // create a new Sprite from an image path.
@@ -821,13 +824,13 @@ export default {
   var isAndroid = /(android)/i.test(navigator.userAgent);
 
         if (this.os == "iOS" || isAndroid==true){
-          //alert('mobile');
+         // alert('mobile');
      
           portrait.on('touchstart', this.onDragStart)
           portrait.on('touchend', this.onDragEnd)
           portrait.on('touchendoutside', this.onDragEnd)
           portrait.on('touchmove', this.onDragMove);
-         // portrait.on('click', this.rotateImg)
+  
           portrait.on('tap', this.rotateImg)
     
 
@@ -845,14 +848,16 @@ export default {
           portrait.on('click', this.rotateImg)
           portrait.on('tap', this.rotateImg)
           portrait.on('pointertap', this.rotateImg)
-        }
 
-
-        portrait.on('mousedown', this.onDragStart)
+          portrait.on('mousedown', this.onDragStart)
         portrait.on('mouseup', this.onDragEnd)
         portrait.on('mouseupoutside', this.onDragEnd)
         portrait.on('mousemove', this.onDragMove)
-        portrait.on('click', this.rotateImg)
+     
+        }
+
+
+        
        // portrait.on('tap', this.rotateImg)
 /*
         //      portrait
@@ -1238,15 +1243,15 @@ export default {
         TweenMax.killAll();
 
         marker_container.position.x = 1000;
-/*
+
         for (var i = 0; i < buttons.length; i++)
         {
-            //buttons[i].alpha=0;
+            buttons[i].alpha=0;
 
-            buttons[1].visible =false;
+            //buttons[1].visible =false;
             //console.log('buttons='+buttons[i].alpha)
         }
-    */
+   
       },
       hideMarkers: function(){
 
@@ -1375,7 +1380,7 @@ export default {
           portrait.alpha = 0.5;
           portrait.dragging = true;
           portrait.counter= 0;
-          //console.log('drag start');
+         // console.log('drag start');
       },
       onDragEnd: function(e)
       {
@@ -1385,11 +1390,12 @@ export default {
 
           // set the interaction data to null
           portrait.data = null;
-          //console.log('drag end');
+        //  console.log('drag end');
       },
 
       onDragMove: function(e)
       {
+        // console.log('ondragmove')
           if (portrait.dragging)
           {
               var newPosition = e.data.getLocalPosition(stage);
@@ -1397,7 +1403,7 @@ export default {
               portrait.position.y = newPosition.y;
               portrait.counter+=1;
               //console.log(portrait.counter)
-              //console.log('drag move');
+             // console.log('drag move');
           }
       },
       showHelpLayouts: function(e){
